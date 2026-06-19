@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hirro Kuizon — AI-Augmented Growth Operator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --off-white: #f0ede8;
+    --mid: #6b6b6b;
+    --accent: #c8f135;
+    --accent-dim: rgba(200,241,53,0.12);
+    --border: rgba(255,255,255,0.08);
+    --card-bg: #111111;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--off-white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--mid);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--off-white); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: -0.5rem;
+    transform: translateY(-50%);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(7rem, 18vw, 20rem);
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    max-width: 900px;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+  }
+
+  .hero-bio {
+    max-width: 560px;
+    color: var(--mid);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-bio strong {
+    color: var(--off-white);
+    font-weight: 500;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--off-white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--off-white); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    right: 2.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .scroll-hint::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: var(--mid);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2.5rem;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* EXPERIENCE */
+  .experience-grid {
+    display: grid;
+    gap: 0;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta {
+    padding-top: 0.2rem;
+  }
+
+  .exp-years {
+    font-size: 0.78rem;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-company {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .exp-desc {
+    color: var(--mid);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mid);
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.65rem;
+  }
+
+  /* DEMOS / SHOWCASE */
+  .demos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .demo-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .demo-card:hover { border-color: var(--accent); }
+
+  .demo-status {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .demo-status.live { color: var(--accent); }
+  .demo-status.soon { color: var(--mid); }
+
+  .demo-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .demo-status.live .demo-status-dot {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .demo-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+    color: var(--off-white);
+  }
+
+  .demo-desc {
+    color: var(--mid);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .demo-arrow {
+    font-size: 1.2rem;
+    color: var(--accent);
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    transition: transform 0.2s;
+  }
+
+  .demo-card:hover .demo-arrow { transform: translate(3px, -3px); }
+
+  .demo-card.locked {
+    cursor: default;
+  }
+
+  .demo-card.locked:hover { border-color: var(--border); }
+  .demo-card.locked .demo-arrow { display: none; }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-group {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .skill-group-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .skill-list li {
+    font-size: 0.9rem;
+    color: var(--off-white);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .skill-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--mid);
+    font-size: 0.7rem;
+  }
+
+  /* CONTACT */
+  .contact-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-headline {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .contact-headline span { color: var(--accent); }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 0.5rem;
+  }
+
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.25rem;
+    transition: border-color 0.2s;
+  }
+
+  .contact-link:hover { border-color: var(--accent); }
+
+  .contact-link-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .contact-link-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--off-white);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .footer-left {
+    font-size: 0.8rem;
+    color: var(--mid);
+  }
+
+  .footer-right {
+    font-size: 0.8rem;
+    color: var(--mid);
+  }
+
+  /* DIVIDER */
+  .full-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    .hero { padding: 0 1.25rem 4rem; }
+    section { padding: 4rem 1.25rem; }
+    .stats-bar { padding: 2rem 1.25rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .contact-block { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">HK</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="max-width:100%; padding-left:2.5rem; padding-right:2.5rem;">
+  <div class="hero-bg-text">HIRRO</div>
+  <div class="hero-eyebrow">Available for work · Philippines</div>
+  <h1 class="hero-name">
+    AI-Augmented<br>
+    <span>Growth</span> Operator.
+  </h1>
+  <p class="hero-bio">
+    I scale communities, build content systems, and deploy <strong>AI-powered tools</strong> that eliminate manual overhead.<br>
+    6 years at NVIDIA. 224K followers built from scratch. Now I ship the strategy <em>and</em> the machine that runs it.
+  </p>
+  <div class="hero-cta">
+    <a href="#tools" class="btn-primary">See Live Tools</a>
+    <a href="#contact" class="btn-ghost">Work With Me</a>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number">224K</span>
+      <span class="stat-label">Page Followers Built</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">135K</span>
+      <span class="stat-label">Community Members</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">6yr</span>
+      <span class="stat-label">NVIDIA Philippines</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3</span>
+      <span class="stat-label">International Markets</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">AI+</span>
+      <span class="stat-label">Claude-Augmented Ops</span>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Track Record</div>
+  <div class="experience-grid">
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-years">2017 — 2023</div>
+        <div class="exp-company">NVIDIA GeForce PH</div>
+      </div>
+      <div>
+        <h3 class="exp-title">Social Media & Community Manager</h3>
+        <p class="exp-desc">Led long-term organic growth for a global consumer tech brand in the Philippine market. Built editorial pipelines, community engagement loops, and UGC amplification systems aligned to product launch cycles. Grew the Facebook Page from 51K → 224.5K and the Group from 30K → 135K. Launched and scaled Instagram to 22K organic.</p>
+        <div class="exp-tags">
+          <span class="tag">Community Systems</span>
+          <span class="tag">Editorial Strategy</span>
+          <span class="tag">Influencer Marketing</span>
+          <span class="tag">Brand Partnerships</span>
+          <span class="tag">Live Events</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-years">2023 — Present</div>
+        <div class="exp-company">Freelance</div>
+      </div>
+      <div>
+        <h3 class="exp-title">Digital Marketing Strategist + AI Operator</h3>
+        <p class="exp-desc">Delivered growth strategy and AI-augmented content systems for SMEs across AU, UK, and PH markets. Specializing in organic SEO, conversion-aligned content, and deploying Claude-powered tools that reduce manual overhead. Currently building Aurora Digital Foundry — a business infrastructure manufacturing operation for local enterprises.</p>
+        <div class="exp-tags">
+          <span class="tag">AI Tool Building</span>
+          <span class="tag">SEO Strategy</span>
+          <span class="tag">Conversion Systems</span>
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">Google Apps Script</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-years">2023 — 2024</div>
+        <div class="exp-company">Crypto-Legal</div>
+      </div>
+      <div>
+        <h3 class="exp-title">Virtual Assistant — AML Compliance</h3>
+        <p class="exp-desc">Administrative support for anti-money laundering compliance audits of international cryptocurrency arbitrage corporations. Async remote, high-accuracy documentation work across jurisdictions.</p>
+        <div class="exp-tags">
+          <span class="tag">AML Compliance</span>
+          <span class="tag">Documentation</span>
+          <span class="tag">Remote Operations</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-years">2013 — 2016</div>
+        <div class="exp-company">Rumble Royale</div>
+      </div>
+      <div>
+        <h3 class="exp-title">Co-Founder & Marketing Head</h3>
+        <p class="exp-desc">Co-founded and led marketing for a pioneering Philippine eSports organization. Built the brand's digital presence from zero — community, content, and partner acquisition — at a time when eSports infrastructure in the country didn't yet exist.</p>
+        <div class="exp-tags">
+          <span class="tag">Brand Building</span>
+          <span class="tag">eSports</span>
+          <span class="tag">Community Growth</span>
+          <span class="tag">Content Strategy</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- SKILLS -->
+<section>
+  <div class="section-label">Capabilities</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-label">AI & Automation</div>
+      <ul class="skill-list">
+        <li>Prompt Engineering (Claude, GPT-4)</li>
+        <li>Claude API / Artifacts</li>
+        <li>Google Apps Script</li>
+        <li>Workflow Automation</li>
+        <li>AI-Powered Tool Building</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Growth & Content</div>
+      <ul class="skill-list">
+        <li>Organic SEO Strategy</li>
+        <li>Content Systems & Pillars</li>
+        <li>Community Architecture</li>
+        <li>Editorial Calendar Management</li>
+        <li>Audience Monetization</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Infrastructure</div>
+      <ul class="skill-list">
+        <li>Google Sheets Data Spine</li>
+        <li>GitHub Pages Deployment</li>
+        <li>React / Vite / Tailwind</li>
+        <li>Formspree / GCash / PayMongo</li>
+        <li>Telegram Bot API</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Strategy</div>
+      <ul class="skill-list">
+        <li>Business Infrastructure Design</li>
+        <li>Brand Positioning</li>
+        <li>Conversion Funnel Architecture</li>
+        <li>Competitive Recon</li>
+        <li>Systems Thinking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- DEMO TOOLS -->
+<section id="tools">
+  <div class="section-label">Live AI Tools</div>
+  <div class="demos-grid">
+
+    <a href="#" class="demo-card locked">
+      <div class="demo-status soon">
+        <span class="demo-status-dot"></span>
+        Coming Soon
+      </div>
+      <div class="demo-title">Lead Qualifier Bot</div>
+      <p class="demo-desc">Drop in a prospect's name, industry, and problem. Get a structured qualification brief — pain, budget signal, next action — in seconds.</p>
+    </a>
+
+    <a href="#" class="demo-card locked">
+      <div class="demo-status soon">
+        <span class="demo-status-dot"></span>
+        Coming Soon
+      </div>
+      <div class="demo-title">AI Business Brief Generator</div>
+      <p class="demo-desc">Enter a business name and URL. Receive a structured recon brief: current state, gaps, infrastructure recommendations, and expected outcomes.</p>
+    </a>
+
+    <a href="#" class="demo-card locked">
+      <div class="demo-status soon">
+        <span class="demo-status-dot"></span>
+        Coming Soon
+      </div>
+      <div class="demo-title">Content Pillar Architect</div>
+      <p class="demo-desc">Input your niche and audience. Output a 90-day content strategy with pillars, post types, and platform-native publishing cadence.</p>
+    </a>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Let's Work</div>
+  <div class="contact-block">
+    <div>
+      <h2 class="contact-headline">
+        Ready to build<br>
+        <span>faster</span> with AI.
+      </h2>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:hirro.kuizon@gmail.com" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">hirro.kuizon@gmail.com</span>
+      </a>
+      <a href="tel:+639156067649" class="contact-link">
+        <span class="contact-link-label">Phone / WhatsApp</span>
+        <span class="contact-link-value">+63 915 606 7649</span>
+      </a>
+      <a href="https://www.linkedin.com/in/hirrokjuizon" target="_blank" class="contact-link">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-value">linkedin.com/in/hirrokjuizon</span>
+      </a>
+      <a href="https://upwork.com" target="_blank" class="contact-link">
+        <span class="contact-link-label">Upwork</span>
+        <span class="contact-link-value">Profile — coming soon</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">© 2026 Hirro Mac Joseph Kuizon</span>
+  <span class="footer-right">Built with Claude · Aurora Digital Foundry</span>
+</footer>
+
+</body>
+</html>

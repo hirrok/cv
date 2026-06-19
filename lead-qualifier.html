@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lead Qualifier Bot — Aurora Digital Foundry</title>
+<title>Lead Qualifier Bot — Hirro Kuizon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -11,7 +11,6 @@
 :root{
   --ac:#c8f135;--bk:#0a0a0a;--c1:#111111;--c2:#161616;
   --bd:rgba(255,255,255,0.08);--md:#6b6b6b;--ow:#f0ede8;
-  --hot:#c8f135;--warm:#f5c842;--cold:#6b6b6b;
 }
 body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-height:100vh;font-weight:300;-webkit-font-smoothing:antialiased;font-size:16px}
 select option{background:#111;color:#f0ede8}
@@ -19,12 +18,11 @@ select option{background:#111;color:#f0ede8}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* NAV */
 .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.75rem;border-bottom:1px solid var(--bd)}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem}
-.nav-tag{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--md)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;text-decoration:none;color:var(--ow)}
+.nav-back{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--ac)}
 
-/* HEADER */
 .hd{padding:2.25rem 1.75rem 1.5rem;max-width:900px;margin:0 auto}
 .eyebrow{display:flex;align-items:center;gap:7px;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ac);margin-bottom:.7rem}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 1.5s infinite;display:inline-block}
@@ -32,15 +30,12 @@ select option{background:#111;color:#f0ede8}
 .title span{color:var(--ac)}
 .desc{color:var(--md);font-size:.87rem;max-width:500px;line-height:1.7}
 
-/* GRID */
 .body{max-width:900px;margin:0 auto;padding:0 1.75rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;align-items:start}
 @media(max-width:640px){.body{grid-template-columns:1fr}}
 
-/* PANELS */
 .panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem}
 .panel-lbl{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ac);margin-bottom:1.2rem;display:block}
 
-/* FORM */
 .field{margin-bottom:.95rem}
 .field label{display:block;font-size:.67rem;color:var(--md);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
 .field input,.field select,.field textarea{
@@ -60,19 +55,16 @@ select option{background:#111;color:#f0ede8}
 .cta:disabled{opacity:.35;cursor:not-allowed}
 .err-msg{font-size:.74rem;color:#ff5a5a;margin-bottom:.65rem}
 
-/* OUTPUT */
 .out-panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem;min-height:400px;display:flex;flex-direction:column}
 .state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
 .state p{font-size:.79rem;color:var(--md);line-height:1.5;max-width:165px}
 .state-icon{font-size:1.9rem;opacity:.18;color:var(--md)}
 .load-txt{font-size:.7rem;color:var(--md);letter-spacing:.09em;text-transform:uppercase}
 
-/* SPINNER */
 .spinner{width:36px;height:36px;display:block}
 .spin-track{fill:none;stroke:rgba(255,255,255,0.07);stroke-width:2.5}
 .spin-arc{fill:none;stroke:var(--ac);stroke-width:2.5;stroke-dasharray:22 66;stroke-linecap:round;transform-origin:50% 50%;animation:spin .85s linear infinite}
 
-/* RESULTS */
 .results{display:flex;flex-direction:column;flex:1}
 .score-row{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:.95rem;border-bottom:1px solid var(--bd);margin-bottom:.95rem}
 .score-label{font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--md)}
@@ -91,9 +83,9 @@ select option{background:#111;color:#f0ede8}
 .rst-btn{background:transparent;border:1px solid var(--bd);color:var(--md);font-family:'Syne',sans-serif;font-weight:700;font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1rem;cursor:pointer;align-self:flex-start;transition:border-color .2s,color .2s}
 .rst-btn:hover{border-color:var(--ow);color:var(--ow)}
 
-/* FOOTER */
-.footer{max-width:900px;margin:0 auto;padding:1rem 1.75rem 1.75rem;border-top:1px solid var(--bd);display:flex;justify-content:space-between}
+.footer{max-width:900px;margin:0 auto;padding:1rem 1.75rem 1.75rem;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
 .footer span{font-size:.66rem;color:var(--md)}
+.footer-note{font-size:.66rem;color:var(--md);font-style:italic}
 
 .hidden{display:none}
 </style>
@@ -101,19 +93,18 @@ select option{background:#111;color:#f0ede8}
 <body>
 
 <div class="nav">
-  <a href="index.html" class="nav-logo" style="text-decoration:none;color:inherit;">Aurora Digital Foundry</a>
-  <a href="index.html" class="nav-tag" style="text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#c8f135'" onmouseout="this.style.color=''">&#8592; Back</a>
+  <a href="index.html" class="nav-logo">HK</a>
+  <a href="index.html" class="nav-back">&#8592; Back to Portfolio</a>
 </div>
 
 <div class="hd">
-  <div class="eyebrow"><span class="dot"></span>Live AI Tool &middot; Sales Ops</div>
+  <div class="eyebrow"><span class="dot"></span>Live Tool &middot; Demo 01</div>
   <h1 class="title">Lead <span>Qualifier</span> Bot</h1>
-  <p class="desc">Drop in a prospect&rsquo;s details. Get a structured qualification brief &mdash; pain score, budget read, fit assessment, and your exact next move.</p>
+  <p class="desc">Drop in a prospect's details. Get a structured qualification brief &mdash; pain score, budget read, fit assessment, and your exact next move.</p>
 </div>
 
 <div class="body">
 
-  <!-- FORM -->
   <div class="panel">
     <span class="panel-lbl">Prospect Input</span>
 
@@ -156,22 +147,22 @@ select option{background:#111;color:#f0ede8}
     <div class="field">
       <label>Budget Signal</label>
       <select id="budg">
-        <option value="">Unknown / not discussed</option>
-        <option value="Price-sensitive">Price-sensitive / tight</option>
-        <option value="Moderate">Moderate - needs clear ROI</option>
-        <option value="Ready to spend">Ready to spend</option>
+        <option value="unknown">Unknown / not discussed</option>
+        <option value="tight">Price-sensitive / tight</option>
+        <option value="moderate">Moderate &mdash; needs clear ROI</option>
+        <option value="ready">Ready to spend</option>
       </select>
     </div>
     <div class="field" style="margin-bottom:1.2rem">
       <label>Lead Source</label>
       <select id="src">
-        <option>Unknown</option>
-        <option>Referral</option>
-        <option>Facebook / Social Media</option>
-        <option>Google Search</option>
-        <option>Cold outreach by me</option>
-        <option>Walk-in / In-person</option>
-        <option>Event / Networking</option>
+        <option value="unknown">Unknown</option>
+        <option value="referral">Referral</option>
+        <option value="social">Facebook / Social Media</option>
+        <option value="google">Google Search</option>
+        <option value="outreach">Cold outreach by me</option>
+        <option value="walkin">Walk-in / In-person</option>
+        <option value="event">Event / Networking</option>
       </select>
     </div>
 
@@ -179,7 +170,6 @@ select option{background:#111;color:#f0ede8}
     <button class="cta" id="cta" onclick="qualify()">Qualify This Lead &rarr;</button>
   </div>
 
-  <!-- OUTPUT -->
   <div class="out-panel">
     <span class="panel-lbl">Qualification Brief</span>
 
@@ -194,12 +184,6 @@ select option{background:#111;color:#f0ede8}
         <circle class="spin-arc" cx="18" cy="18" r="14"/>
       </svg>
       <span class="load-txt">Analyzing prospect...</span>
-    </div>
-
-    <div class="state hidden" id="st-err">
-      <span style="font-size:1.8rem;color:#ff5a5a;opacity:.65">&#9888;</span>
-      <p style="color:#ff5a5a" id="err-out">Analysis failed.</p>
-      <button class="rst-btn" style="margin-top:6px" onclick="reset()">Try Again</button>
     </div>
 
     <div class="results hidden" id="st-done">
@@ -228,24 +212,122 @@ select option{background:#111;color:#f0ede8}
 </div>
 
 <div class="footer">
-  <span>Powered by Claude AI &middot; Aurora Digital Foundry</span>
-  <span>Sales Intelligence System</span>
+  <span>Built by Hirro Kuizon</span>
+  <span class="footer-note">Scoring engine &mdash; pure JS logic</span>
 </div>
 
 <script>
-const TC = { Hot: '#c8f135', Warm: '#f5c842', Cold: '#6b6b6b' };
+// ─── SCORING WEIGHTS ───────────────────────────────────────────────
+var BUDGET_W  = { unknown:0, tight:1, moderate:2, ready:3 };
+var SOURCE_W  = { unknown:0, social:1, google:1, outreach:1, walkin:2, event:2, referral:3 };
+var SIZE_W    = { '':0, 'Solo / Freelancer':1, 'Small (2-10 employees)':2, 'Medium (11-50 employees)':3, 'Large (50+ employees)':2 };
+
+// Pain keyword banks — urgency signals
+var PAIN_HIGH   = ['losing','lost','bleeding','urgent','crisis','dying','failing','broke','desperate','immediately','no one','zero','nothing','can\'t','cannot'];
+var PAIN_MED    = ['struggling','behind','outdated','slow','manual','inconsistent','competitors','growing','need','want','improve','better','fix','help'];
+var PAIN_REV    = ['revenue','sales','customers','clients','leads','profit','money','income','bookings','orders','conversions'];
+
+// ─── INDUSTRY CONTEXT ──────────────────────────────────────────────
+var IND_CONTEXT = {
+  'Restaurant / Food Service':    { fit:'Strong fit — restaurants benefit immediately from online presence, review management, and local SEO systems.', risk:'Owner-operated businesses often have thin margins and limited time for onboarding.' },
+  'Retail / E-commerce':          { fit:'High fit — retail businesses need content systems, product SEO, and conversion-focused infrastructure.', risk:'May already have in-house digital staff; differentiate on strategy depth, not execution alone.' },
+  'Professional Services':        { fit:'Excellent fit — lawyers, accountants, and consultants need credibility content and lead generation systems.', risk:'Long sales cycles; decision-makers are cautious. Lead with case studies and ROI data.' },
+  'Health & Wellness':            { fit:'Strong fit — wellness businesses rely on trust, community, and consistent content to drive bookings.', risk:'Regulatory sensitivity around health claims. Content must be carefully positioned.' },
+  'Construction / Trades':        { fit:'Good fit — trades businesses are chronically under-digitized. Low competition online, high upside.', risk:'Owners are often skeptical of digital ROI. Needs proof-of-concept framing.' },
+  'Real Estate':                  { fit:'Moderate fit — real estate has high digital competition. Positioning and niche clarity are critical.', risk:'High churn potential if listings slow down. Tie retainer to pipeline activity, not just content volume.' },
+  'Education':                    { fit:'Good fit — education businesses need content authority, enrollment funnels, and community systems.', risk:'Budget cycles tied to academic calendar. Timing the pitch matters.' },
+  'Hospitality / Tourism':        { fit:'Strong fit — hospitality lives and dies by reputation, reviews, and seasonal content systems.', risk:'Highly seasonal revenue. Structure retainer to reflect peak/off-peak realities.' },
+  'Technology / SaaS':            { fit:'Moderate fit — tech companies often have internal marketing. Position as AI-augmented specialist layer.', risk:'Sophisticated buyers. Must demonstrate technical fluency and measurable growth outcomes.' },
+  'Manufacturing':                { fit:'Emerging fit — manufacturing is digitizing fast. B2B content and LinkedIn presence are underserved.', risk:'Long decision cycles and procurement processes. Expect 60-90 day sales timelines.' },
+  'Logistics':                    { fit:'Moderate fit — logistics needs operational content and B2B lead generation systems.', risk:'Price-sensitive sector. ROI framing is essential from the first conversation.' },
+  'Other':                        { fit:'Fit is contextual — more discovery needed to assess infrastructure gaps and growth levers.', risk:'Undefined vertical means undefined competitors. Clarify niche before scoping.' }
+};
+
+// ─── NEXT ACTION MATRIX ────────────────────────────────────────────
+var NEXT_HOT = [
+  'Send a same-day proposal with 3 clear deliverables, a 30-day quick win, and a project start date. Strike while intent is high.',
+  'Book a 30-minute discovery call within 24 hours. Prepare 3 questions about their current revenue bottleneck before the call.',
+  'Draft a one-page growth audit for their business and send it before end of day — unprompted. Let the quality of your thinking close the deal.'
+];
+var NEXT_WARM = [
+  'Send a value-first email: one specific insight about their industry + a relevant case study. No pitch. Follow up in 3 days.',
+  'Connect on LinkedIn with a personalized note referencing their specific problem. Keep it under 3 sentences.',
+  'Offer a free 20-minute audit call framed around their stated problem. Remove the risk from the first step.'
+];
+var NEXT_COLD = [
+  'Add to a nurture sequence. Send one useful piece of content per week for 4 weeks before pitching anything.',
+  'Revisit in 30 days. Flag for a check-in email that references a relevant industry development or win.',
+  'Qualify further before investing time. Schedule a 10-minute discovery call to validate budget and decision authority.'
+];
+
+// ─── PAIN PARSER ───────────────────────────────────────────────────
+function parsePain(text) {
+  var t = text.toLowerCase();
+  var high = PAIN_HIGH.filter(function(w){ return t.indexOf(w) > -1; }).length;
+  var med  = PAIN_MED.filter(function(w){ return t.indexOf(w) > -1; }).length;
+  var rev  = PAIN_REV.filter(function(w){ return t.indexOf(w) > -1; }).length;
+  var score = Math.min(3, high * 1.5 + med * 0.5 + rev * 0.7);
+  var urgency = high > 0 ? 'high' : med > 1 ? 'medium' : 'low';
+  return { score: score, urgency: urgency, revSignal: rev > 0 };
+}
+
+function painRead(text, urgency, revSignal, industry) {
+  var reads = {
+    high: 'Pain is acute and active — the prospect used language signaling urgency or active loss. This problem is costing them now, not theoretically. High motivation to move fast if a credible solution is presented.',
+    medium: 'Pain is real but not yet crisis-level. The prospect is aware of the gap and looking for solutions. Needs a clear ROI case to convert awareness into commitment.',
+    low: 'Pain signals are mild or generic. Either the problem isn\'t urgent, or they haven\'t fully articulated the cost of inaction. Discovery call needed to surface the real driver.'
+  };
+  var base = reads[urgency];
+  if (revSignal) base += ' Revenue impact was explicitly mentioned — this increases closing probability significantly.';
+  return base;
+}
+
+// ─── BUDGET READ ───────────────────────────────────────────────────
+function budgetRead(budg, size) {
+  var reads = {
+    unknown: 'Budget was not discussed. Treat as unqualified until confirmed. Introduce budget conversation in the next touchpoint using ROI framing, not price.',
+    tight:   'Prospect has signaled price sensitivity. Lead with ROI and cost-of-inaction math before revealing price. Consider a starter package to get in the door.',
+    moderate:'Prospect is willing to invest if the value is clear. This is the ideal position — prepare a specific outcome-linked proposal, not a generic service list.',
+    ready:   'Strong buying intent. Prospect is prepared to spend. Move fast — do not let this sit. Same-day or next-day proposal is the correct move.'
+  };
+  var r = reads[budg] || reads['unknown'];
+  if (size === 'Large (50+ employees)' && budg === 'tight') r += ' Note: large businesses with tight signals often have internal approval bottlenecks — not true budget constraints. Probe further.';
+  return r;
+}
+
+// ─── SCORING ENGINE ────────────────────────────────────────────────
+function score(budg, src, sz, painScore) {
+  var b = BUDGET_W[budg] || 0;
+  var s = SOURCE_W[src]  || 0;
+  var z = SIZE_W[sz]     || 0;
+  var p = painScore || 0;
+  var raw = b * 2.5 + s * 1.5 + z * 1.0 + p * 1.5;
+  var max = 3*2.5 + 3*1.5 + 3*1.0 + 3*1.5;
+  return Math.round((raw / max) * 9) + 1; // 1-10
+}
+
+function tier(n) {
+  if (n >= 7) return 'Hot';
+  if (n >= 4) return 'Warm';
+  return 'Cold';
+}
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// ─── UI ────────────────────────────────────────────────────────────
+var TC = { Hot:'#c8f135', Warm:'#f5c842', Cold:'#6b6b6b' };
 
 function show(id) {
-  ['st-idle','st-load','st-err','st-done'].forEach(function(s) {
+  ['st-idle','st-load','st-done'].forEach(function(s){
     var el = document.getElementById(s);
     if (el) el.classList.toggle('hidden', s !== id);
   });
 }
 
-async function qualify() {
-  var biz = document.getElementById('biz').value.trim();
-  var ind = document.getElementById('ind').value;
-  var sz  = document.getElementById('sz').value;
+function qualify() {
+  var biz  = document.getElementById('biz').value.trim();
+  var ind  = document.getElementById('ind').value;
+  var sz   = document.getElementById('sz').value;
   var prob = document.getElementById('prob').value.trim();
   var budg = document.getElementById('budg').value;
   var src  = document.getElementById('src').value;
@@ -257,52 +339,41 @@ async function qualify() {
     return;
   }
   errEl.classList.add('hidden');
-
-  show('st-load');
   document.getElementById('cta').disabled = true;
+  show('st-load');
 
-  var prompt = 'You are a senior sales strategist for Aurora Digital Foundry, a digital infrastructure and AI agency in the Philippines. Qualify this prospect and return ONLY a valid JSON object — no markdown, no preamble, no code fences.\n\nBusiness: ' + biz + '\nIndustry: ' + ind + '\nSize: ' + (sz || 'Unknown') + '\nProblem: ' + prob + '\nBudget: ' + (budg || 'Unknown') + '\nSource: ' + (src || 'Unknown') + '\n\nReturn this exact JSON shape:\n{"score": <integer 1-10>, "tier": "<Hot|Warm|Cold>", "pain": "<2-3 sentences on pain acuity>", "budget": "<2 sentences on commercial viability>", "fit": "<2-3 sentences on ICP fit>", "risks": "<2 sentences on key risks>", "next_action": "<one hyper-specific 48hr action>"}';
+  // Simulate processing delay for UX realism
+  setTimeout(function() {
+    var pain    = parsePain(prob);
+    var sc      = score(budg, src, sz, pain.score);
+    var tr      = tier(sc);
+    var color   = TC[tr];
+    var indCtx  = IND_CONTEXT[ind] || IND_CONTEXT['Other'];
+    var nextArr = tr === 'Hot' ? NEXT_HOT : tr === 'Warm' ? NEXT_WARM : NEXT_COLD;
 
-  try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    var data = await res.json();
-    var raw = data.content.map(function(b) { return b.text || ''; }).join('').trim().replace(/```json|```/g, '').trim();
-    var r = JSON.parse(raw);
-
-    var tc = TC[r.tier] || '#c8f135';
-    document.getElementById('score-num').innerHTML = r.score + '<span>/10</span>';
-    document.getElementById('score-num').style.color = tc;
-    document.getElementById('score-tier').textContent = r.tier;
-    document.getElementById('score-tier').style.color = tc;
-    document.getElementById('bar-fill').style.width = (r.score * 10) + '%';
-    document.getElementById('bar-fill').style.background = tc;
-    document.getElementById('r-pain').textContent = r.pain;
-    document.getElementById('r-budget').textContent = r.budget;
-    document.getElementById('r-fit').textContent = r.fit;
-    document.getElementById('r-risks').textContent = r.risks;
-    document.getElementById('r-action').textContent = r.next_action;
+    document.getElementById('score-num').innerHTML = sc + '<span>/10</span>';
+    document.getElementById('score-num').style.color = color;
+    document.getElementById('score-tier').textContent = tr;
+    document.getElementById('score-tier').style.color = color;
+    document.getElementById('bar-fill').style.width = (sc * 10) + '%';
+    document.getElementById('bar-fill').style.background = color;
+    document.getElementById('r-pain').textContent   = painRead(prob, pain.urgency, pain.revSignal, ind);
+    document.getElementById('r-budget').textContent = budgetRead(budg, sz);
+    document.getElementById('r-fit').textContent    = indCtx.fit;
+    document.getElementById('r-risks').textContent  = indCtx.risk;
+    document.getElementById('r-action').textContent = pick(nextArr);
 
     show('st-done');
-  } catch(e) {
-    document.getElementById('err-out').textContent = 'Analysis failed. Check console and try again.';
-    show('st-err');
-    console.error(e);
-  }
-
-  document.getElementById('cta').disabled = false;
+    document.getElementById('cta').disabled = false;
+  }, 1800);
 }
 
 function reset() {
-  ['biz','prob'].forEach(function(id) { document.getElementById(id).value = ''; });
-  ['ind','sz','budg','src'].forEach(function(id) { document.getElementById(id).selectedIndex = 0; });
+  document.getElementById('biz').value = '';
+  document.getElementById('prob').value = '';
+  ['ind','sz','budg','src'].forEach(function(id){
+    document.getElementById(id).selectedIndex = 0;
+  });
   document.getElementById('err-msg').classList.add('hidden');
   show('st-idle');
   document.getElementById('cta').disabled = false;

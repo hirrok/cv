@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI ROI Estimator — Hirro Kuizon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ac:#c8f135;--bk:#0a0a0a;--c1:#111111;--c2:#161616;
+  --bd:rgba(255,255,255,0.08);--md:#6b6b6b;--ow:#f0ede8;
+}
+body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-height:100vh;font-weight:300;-webkit-font-smoothing:antialiased;font-size:16px}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes countup{from{opacity:0}to{opacity:1}}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.75rem;border-bottom:1px solid var(--bd)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;text-decoration:none;color:var(--ow)}
+.nav-back{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--ac)}
+
+/* HEADER */
+.hd{padding:2.25rem 1.75rem 1.75rem;max-width:860px;margin:0 auto}
+.eyebrow{display:flex;align-items:center;gap:7px;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ac);margin-bottom:.7rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 1.5s infinite;display:inline-block}
+.title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.7rem,4vw,2.8rem);line-height:1;letter-spacing:-.03em;margin-bottom:.6rem}
+.title span{color:var(--ac)}
+.desc{color:var(--md);font-size:.87rem;max-width:520px;line-height:1.7}
+
+/* LAYOUT */
+.main{max-width:860px;margin:0 auto;padding:0 1.75rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;align-items:start}
+@media(max-width:640px){.main{grid-template-columns:1fr}}
+
+/* INPUT PANEL */
+.panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem}
+.panel-lbl{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ac);margin-bottom:1.4rem;display:block}
+
+.field{margin-bottom:1.1rem}
+.field-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.35rem}
+.field-label span{font-size:.67rem;color:var(--md);letter-spacing:.08em;text-transform:uppercase}
+.field-hint{font-size:.63rem;color:var(--md);opacity:.6}
+
+.input-wrap{position:relative}
+.prefix{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.88rem;color:var(--md);pointer-events:none}
+.suffix{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);font-size:.75rem;color:var(--md);pointer-events:none;letter-spacing:.05em;text-transform:uppercase}
+.field input{
+  width:100%;background:var(--c2);border:1px solid var(--bd);color:var(--ow);
+  font-family:'Inter',sans-serif;font-size:.88rem;font-weight:300;
+  padding:.65rem .85rem .65rem 1.75rem;outline:none;transition:border-color .15s
+}
+.field input.no-prefix{padding-left:.85rem}
+.field input:focus{border-color:var(--ac)}
+.field input[type=range]{
+  padding:0;background:transparent;border:none;width:100%;
+  accent-color:var(--ac);cursor:pointer;height:20px
+}
+.field input[type=range]:focus{border:none}
+.range-labels{display:flex;justify-content:space-between;margin-top:.25rem}
+.range-lbl{font-size:.62rem;color:var(--md)}
+
+select.field-select{
+  width:100%;background:var(--c2);border:1px solid var(--bd);color:var(--ow);
+  font-family:'Inter',sans-serif;font-size:.88rem;font-weight:300;
+  padding:.65rem .85rem;outline:none;transition:border-color .15s;appearance:none;cursor:pointer
+}
+select.field-select:focus{border-color:var(--ac)}
+select option{background:#111;color:#f0ede8}
+
+.cta{
+  width:100%;background:var(--ac);color:var(--bk);border:none;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.77rem;
+  letter-spacing:.09em;text-transform:uppercase;padding:.82rem;
+  cursor:pointer;transition:opacity .2s;margin-top:.5rem
+}
+.cta:hover{opacity:.82}
+
+/* OUTPUT PANEL */
+.out-panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem;min-height:460px;display:flex;flex-direction:column}
+.out-lbl{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ac);margin-bottom:1.2rem;display:block}
+
+.idle-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--md);text-align:center}
+.idle-icon{font-size:1.9rem;opacity:.15}
+.idle-txt{font-size:.79rem;line-height:1.5;max-width:165px}
+
+.spin-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.spinner{width:36px;height:36px}
+.spin-track{fill:none;stroke:rgba(255,255,255,0.07);stroke-width:2.5}
+.spin-arc{fill:none;stroke:var(--ac);stroke-width:2.5;stroke-dasharray:22 66;stroke-linecap:round;transform-origin:50% 50%;animation:spin .85s linear infinite}
+.spin-txt{font-size:.7rem;color:var(--md);letter-spacing:.09em;text-transform:uppercase}
+
+/* RESULTS */
+.results{display:flex;flex-direction:column;flex:1;animation:fadein .35s ease}
+
+.headline-metric{padding-bottom:1rem;border-bottom:1px solid var(--bd);margin-bottom:1rem}
+.hm-label{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--md);margin-bottom:.3rem}
+.hm-value{font-family:'Syne',sans-serif;font-weight:800;font-size:1.9rem;line-height:1;color:var(--ac)}
+.hm-sub{font-size:.75rem;color:var(--md);margin-top:.3rem}
+
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
+.metric-card{background:var(--c2);border:1px solid var(--bd);padding:.85rem}
+.mc-label{font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--md);margin-bottom:.3rem}
+.mc-value{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ow)}
+.mc-value.green{color:var(--ac)}
+.mc-value.amber{color:#f5c842}
+
+.insight-block{margin-bottom:.85rem}
+.ib-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--md);margin-bottom:.25rem}
+.ib-text{font-size:.8rem;line-height:1.65;color:var(--ow)}
+
+.coi-block{background:var(--c2);border:1px solid rgba(255,255,255,0.05);border-left:3px solid #ff5a5a;padding:.85rem;margin-bottom:.9rem}
+.coi-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#ff5a5a;margin-bottom:.25rem}
+.coi-text{font-size:.8rem;line-height:1.65;color:var(--ow)}
+
+.rst-btn{background:transparent;border:1px solid var(--bd);color:var(--md);font-family:'Syne',sans-serif;font-weight:700;font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1rem;cursor:pointer;align-self:flex-start;transition:border-color .2s,color .2s}
+.rst-btn:hover{border-color:var(--ow);color:var(--ow)}
+
+/* ASSUMPTIONS */
+.assumptions{max-width:860px;margin:0 auto;padding:0 1.75rem 1rem}
+.ass-title{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--md);margin-bottom:.6rem}
+.ass-list{display:flex;flex-wrap:wrap;gap:.5rem}
+.ass-tag{font-size:.68rem;color:var(--md);background:var(--c1);border:1px solid var(--bd);padding:.3rem .7rem}
+
+/* FOOTER */
+.footer{max-width:860px;margin:0 auto;padding:1rem 1.75rem 1.75rem;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
+.footer span{font-size:.66rem;color:var(--md)}
+
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html" class="nav-logo">HK</a>
+  <a href="index.html" class="nav-back">&#8592; Back to Portfolio</a>
+</div>
+
+<div class="hd">
+  <div class="eyebrow"><span class="dot"></span>Live Tool &middot; Demo 03</div>
+  <h1 class="title">AI &amp; Automation <span>ROI Estimator</span></h1>
+  <p class="desc">Enter your current business numbers. Get a projected return on investing in AI-augmented systems &mdash; time saved, revenue unlocked, and the cost of doing nothing.</p>
+</div>
+
+<div class="main">
+
+  <!-- INPUT PANEL -->
+  <div class="panel">
+    <span class="panel-lbl">Your Business Numbers</span>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Monthly Revenue</span>
+        <span class="field-hint">PHP or your currency</span>
+      </div>
+      <div class="input-wrap">
+        <span class="prefix">₱</span>
+        <input type="number" id="revenue" placeholder="150,000" min="0">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Team Size</span>
+        <span class="field-hint">including yourself</span>
+      </div>
+      <div class="input-wrap">
+        <input type="number" id="team" placeholder="3" min="1" class="no-prefix">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Hours lost to manual / repetitive tasks per week</span>
+      </div>
+      <div class="input-wrap">
+        <input type="number" id="hours" placeholder="15" min="0" max="80" class="no-prefix">
+        <span class="suffix">hrs</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Primary business type</span>
+      </div>
+      <select class="field-select" id="biztype">
+        <option value="service">Service Business (agency, consulting, freelance)</option>
+        <option value="retail">Retail / E-commerce</option>
+        <option value="food">Restaurant / Food Service</option>
+        <option value="health">Health &amp; Wellness</option>
+        <option value="trades">Construction / Trades</option>
+        <option value="saas">Technology / SaaS</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Biggest operational bottleneck</span>
+      </div>
+      <select class="field-select" id="bottleneck">
+        <option value="leads">Getting consistent leads</option>
+        <option value="followup">Following up with prospects</option>
+        <option value="content">Creating content consistently</option>
+        <option value="admin">Admin, reporting, documentation</option>
+        <option value="fulfillment">Fulfillment and delivery</option>
+        <option value="customerservice">Customer service and inquiries</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Current monthly spend on marketing / growth</span>
+      </div>
+      <div class="input-wrap">
+        <span class="prefix">₱</span>
+        <input type="number" id="mktspend" placeholder="10,000" min="0">
+      </div>
+    </div>
+
+    <button class="cta" onclick="calculate()">Calculate My ROI &rarr;</button>
+  </div>
+
+  <!-- OUTPUT PANEL -->
+  <div class="out-panel">
+    <span class="out-lbl">ROI Projection</span>
+
+    <div class="idle-state" id="st-idle">
+      <span class="idle-icon">&#x25CC;</span>
+      <p class="idle-txt">Enter your numbers and run the estimator.</p>
+    </div>
+
+    <div class="spin-state hidden" id="st-spin">
+      <svg class="spinner" viewBox="0 0 36 36">
+        <circle class="spin-track" cx="18" cy="18" r="14"/>
+        <circle class="spin-arc" cx="18" cy="18" r="14"/>
+      </svg>
+      <span class="spin-txt">Calculating your ROI...</span>
+    </div>
+
+    <div class="results hidden" id="st-results">
+
+      <div class="headline-metric">
+        <div class="hm-label">Projected 12-Month Value Unlocked</div>
+        <div class="hm-value" id="r-headline">₱0</div>
+        <div class="hm-sub" id="r-headline-sub"></div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="mc-label">Hours Recovered / Year</div>
+          <div class="mc-value green" id="r-hours"></div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Revenue Capacity Gain</div>
+          <div class="mc-value green" id="r-revcap"></div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Estimated Automation Saving</div>
+          <div class="mc-value" id="r-saving"></div>
+        </div>
+        <div class="metric-card">
+          <div class="mc-label">Mktg Efficiency Uplift</div>
+          <div class="mc-value amber" id="r-mkt"></div>
+        </div>
+      </div>
+
+      <div class="insight-block">
+        <div class="ib-label">Bottleneck Analysis</div>
+        <p class="ib-text" id="r-bottleneck"></p>
+      </div>
+
+      <div class="insight-block">
+        <div class="ib-label">Highest-Leverage First Move</div>
+        <p class="ib-text" id="r-firstmove"></p>
+      </div>
+
+      <div class="coi-block">
+        <div class="coi-label">Cost of Inaction (12 months)</div>
+        <p class="coi-text" id="r-coi"></p>
+      </div>
+
+      <button class="rst-btn" onclick="resetTool()">&#8592; Recalculate</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="assumptions">
+  <div class="ass-title">Model Assumptions</div>
+  <div class="ass-list">
+    <span class="ass-tag">40% avg task automation rate</span>
+    <span class="ass-tag">Conservative revenue upside estimates</span>
+    <span class="ass-tag">PHP-denominated defaults</span>
+    <span class="ass-tag">SME baseline (1–50 staff)</span>
+    <span class="ass-tag">12-month projection window</span>
+    <span class="ass-tag">Estimates vary by implementation quality</span>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Built by Hirro Kuizon</span>
+  <span>AI &amp; Automation ROI Model &mdash; pure JS</span>
+</div>
+
+<script>
+// ─── BOTTLENECK CONFIG ─────────────────────────────────────────────
+var BOTTLENECKS = {
+  leads: {
+    analysis: 'Inconsistent lead flow is the highest-cost problem a business can have — it means revenue is unpredictable and every month starts from zero. AI-augmented lead generation (content systems, SEO automation, and lead scoring) typically reduces cost-per-lead by 30–50% while increasing volume.',
+    move: 'Deploy a lead qualification system and automated follow-up sequence. A prospect who doesn\'t hear from you within 2 hours is 7× less likely to convert. Automate the first 3 touchpoints so speed-to-lead is no longer dependent on your availability.',
+    multiplier: 1.35
+  },
+  followup: {
+    analysis: 'Manual follow-up is where deals go to die. Studies show 80% of sales require 5+ follow-ups, but 44% of salespeople give up after one. An automated sequence ensures every prospect is followed up systematically — without owner intervention.',
+    move: 'Build a 5-step follow-up sequence: Day 0 (instant), Day 2 (value add), Day 5 (case study), Day 9 (objection pre-empt), Day 14 (close or park). This alone typically lifts conversion rates by 20–35%.',
+    multiplier: 1.25
+  },
+  content: {
+    analysis: 'Manual content creation is a time sink with no compounding return. A systematized content operation — pillar strategy, templates, and repurposing workflows — produces 3–5× more output per hour invested while building long-term organic reach.',
+    move: 'Implement a content multiplication system: one anchor piece per week → 5 derivative assets (clips, captions, carousels, email, story). This triples your content output without tripling your time.',
+    multiplier: 1.20
+  },
+  admin: {
+    analysis: 'Admin tasks are the silent revenue killer. Reporting, documentation, and data entry consume high-cost human time for low-value work. This is the highest-ROI category for AI automation — most admin tasks can be 70–90% automated.',
+    move: 'Audit your last 5 hours of admin work and identify the 3 most repetitive tasks. These are your automation targets. Start with automated reporting and templated documentation — typically recovers 8–12 hours per week per person.',
+    multiplier: 1.30
+  },
+  fulfillment: {
+    analysis: 'Fulfillment bottlenecks cap revenue directly — you can\'t sell what you can\'t deliver. Systemizing delivery through SOPs, templates, and client onboarding automation removes the ceiling on capacity.',
+    move: 'Document your fulfillment process as a step-by-step SOP, then identify which steps can be templated or automated. A standardized onboarding flow alone reduces fulfillment time by 25–40% per client.',
+    multiplier: 1.15
+  },
+  customerservice: {
+    analysis: 'Unmanaged customer service is a churn accelerator. Every unanswered inquiry is a competitor opportunity. AI-powered FAQ systems and automated response workflows can handle 60–70% of common inquiries instantly — 24/7.',
+    move: 'Build an FAQ automation layer: identify your 10 most common questions, create templated responses, and deploy an auto-reply with those answers. This immediately reduces response time from hours to seconds.',
+    multiplier: 1.20
+  }
+};
+
+// ─── BIZ TYPE MULTIPLIERS ──────────────────────────────────────────
+var BIZ_MULT = {
+  service:  1.30,
+  retail:   1.20,
+  food:     1.10,
+  health:   1.25,
+  trades:   1.15,
+  saas:     1.35,
+  other:    1.20
+};
+
+// ─── HELPERS ───────────────────────────────────────────────────────
+function fmt(n) {
+  return '₱' + Math.round(n).toLocaleString('en-PH');
+}
+
+function show(id) {
+  ['st-idle','st-spin','st-results'].forEach(function(s) {
+    document.getElementById(s).classList.toggle('hidden', s !== id);
+  });
+}
+
+// ─── CORE CALCULATION ──────────────────────────────────────────────
+function calculate() {
+  var revenue   = parseFloat(document.getElementById('revenue').value) || 0;
+  var team      = parseFloat(document.getElementById('team').value) || 1;
+  var hours     = parseFloat(document.getElementById('hours').value) || 0;
+  var mktspend  = parseFloat(document.getElementById('mktspend').value) || 0;
+  var biztype   = document.getElementById('biztype').value;
+  var bottleneck = document.getElementById('bottleneck').value;
+
+  if (!revenue || !hours) {
+    alert('Please enter your monthly revenue and weekly hours lost to manual tasks.');
+    return;
+  }
+
+  show('st-spin');
+
+  setTimeout(function() {
+    var bizMult  = BIZ_MULT[biztype] || 1.20;
+    var bnConfig = BOTTLENECKS[bottleneck];
+    var bnMult   = bnConfig.multiplier;
+
+    // Hours recovered: 40% automation rate of manual hours
+    var hoursPerYear     = hours * 52;
+    var hoursRecovered   = Math.round(hoursPerYear * 0.40);
+
+    // Revenue per hour (rough: monthly rev / (team * 160hrs/mo))
+    var revPerHour = revenue / (team * 160);
+
+    // Revenue capacity gain: recovered hours × rev/hr × biz multiplier
+    var revCapGain = hoursRecovered * revPerHour * bizMult;
+
+    // Marketing efficiency: if spending on mkt, 25% uplift from better systems
+    var mktUplift = mktspend > 0 ? mktspend * 12 * 0.25 : revenue * 0.08;
+
+    // Automation cost saving: admin/tool overhead reduction (conservative ₱3k/mo per team member)
+    var autoSaving = team * 3000 * 12;
+
+    // Total 12-month value
+    var total = revCapGain + mktUplift + autoSaving;
+
+    // Cost of inaction: lost revenue + time cost + competitive erosion
+    var coiTime = hoursRecovered * revPerHour; // time never converted
+    var coiComp = revenue * 12 * 0.05;          // 5% competitive erosion est.
+    var coiTotal = coiTime + coiComp + (mktspend * 12 * 0.15);
+
+    // Marketing efficiency label
+    var mktLabel = mktspend > 0
+      ? fmt(mktUplift) + ' uplift on existing spend'
+      : fmt(mktUplift) + ' est. organic value';
+
+    // Populate output
+    document.getElementById('r-headline').textContent = fmt(total);
+    document.getElementById('r-headline-sub').textContent =
+      'Across time recovery, revenue capacity, and system efficiency gains over 12 months.';
+
+    document.getElementById('r-hours').textContent = hoursRecovered.toLocaleString() + ' hrs';
+    document.getElementById('r-revcap').textContent = fmt(revCapGain);
+    document.getElementById('r-saving').textContent = fmt(autoSaving);
+    document.getElementById('r-mkt').textContent = mktLabel;
+
+    document.getElementById('r-bottleneck').textContent = bnConfig.analysis;
+    document.getElementById('r-firstmove').textContent   = bnConfig.move;
+
+    document.getElementById('r-coi').textContent =
+      'Delaying systemization by 12 months costs an estimated ' + fmt(coiTotal) +
+      ' in unrecovered time value, missed conversions, and competitive ground ceded to operators who move faster. That\'s ' +
+      fmt(coiTotal / 12) + ' per month you\'re leaving on the table.';
+
+    show('st-results');
+  }, 1800);
+}
+
+function resetTool() {
+  show('st-idle');
+}
+</script>
+</body>
+</html>

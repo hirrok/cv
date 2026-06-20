@@ -631,8 +631,10 @@ Return this exact JSON shape:
     }
 
     const raw = data.choices[0].message.content.trim();
+    console.log('RAW GROQ RESPONSE:', raw);
     // Strip <think>...</think> blocks (Qwen chain-of-thought)
     const noThink = raw.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    console.log('AFTER STRIP:', noThink);
     // Extract JSON object — find first { to last }
     const jsonMatch = noThink.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('No JSON object found in response');

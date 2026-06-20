@@ -326,8 +326,12 @@
   /* DEMOS / SHOWCASE */
   .demos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .demos-grid { grid-template-columns: 1fr; }
   }
 
   .demo-card {
@@ -559,7 +563,7 @@
   </h1>
   <p class="hero-bio">
     I scale communities, build content systems, and deploy <strong>AI-powered tools</strong> that eliminate manual overhead.<br>
-    6 years at NVIDIA. 224K followers built from scratch. Now I ship the strategy <em>and</em> the machine that runs it.
+    6 years at NVIDIA. Grew a page from 51K to 224K followers. Now I ship the strategy <em>and</em> the machine that runs it.
   </p>
   <div class="hero-cta">
     <a href="#tools" class="btn-primary">See Live Tools</a>
@@ -624,7 +628,7 @@
       </div>
       <div>
         <h3 class="exp-title">Digital Marketing Strategist + AI Operator</h3>
-        <p class="exp-desc">Delivered growth strategy and AI-augmented content systems for SMEs across AU, UK, and PH markets. Specializing in organic SEO, conversion-aligned content, and deploying Claude-powered tools that reduce manual overhead. Currently building Aurora Digital Foundry — a business infrastructure manufacturing operation for local enterprises.</p>
+        <p class="exp-desc">Delivered growth strategy and AI-augmented content systems for SMEs across AU, UK, and PH markets. Specializing in organic SEO, conversion-aligned content, and deploying Claude-powered tools that reduce manual overhead.</p>
         <div class="exp-tags">
           <span class="tag">AI Tool Building</span>
           <span class="tag">SEO Strategy</span>
@@ -702,9 +706,8 @@
       <ul class="skill-list">
         <li>Google Sheets Data Spine</li>
         <li>GitHub Pages Deployment</li>
-        <li>React / Vite / Tailwind</li>
-        <li>Formspree / GCash / PayMongo</li>
-        <li>Telegram Bot API</li>
+        <li>React / HTML / CSS</li>
+        <li>Formspree</li>
       </ul>
     </div>
     <div class="skill-group">
@@ -733,7 +736,7 @@
         Live
       </div>
       <div class="demo-title">Lead Qualifier Bot</div>
-      <p class="demo-desc">Drop in a prospect's name, industry, and problem. Get a structured qualification brief — pain, budget signal, next action — in seconds.</p>
+      <p class="demo-desc">Drop in a prospect's name, industry, and problem. Get a structured qualification brief: pain assessment, budget signal, and next action in seconds.</p>
       <div class="demo-arrow">↗</div>
     </a>
 
@@ -743,7 +746,7 @@
         Live
       </div>
       <div class="demo-title">Business Infrastructure Scorecard</div>
-      <p class="demo-desc">10 questions. 4 dimensions. Get a readiness score across your sales, content, operations, and digital systems — plus a prioritized action plan.</p>
+      <p class="demo-desc">10 questions. 4 dimensions. Get a readiness score across your sales, content, operations, and digital systems; plus a prioritized action plan.</p>
       <div class="demo-arrow">↗</div>
     </a>
 
@@ -787,17 +790,9 @@
         <span class="contact-link-label">Email</span>
         <span class="contact-link-value">hirro.kuizon@gmail.com</span>
       </a>
-      <a href="tel:+639156067649" class="contact-link">
-        <span class="contact-link-label">Phone / WhatsApp</span>
-        <span class="contact-link-value">+63 915 606 7649</span>
-      </a>
-      <a href="https://www.linkedin.com/in/hirrokjuizon" target="_blank" class="contact-link">
+      <a href="https://www.linkedin.com/in/ngirro/" target="_blank" class="contact-link">
         <span class="contact-link-label">LinkedIn</span>
-        <span class="contact-link-value">linkedin.com/in/hirrokjuizon</span>
-      </a>
-      <a href="https://upwork.com" target="_blank" class="contact-link">
-        <span class="contact-link-label">Upwork</span>
-        <span class="contact-link-value">Profile — coming soon</span>
+        <span class="contact-link-value">linkedin.com/in/ngirro</span>
       </a>
     </div>
   </div>
@@ -806,7 +801,7 @@
 <!-- FOOTER -->
 <footer>
   <span class="footer-left">© 2026 Hirro Mac Joseph Kuizon</span>
-  <span class="footer-right">Built with Claude · Aurora Digital Foundry</span>
+  <span class="footer-right">Built with Claude</span>
 </footer>
 
 </body>

@@ -143,7 +143,7 @@ body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-hei
 <div class="hd">
   <div class="eyebrow"><span class="dot"></span>Live Tool &middot; Demo 02</div>
   <h1 class="title">Business <span>Infrastructure</span> Scorecard</h1>
-  <p class="desc">10 questions. 4 dimensions. Get a readiness score across your sales, content, operations, and digital systems &mdash; plus a prioritized action plan.</p>
+  <p class="desc">10 questions. 4 dimensions. Get a readiness score across your sales, content, operations, and digital systems; plus a prioritized action plan.</p>
 </div>
 
 <div class="quiz-wrap">
@@ -213,7 +213,7 @@ body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-hei
 
       <div class="reset-row">
         <button class="rst-btn" onclick="restart()">&#8592; Retake Diagnostic</button>
-        <span class="share-note">Built by Hirro Kuizon &mdash; pure JS logic</span>
+        <span class="share-note">Built by Hirro Kuizon, pure JS logic</span>
       </div>
     </div>
   </div>
@@ -360,7 +360,7 @@ var DIMS = {
       { max:3,  text:'Revenue generation is ad hoc and heavily dependent on luck or referrals. No defined pipeline means inconsistent income and missed opportunities.' },
       { max:6,  text:'Some sales activity exists but lacks structure. Leads fall through the cracks and follow-up is inconsistent. Basic systemization would deliver immediate revenue lift.' },
       { max:9,  text:'A functional sales process is emerging. Refining the conversion steps and adding tracking will compound results significantly.' },
-      { max:12, text:'Solid sales infrastructure. The next lever is optimization — A/B testing messaging, shortening sales cycles, and automating follow-up sequences.' }
+      { max:12, text:'Solid sales infrastructure. The next lever is optimization: A/B testing messaging, shortening sales cycles, and automating follow-up sequences.' }
     ],
     actions: [
       { title:'Build a 3-step follow-up sequence', desc:'Create a standardized response flow for new inquiries: same-day reply → value touchpoint at day 3 → close or qualify-out at day 7.' },
@@ -371,21 +371,21 @@ var DIMS = {
   Content: {
     label: 'Content System',
     reads: [
-      { max:3,  text:'Content is non-existent or entirely reactive. The business has no visibility engine — growth depends entirely on word of mouth and direct outreach.' },
+      { max:3,  text:'Content is non-existent or entirely reactive. The business has no visibility engine; growth depends entirely on word of mouth and direct outreach.' },
       { max:6,  text:'Sporadic content exists but creates no compounding value. Without consistency and strategy, content effort is wasted energy.' },
-      { max:9,  text:'A content habit is forming. Adding structure — pillars, cadence, and platform-specific adaptation — will multiply the impact of existing effort.' },
+      { max:9,  text:'A content habit is forming. Adding structure, specifically pillars, cadence, and platform-specific adaptation, will multiply the impact of existing effort.' },
       { max:12, text:'Strong content operation. The next frontier is full-funnel attribution: mapping specific content to leads, conversions, and revenue.' }
     ],
     actions: [
       { title:'Define 3 content pillars', desc:'Choose 3 themes that sit at the intersection of your expertise and your audience\'s problems. Every post should belong to one of these pillars.' },
-      { title:'Set a non-negotiable weekly cadence', desc:'One platform, one post per week minimum. Consistency compounds — irregular posting resets algorithmic momentum every time.' },
+      { title:'Set a non-negotiable weekly cadence', desc:'One platform, one post per week minimum. Consistency compounds; irregular posting resets algorithmic momentum every time.' },
       { title:'Build a repurposing workflow', desc:'Every long-form piece (video, blog, case study) should yield at least 3 derivative assets. This multiplies output without multiplying effort.' }
     ]
   },
   Operations: {
     label: 'Operations',
     reads: [
-      { max:3,  text:'The business is entirely owner-dependent. This is a fragility risk — any disruption to the owner directly stops revenue. Systemization is a survival priority.' },
+      { max:3,  text:'The business is entirely owner-dependent. This is a fragility risk, as any disruption to the owner directly stops revenue. Systemization is a survival priority.' },
       { max:6,  text:'Some delegation exists but the business still runs on tribal knowledge. Scaling is currently impossible without the owner as the bottleneck.' },
       { max:9,  text:'Operations are becoming repeatable. Documenting and automating the remaining manual processes will free significant owner time and enable growth.' },
       { max:12, text:'Operationally mature. The next level is integrating AI and automation tools to reduce human overhead on repeatable tasks further.' }
@@ -416,8 +416,8 @@ var DIMS = {
 var GRADES = [
   { min:0,  max:10, grade:'Critical',  color:'#ff5a5a', verdict:'Your business infrastructure has significant gaps that are actively limiting growth. The good news: the highest-leverage fixes are straightforward and implementable immediately.' },
   { min:11, max:20, grade:'Developing', color:'#f5c842', verdict:'You have a functional business but it\'s running on manual effort and intuition. Systemizing the gaps identified below will reduce owner dependency and unlock scalable growth.' },
-  { min:21, max:30, grade:'Solid',      color:'#c8f135', verdict:'Strong foundation with clear optimization opportunities. You\'ve built something real — now it\'s about compounding what works and eliminating the remaining friction points.' },
-  { min:31, max:40, grade:'Advanced',   color:'#c8f135', verdict:'Sophisticated infrastructure across most dimensions. Your next frontier is integration — connecting your systems so data flows between them and decisions become automatic.' }
+  { min:21, max:30, grade:'Solid',      color:'#c8f135', verdict:'Strong foundation with clear optimization opportunities. You\'ve built something real; now it\'s about compounding what works and eliminating the remaining friction points.' },
+  { min:31, max:40, grade:'Advanced',   color:'#c8f135', verdict:'Sophisticated infrastructure across most dimensions. Your next frontier is integration: connecting your systems so data flows between them and decisions become automatic.' }
 ];
 
 // ─── STATE ─────────────────────────────────────────────────────────

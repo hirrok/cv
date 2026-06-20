@@ -630,15 +630,12 @@ Return this exact JSON shape:
       throw new Error(data.error?.message || 'Groq API error');
     }
 
-    const raw = data.choices[0].message.content.trim();
-    console.log('RAW GROQ RESPONSE:', raw);
-    // Strip <think>...</think> blocks (Qwen chain-of-thought)
-    const noThink = raw.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
-    console.log('AFTER STRIP:', noThink);
-    // Extract JSON object — find first { to last }
-    const jsonMatch = noThink.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON object found in response');
-    const result = JSON.parse(jsonMatch[0]);
+    const raw = data.choices[0].message.content;
+    // Extract JSON directly — find first { to last } regardless of think tags or markdown fences
+    const jsonStart = raw.indexOf('{');
+    const jsonEnd   = raw.lastIndexOf('}');
+    if (jsonStart === -1 || jsonEnd === -1) throw new Error('No JSON object found in response');
+    const result = JSON.parse(raw.slice(jsonStart, jsonEnd + 1));
 
     const tierColor = result.tier === 'Hot' ? '#c8f135' : result.tier === 'Warm' ? '#f5c842' : '#6b6b6b';
 

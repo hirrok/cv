@@ -421,7 +421,7 @@
     Live Tool · Demo 01
   </div>
   <h1 class="tool-title">Lead <span>Qualifier</span> Bot</h1>
-  <p class="tool-desc">Drop in a prospect's details. Get a structured qualification brief: pain score, budget signal, fit assessment, and your exact next move. Powered by Qwen 3.6 via Groq.</p>
+  <p class="tool-desc">Drop in a prospect's details. Get a structured qualification brief: pain score, budget signal, fit assessment, and your exact next move. Powered by Llama 3.3 via Groq.</p>
 </div>
 
 <div class="tool-body">
@@ -497,7 +497,7 @@
   <div class="output-panel">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
       <span class="output-label" style="margin-bottom:0">Qualification Brief</span>
-      <span id="model-badge" style="display:none;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b6b6b;background:#161616;border:1px solid rgba(255,255,255,0.08);padding:0.25rem 0.6rem;">Qwen 3.6 · Groq</span>
+      <span id="model-badge" style="display:none;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b6b6b;background:#161616;border:1px solid rgba(255,255,255,0.08);padding:0.25rem 0.6rem;">Llama 3.3 · Groq</span>
     </div>
 
     <div class="output-empty" id="empty-state">
@@ -553,14 +553,14 @@
 </div>
 
 <div class="tool-footer">
-  <p>Qwen 3.6 via Groq API · Built by Hirro Kuizon</p>
+  <p>Llama 3.3 via Groq API · Built by Hirro Kuizon</p>
   <a href="index.html" class="back-link">← Portfolio</a>
 </div>
 
 <script>
 const GROQ_KEY = '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';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL    = 'qwen/qwen3.6-27b';
+const MODEL    = 'llama-3.3-70b-versatile';
 
 async function runQualifier() {
   const bizName  = document.getElementById('biz-name').value.trim();
@@ -630,12 +630,9 @@ Return this exact JSON shape:
       throw new Error(data.error?.message || 'Groq API error');
     }
 
-    const raw = data.choices[0].message.content;
-    // Extract JSON directly — find first { to last } regardless of think tags or markdown fences
-    const jsonStart = raw.indexOf('{');
-    const jsonEnd   = raw.lastIndexOf('}');
-    if (jsonStart === -1 || jsonEnd === -1) throw new Error('No JSON object found in response');
-    const result = JSON.parse(raw.slice(jsonStart, jsonEnd + 1));
+    const raw = data.choices[0].message.content.trim();
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
 
     const tierColor = result.tier === 'Hot' ? '#c8f135' : result.tier === 'Warm' ? '#f5c842' : '#6b6b6b';
 

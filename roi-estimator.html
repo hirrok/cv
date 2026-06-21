@@ -36,6 +36,17 @@ body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-hei
 /* LAYOUT */
 .main{max-width:860px;margin:0 auto;padding:0 1.75rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;align-items:start}
 @media(max-width:640px){.main{grid-template-columns:1fr}}
+@media(max-width:480px){
+  .hd{padding:1.75rem 1rem 1.25rem}
+  .main{padding:0 1rem 3rem}
+  .assumptions{padding:0 1rem 1rem}
+  .panel{padding:1.25rem}
+  .out-panel{padding:1.25rem;min-height:300px}
+  .hm-value{font-size:1.55rem}
+  .metrics-grid{grid-template-columns:1fr}
+  .footer{padding:1rem 1rem 1.5rem;flex-direction:column;gap:.4rem}
+  .field{margin-bottom:.85rem}
+}
 
 /* INPUT PANEL */
 .panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem}

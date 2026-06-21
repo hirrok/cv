@@ -531,13 +531,46 @@
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.25rem; }
-    .nav-links { gap: 1rem; }
-    .hero { padding: 0 1.25rem 4rem; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 0.78rem; }
+    .hero { padding: 0 1.25rem 4rem !important; }
     section { padding: 4rem 1.25rem; }
     .stats-bar { padding: 2rem 1.25rem; }
-    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.4rem; padding: 2rem 0; }
+    .exp-meta { display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
     .contact-block { grid-template-columns: 1fr; gap: 2.5rem; }
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .hero-name { font-size: clamp(2.6rem, 10vw, 5rem); }
+    .demos-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    nav { padding: 0.9rem 1rem; }
+    .nav-links { gap: 0.85rem; }
+    .nav-links a { font-size: 0.72rem; letter-spacing: 0.02em; }
+    .hero { padding: 0 1rem 3.5rem !important; min-height: 100svh; }
+    .hero-name { font-size: clamp(2.2rem, 11vw, 3.5rem); line-height: 1; }
+    .hero-bio { font-size: 0.92rem; margin-bottom: 2rem; }
+    .hero-eyebrow { font-size: 0.72rem; margin-bottom: 1rem; }
+    .btn-primary, .btn-ghost { font-size: 0.78rem; padding: 0.8rem 1.4rem; }
+    .hero-cta { gap: 0.75rem; }
+    section { padding: 3rem 1rem; }
+    .section-label { font-size: 0.68rem; margin-bottom: 2rem; }
+    .stats-bar { padding: 1.75rem 1rem; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .stat-number { font-size: 1.9rem; }
+    .stat-label { font-size: 0.7rem; }
+    .exp-title { font-size: 1.05rem; }
+    .exp-desc { font-size: 0.88rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .demo-card { padding: 1.5rem; }
+    .demo-title { font-size: 1rem; }
+    .contact-headline { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+    .contact-link-value { font-size: 0.95rem; }
+    footer { padding: 1.5rem 1rem; }
+    .hero-bg-text { font-size: clamp(5rem, 28vw, 10rem); opacity: 0.02; }
+    .scroll-hint { display: none; }
   }
 </style>
 </head>
@@ -554,7 +587,7 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero" style="max-width:100%; padding-left:2.5rem; padding-right:2.5rem;">
+<section class="hero">
   <div class="hero-bg-text">HIRRO</div>
   <div class="hero-eyebrow">Available for work · Philippines</div>
   <h1 class="hero-name">

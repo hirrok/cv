@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECON Plumbing NSW — Mission Debrief | Hirro Kuizon</title>
+<meta name="description" content="A Growth Operating System case study: how a commercial plumbing business in Sydney NSW moved from invisible to in-contention through systems, not spend.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --off-white: #f0ede8;
+    --mid: #6b6b6b;
+    --accent: #c8f135;
+    --accent-dim: rgba(200,241,53,0.12);
+    --border: rgba(255,255,255,0.08);
+    --card-bg: #111111;
+    --internal: #9b8cff;
+    --internal-dim: rgba(155,140,255,0.12);
+    --pending: #8a8a8a;
+    --pending-dim: rgba(138,138,138,0.10);
+    --lever: #ff7a45;
+    --lever-dim: rgba(255,122,69,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  section { padding: 7rem 2.5rem; max-width: 1180px; margin: 0 auto; }
+  @media (max-width: 720px) { section { padding: 4rem 1.25rem; } }
+
+  h1, h2, h3 { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+
+  .section-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  a { color: inherit; }
+  .skip-link {
+    position: absolute; left: -999px; top: 0; background: var(--accent); color: var(--black);
+    padding: 0.75rem 1.25rem; z-index: 1000; font-weight: 600;
+  }
+  .skip-link:focus { left: 1rem; top: 1rem; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(10,10,10,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-back { font-size: 0.85rem; color: var(--mid); text-decoration: none; display: flex; gap: 0.5rem; align-items: center; }
+  .nav-back:hover { color: var(--off-white); }
+  .nav-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); }
+  @media (max-width: 600px) { .nav-tag { display: none; } }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 7rem 2.5rem 5rem; max-width: 1180px; margin: 0 auto;
+  }
+  .hero-layer-one { justify-content: center; align-items: flex-start; }
+  .case-study-kicker {
+    font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);
+    margin-bottom: 1.75rem; font-weight: 600;
+  }
+  .scroll-cue {
+    margin-top: 3.5rem; background: none; border: 1px solid var(--border); color: var(--mid);
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; padding: 0.85rem 1.4rem;
+    display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer;
+  }
+  .scroll-cue:hover { color: var(--off-white); border-color: var(--off-white); }
+  .scroll-cue-arrow { display: inline-block; animation: bobArrow 1.6s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue-arrow { animation: none; } }
+  @keyframes bobArrow { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(4px);} }
+
+  .hero-layer-two { padding-top: 5rem; }
+  .directed-by { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--mid); margin-bottom: 0.6rem; }
+  .hero-client-title { font-family:'Syne',sans-serif; font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 1rem; }
+
+  .mission-board {
+    margin-top: 2.75rem; border: 1px solid var(--border); background: var(--card-bg);
+    max-width: 560px; padding: 0.4rem 1.5rem;
+  }
+  .mission-row {
+    display: flex; align-items: center; gap: 0.85rem; padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border); font-size: 0.92rem;
+  }
+  .mission-row:last-child { border-bottom: none; }
+  .mission-light { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; opacity: 0; transition: opacity 0.4s; }
+  .mission-light.lit { opacity: 1; }
+  .mission-light[data-status="online"] { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .mission-light[data-status="contention"] { background: var(--lever); box-shadow: 0 0 6px var(--lever); }
+  .mission-light[data-status="prototype"] { background: #4fd1ff; box-shadow: 0 0 6px #4fd1ff; }
+  .mission-light[data-status="latent"] { background: var(--mid); }
+  .mission-label { flex: 1; color: var(--off-white); }
+  .mission-state { font-size: 0.74rem; letter-spacing: 0.08em; font-weight: 600; }
+  .state-online { color: var(--accent); }
+  .state-contention { color: var(--lever); }
+  .state-prototype { color: #4fd1ff; }
+  .state-latent { color: var(--mid); }
+  .mission-board-note { font-size: 0.78rem; color: var(--mid); margin-top: 1rem; max-width: 560px; }
+
+  .hero-coords {
+    font-size: 0.82rem; color: var(--mid); letter-spacing: 0.06em; margin-bottom: 2rem;
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .hero-coords span { color: var(--off-white); }
+  .hero-title {
+    font-size: clamp(2.1rem, 6.5vw, 4.6rem); line-height: 1.05; margin-bottom: 1.75rem; max-width: 980px;
+  }
+  .hero-title .hl { color: var(--accent); }
+  .hero-sub { max-width: 640px; color: var(--mid); font-size: 1.1rem; line-height: 1.75; }
+  .hero-metric {
+    margin-top: 3rem; display: inline-flex; align-items: baseline; gap: 0.75rem;
+    border-left: 2px solid var(--lever); padding-left: 1.25rem;
+  }
+  .hero-metric-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.4rem; color: var(--lever); }
+  .hero-metric-label { color: var(--mid); font-size: 0.95rem; max-width: 420px; }
+
+  hr.full-divider { border: none; border-top: 1px solid var(--border); }
+
+  /* MISSION / CONTEXT / DIAGNOSIS */
+  .lede { font-size: 1.5rem; line-height: 1.6; max-width: 880px; color: var(--off-white); font-weight: 300; }
+  .lede strong { color: var(--accent); font-weight: 600; }
+  .body-text { max-width: 760px; color: var(--mid); font-size: 1.02rem; margin-top: 1.5rem; }
+  .body-text + .body-text { margin-top: 1rem; }
+  .body-text strong { color: var(--off-white); font-weight: 500; }
+
+  .diagnosis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
+  @media (max-width: 800px) { .diagnosis-grid { grid-template-columns: 1fr; } }
+  .diagnosis-card { border: 1px solid var(--border); padding: 1.75rem; background: var(--card-bg); }
+  .diagnosis-card h3 { font-size: 1.05rem; margin-bottom: 0.75rem; color: var(--off-white); }
+  .diagnosis-card p { color: var(--mid); font-size: 0.95rem; }
+
+  .principles-list { list-style: none; max-width: 760px; }
+  .principles-list li { display: flex; gap: 1.5rem; padding: 1.1rem 0; border-bottom: 1px solid var(--border); }
+  .principles-list li:last-child { border-bottom: none; }
+  .principle-num { font-family:'Syne',sans-serif; font-weight: 700; color: var(--accent); font-size: 0.95rem; flex-shrink: 0; width: 2rem; }
+  .principle-text { color: var(--off-white); font-size: 1rem; line-height: 1.6; }
+
+  /* DIAGRAM BLOCKS */
+  .diagram-wrap { margin-top: 2.5rem; }
+  .diagram-svg-wrap {
+    border: 1px solid var(--border); background: var(--card-bg); padding: 2rem 1.5rem;
+    overflow-x: auto;
+  }
+  .diagram-svg-wrap svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .diagram-node {
+    cursor: pointer; fill: var(--card-bg); stroke: var(--mid); stroke-width: 1.5;
+    transition: stroke 0.2s, fill 0.2s;
+  }
+  .diagram-node:hover, .diagram-node:focus, .diagram-node.active {
+    stroke: var(--accent); fill: var(--accent-dim);
+  }
+  .diagram-node-label { fill: var(--off-white); font-family: 'Inter', sans-serif; font-size: 12px; pointer-events: none; }
+  .diagram-edge { stroke: var(--border); stroke-width: 1.5; fill: none; }
+  .diagram-edge.flow { stroke: var(--accent); stroke-dasharray: 6 4; }
+  .diagram-detail {
+    margin-top: 1.25rem; padding: 1rem 1.25rem; border-left: 2px solid var(--accent);
+    background: var(--accent-dim); font-size: 0.92rem; color: var(--off-white); min-height: 2.5em;
+  }
+  .diagram-play-btn {
+    margin-top: 1.25rem; background: none; border: 1px solid var(--border); color: var(--off-white);
+    font-family: 'Inter', sans-serif; font-size: 0.82rem; padding: 0.55rem 1rem; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .diagram-play-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .diagram-play-btn:disabled { opacity: 0.4; cursor: default; }
+  .diagram-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--mid); }
+
+  @keyframes drawFlow { from { stroke-dashoffset: 240; } to { stroke-dashoffset: 0; } }
+  .anim-flow { stroke-dasharray: 240; stroke-dashoffset: 240; animation: drawFlow 1.4s ease forwards; animation-play-state: paused; }
+  .in-view .anim-flow { animation-play-state: running; }
+  @media (prefers-reduced-motion: reduce) {
+    .anim-flow { stroke-dashoffset: 0; animation: none; }
+  }
+
+  @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .flywheel-rotor { transform-origin: center; animation: slowSpin 40s linear infinite; }
+  @media (prefers-reduced-motion: reduce) { .flywheel-rotor { animation: none; } }
+
+  /* TOGGLE (Commercial Positioning) */
+  .toggle-row { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .toggle-btn {
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; padding: 0.6rem 1.1rem;
+    background: transparent; border: 1px solid var(--border); color: var(--mid); cursor: pointer;
+  }
+  .toggle-btn.active { color: var(--black); background: var(--accent); border-color: var(--accent); }
+  .position-panel { margin-top: 1.5rem; border: 1px solid var(--border); background: var(--card-bg); padding: 1.75rem; min-height: 90px; }
+  .position-panel.before { color: var(--mid); }
+  .position-panel.after { color: var(--accent); }
+  .position-panel .quote { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; }
+
+  /* METRIC + EVIDENCE CARDS */
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+  @media (max-width: 900px) { .metrics-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .metrics-grid { grid-template-columns: 1fr; } }
+
+  .instrument-panel { border: 1px solid var(--border); background: var(--card-bg); padding: 1.75rem 1.75rem 1.5rem; margin-top: 2.5rem; }
+  .instrument-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .instrument-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--off-white); }
+  .instrument-snapshot { font-size: 0.74rem; color: var(--mid); }
+  .instrument-bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem; }
+  .instrument-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); position: relative; }
+  .instrument-bar-fill { height: 100%; background: var(--accent); transition: width 1.1s cubic-bezier(.2,.8,.2,1); }
+  @media (prefers-reduced-motion: reduce) { .instrument-bar-fill { transition: none; } }
+  .instrument-bar-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--accent); white-space: nowrap; }
+  .instrument-bar-caption { font-size: 0.78rem; color: var(--mid); margin-top: -1.2rem; margin-bottom: 1.75rem; }
+
+  .gauge-label { font-size: 0.78rem; color: var(--mid); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.6rem; }
+  .gauge-track { position: relative; height: 4px; background: rgba(255,255,255,0.08); margin: 0 0.5rem; }
+  .gauge-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+  .gauge-dot { display: block; width: 11px; height: 11px; border-radius: 50%; }
+  .gauge-marker.observed .gauge-dot { background: var(--lever); box-shadow: 0 0 8px var(--lever); }
+  .gauge-marker.target .gauge-dot { background: var(--accent); }
+  .gauge-tag { position: absolute; top: -1.6rem; left: 50%; transform: translateX(-50%); font-size: 0.7rem; white-space: nowrap; color: var(--off-white); }
+  .gauge-scale { display: flex; justify-content: space-between; margin: 0.8rem 0.5rem 0; font-size: 0.7rem; color: var(--mid); }
+
+  .epistemic-tag {
+    display: inline-block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 0.25rem 0.55rem; border: 1px solid currentColor; margin-bottom: 0.9rem; font-weight: 600;
+  }
+  .tag-observed { color: var(--accent); }
+  .tag-estimated { color: var(--internal); }
+  .tag-recommendation { color: var(--lever); }
+  .tag-forecast { color: var(--pending); }
+
+  .metric-card { border: 1px solid var(--border); background: var(--card-bg); padding: 1.5rem; }
+  .metric-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; line-height: 1; margin-bottom: 0.6rem; }
+  .metric-context { color: var(--off-white); font-size: 0.92rem; margin-bottom: 0.6rem; }
+  .metric-source { color: var(--mid); font-size: 0.78rem; }
+
+  .archive-filters { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 2rem 0 1.5rem; }
+  .filter-btn {
+    font-size: 0.78rem; letter-spacing: 0.04em; padding: 0.5rem 0.9rem;
+    border: 1px solid var(--border); background: transparent; color: var(--mid); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .filter-btn[aria-pressed="true"] { color: var(--off-white); border-color: var(--off-white); }
+  .filter-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .dot-public { background: var(--accent); }
+  .dot-verified { background: #4fd1ff; }
+  .dot-internal { background: var(--internal); }
+  .dot-pending { background: var(--pending); border: 1px dashed var(--pending); background: transparent; }
+
+  .archive-count { color: var(--mid); font-size: 0.82rem; margin-bottom: 1.25rem; }
+
+  .verify-legend { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.6rem 2rem; margin: 1.5rem 0 0.5rem; }
+  @media (max-width: 700px) { .verify-legend { grid-template-columns: 1fr; } }
+  .verify-item { font-size: 0.82rem; color: var(--mid); display: flex; align-items: baseline; gap: 0.5rem; }
+  .verify-item strong { color: var(--off-white); font-weight: 500; }
+  .verify-item .filter-dot { flex-shrink: 0; transform: translateY(-1px); }
+
+  .archive-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  @media (max-width: 800px) { .archive-grid { grid-template-columns: 1fr; } }
+
+  .archive-card {
+    border: 1px solid var(--border); background: var(--card-bg); padding: 1.25rem;
+    cursor: pointer;
+  }
+  .archive-card[data-class="public"] { border-left: 3px solid var(--accent); }
+  .archive-card[data-class="verified"] { border-left: 3px solid #4fd1ff; }
+  .archive-card[data-class="internal"] { border-left: 3px solid var(--internal); }
+  .archive-card[data-class="pending"] { border-left: 3px dashed var(--pending); }
+  .archive-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .archive-card-title { font-size: 0.98rem; color: var(--off-white); font-weight: 500; }
+  .archive-card-class { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mid); white-space: nowrap; }
+  .archive-card-desc { color: var(--mid); font-size: 0.86rem; margin-top: 0.5rem; }
+  .archive-card-detail {
+    margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px solid var(--border);
+    color: var(--off-white); font-size: 0.86rem; display: none;
+  }
+  .archive-card.expanded .archive-card-detail { display: block; }
+  .archive-card-date { font-size: 0.74rem; color: var(--mid); margin-top: 0.4rem; }
+  @keyframes flashHighlight { 0%,100% { border-color: var(--border); } 30% { border-color: var(--accent); } }
+  .archive-card-flash { animation: flashHighlight 1.6s ease; }
+  @media (prefers-reduced-motion: reduce) { .archive-card-flash { animation: none; outline: 2px solid var(--accent); } }
+
+  /* TIMELINE */
+  .timeline { margin-top: 2.5rem; border-left: 2px solid var(--border); padding-left: 1.75rem; }
+  .timeline-item { position: relative; padding-bottom: 2.25rem; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -2.05rem; top: 0.3rem; width: 10px; height: 10px;
+    border-radius: 50%; background: var(--accent);
+  }
+  .timeline-date { font-size: 0.8rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+  .timeline-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.3rem; }
+  .timeline-detail { color: var(--mid); font-size: 0.9rem; max-width: 680px; display: none; }
+  .timeline-item.expanded .timeline-detail { display: block; }
+  .timeline-toggle {
+    background: none; border: none; color: var(--mid); font-size: 0.8rem; cursor: pointer;
+    text-decoration: underline; padding: 0; margin-top: 0.3rem;
+  }
+  .timeline-evidence-link {
+    display: block; margin-top: 0.9rem; background: none; border: 1px solid var(--border);
+    color: var(--accent); font-size: 0.78rem; padding: 0.5rem 0.9rem; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .timeline-evidence-link:hover { border-color: var(--accent); }
+
+  /* COMPETENCY MATRIX */
+  .matrix-wrap { margin-top: 2.5rem; overflow-x: auto; }
+  table.competency { border-collapse: collapse; width: 100%; min-width: 760px; }
+  table.competency th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--mid); padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
+  }
+  table.competency td {
+    padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--off-white);
+    vertical-align: top;
+  }
+  table.competency tbody tr { transition: opacity 0.2s; cursor: pointer; }
+  table.competency tbody tr.dim { opacity: 0.35; }
+  .matrix-capability { font-weight: 600; font-family: 'Syne', sans-serif; }
+  .matrix-transfer { color: var(--accent); }
+
+  @media (max-width: 800px) {
+    table.competency, table.competency thead, table.competency tbody, table.competency tr, table.competency td { display: block; width: 100%; }
+    table.competency thead { display: none; }
+    table.competency tr { border: 1px solid var(--border); margin-bottom: 1rem; padding: 1rem; }
+    table.competency td { border: none; padding: 0.4rem 0; }
+    table.competency td::before { content: attr(data-label); display: block; font-size: 0.68rem; text-transform: uppercase; color: var(--mid); margin-bottom: 0.2rem; }
+  }
+
+  .reflection-quote { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 600; line-height: 1.4; max-width: 880px; color: var(--off-white); }
+  .reflection-quote .hl { color: var(--accent); }
+
+  .closer { text-align: left; }
+  .closer-cta { display: inline-block; margin-top: 2rem; background: var(--accent); color: var(--black); font-family: 'Syne', sans-serif; font-weight: 700; padding: 0.95rem 1.75rem; text-decoration: none; font-size: 0.92rem; }
+  .closer-cta:hover { opacity: 0.88; }
+
+  footer { padding: 3rem 2.5rem; text-align: center; color: var(--mid); font-size: 0.82rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav>
+  <a href="../index.html" class="nav-back">&larr; Hirro Kuizon</a>
+  <span class="nav-tag">Case Study 01 — Mission Debrief</span>
+</nav>
+
+<main id="main">
+
+<!-- 1. HERO — LAYER ONE -->
+<header class="hero hero-layer-one">
+  <div class="case-study-kicker">Case Study 01</div>
+  <h1 class="hero-title">Designing a Growth<br>Operating System<br><span class="hl">for a Commercial Plumbing Business.</span></h1>
+  <p class="hero-sub">The client becomes the proof. The thinking is the product.</p>
+  <button class="scroll-cue" id="scroll-cue" aria-label="Scroll to reveal the client and mission status">
+    <span>Reveal the client</span>
+    <span class="scroll-cue-arrow" aria-hidden="true">↓</span>
+  </button>
+</header>
+
+<!-- 1B. HERO — LAYER TWO: CLIENT REVEAL + MISSION CONTROL -->
+<header class="hero hero-layer-two" id="layer-two">
+  <div class="hero-coords">
+    Theater: <span>Sydney, NSW</span> &nbsp;·&nbsp; Duration: <span>Mar 2025 &ndash; Jun 2026</span> &nbsp;·&nbsp; Operated remotely from <span>PH HQ</span>
+  </div>
+  <div class="directed-by">Client</div>
+  <h2 class="hero-client-title">RECON Plumbing NSW</h2>
+  <p class="hero-sub">A Growth Operating System built from field operations outward, not from a marketing brief inward.</p>
+
+  <div class="mission-board" role="group" aria-label="Mission status board">
+    <div class="mission-row">
+      <span class="mission-light" data-status="online"></span>
+      <span class="mission-label">Field Capture System</span>
+      <span class="mission-state state-online">ONLINE</span>
+    </div>
+    <div class="mission-row">
+      <span class="mission-light" data-status="contention"></span>
+      <span class="mission-label">Search Engine</span>
+      <span class="mission-state state-contention">IN CONTENTION</span>
+    </div>
+    <div class="mission-row">
+      <span class="mission-light" data-status="prototype"></span>
+      <span class="mission-label">Knowledge Flywheel</span>
+      <span class="mission-state state-prototype">PROTOTYPE</span>
+    </div>
+    <div class="mission-row">
+      <span class="mission-light" data-status="online"></span>
+      <span class="mission-label">Executive Reporting</span>
+      <span class="mission-state state-online">ONLINE</span>
+    </div>
+    <div class="mission-row">
+      <span class="mission-light" data-status="online"></span>
+      <span class="mission-label">Commercial Positioning</span>
+      <span class="mission-state state-online">SHIFTED</span>
+    </div>
+    <div class="mission-row">
+      <span class="mission-light" data-status="latent"></span>
+      <span class="mission-label">LinkedIn Activation</span>
+      <span class="mission-state state-latent">LATENT</span>
+    </div>
+  </div>
+  <p class="mission-board-note">Every status above is sourced from a SITREP or export below — none are aspirational.</p>
+
+  <div class="hero-metric">
+    <span class="hero-metric-value">1.34%</span>
+    <span class="hero-metric-label">the click-through rate this entire system exists to move. Everything below explains why.</span>
+  </div>
+</header>
+
+<hr class="full-divider">
+
+<!-- 2. MISSION BRIEF -->
+<section id="mission" aria-labelledby="mission-h">
+  <div class="section-label">Mission Brief</div>
+  <h2 id="mission-h" class="sr-only">Mission</h2>
+  <p class="lede">The mission was never &ldquo;rank a plumbing website.&rdquo; It was to build a system where <strong>real field work compounds into search visibility, brand recall, and procurement-grade trust</strong> &mdash; without manufacturing content disconnected from what RECON actually does on site.</p>
+  <p class="body-text">Every section that follows is one component of that system, in the order it was built.</p>
+</section>
+
+<hr class="full-divider">
+
+<!-- 3. BUSINESS CONTEXT -->
+<section id="context" aria-labelledby="context-h">
+  <div class="section-label">Business Context</div>
+  <h2 id="context-h" class="sr-only">Business Context</h2>
+  <p class="body-text" style="font-size:1.05rem; color:var(--off-white); max-width:760px;">RECON Plumbing Services NSW is a commercial and strata plumbing operator based in Sydney, working a roughly one-hour-drive radius from a Georges Hall HQ. The work is reactive by trade &mdash; backflow devices fail, boundary traps leak, hot water systems die &mdash; but the business model RECON is building toward is recurring: facilities managers, strata operators, and compliance-driven commercial accounts who need a default supplier, not a one-off callout.</p>
+  <p class="body-text">That distinction &mdash; <strong>one-off job vs. default maintenance supplier</strong> &mdash; is the thread every system below was designed to pull on.</p>
+</section>
+
+<hr class="full-divider">
+
+<!-- 4. DIAGNOSIS -->
+<section id="diagnosis" aria-labelledby="diagnosis-h">
+  <div class="section-label">Diagnosis</div>
+  <h2 id="diagnosis-h" class="sr-only">Diagnosis</h2>
+  <p class="lede">The business had no digital memory. Every completed job &mdash; the knowledge, the proof, the local relevance &mdash; disappeared the moment the van left site.</p>
+  <div class="diagnosis-grid">
+    <div class="diagnosis-card">
+      <h3>What was actually happening</h3>
+      <p>Outreach existed but was volume-only. Search presence was effectively invisible (average position outside 40). LinkedIn had an audience forming by accident, not by design. Real expertise &mdash; the kind that shows up in a 2am RPZD valve failure &mdash; was not being converted into anything reusable.</p>
+    </div>
+    <div class="diagnosis-card">
+      <h3>The root cause</h3>
+      <p>No loop existed connecting <strong>operations to marketing</strong>. The business was generating proof of expertise every single day and throwing it away. The fix was never &ldquo;do more SEO&rdquo; &mdash; it was building the pipe that lets field work become search gravity automatically.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 4B. STRATEGIC PRINCIPLES -->
+<section id="principles" aria-labelledby="principles-h">
+  <div class="section-label">Strategic Principles</div>
+  <h2 id="principles-h" style="font-size:1.7rem; margin-bottom:1.75rem;">The doctrine underneath the system.</h2>
+  <ol class="principles-list">
+    <li><span class="principle-num">01</span><span class="principle-text">Reality first. Operations are the source of truth — not the content calendar.</span></li>
+    <li><span class="principle-num">02</span><span class="principle-text">Operations create marketing. A completed job is raw material, not an afterthought to write up.</span></li>
+    <li><span class="principle-num">03</span><span class="principle-text">Marketing creates memory. One job, properly captured, becomes searchable indefinitely.</span></li>
+    <li><span class="principle-num">04</span><span class="principle-text">Memory creates trust. Branded search recall is measurable &mdash; not assumed.</span></li>
+    <li><span class="principle-num">05</span><span class="principle-text">Trust compounds. A default supplier beats a one-off callout, every time.</span></li>
+    <li><span class="principle-num">06</span><span class="principle-text">Compounding beats campaigns. This system was never built to spike.</span></li>
+  </ol>
+</section>
+
+<hr class="full-divider">
+<section id="growth-os" aria-labelledby="gos-h">
+  <div class="section-label">The Growth Operating System</div>
+  <h2 id="gos-h">Five layers, one machine.</h2>
+  <p class="body-text">Every sub-system in this debrief is a child of one of these five layers. Click a node to see what it became.</p>
+  <div class="diagram-wrap" data-animate>
+    <div class="diagram-svg-wrap">
+      <svg viewBox="0 0 920 200" role="img" aria-labelledby="gos-svg-title gos-svg-desc">
+        <title id="gos-svg-title">Growth Operating System — five connected layers</title>
+        <desc id="gos-svg-desc">A horizontal chain of five layers: Public Presence, Lead Capture, Operations, Growth, Intelligence — each connected in sequence, representing how field work moves into visibility and decisions.</desc>
+        <path class="diagram-edge flow anim-flow" d="M120 100 H 800" />
+        <g id="gos-nodes"></g>
+      </svg>
+    </div>
+    <button class="diagram-play-btn" data-play="gos" aria-label="Replay gos sequence">&#9654; Replay flow</button>
+    <div class="diagram-detail" id="gos-detail" aria-live="polite">Select a layer to see what RECON built there.</div>
+    <p class="diagram-caption">Layer model applied directly from Aurora's own infrastructure doctrine &mdash; the system was built on itself.</p>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 6. FIELD CAPTURE ENGINE (Diagram 2) -->
+<section id="field-capture" aria-labelledby="fc-h">
+  <div class="section-label">Field Capture Engine</div>
+  <h2 id="fc-h">A real job, end to end.</h2>
+  <p class="body-text">This is not a hypothetical pipeline. This is the actual Boundary Traps post traced through the system, with its real numbers.</p>
+  <div class="diagram-wrap" data-animate>
+    <div class="diagram-svg-wrap">
+      <svg viewBox="0 0 920 160" role="img" aria-labelledby="fc-svg-title fc-svg-desc">
+        <title id="fc-svg-title">Field Capture Pipeline</title>
+        <desc id="fc-svg-desc">Four stages: a completed job becomes a blog post, which targets a keyword, which produces measured search visibility. Worked example: the Boundary Traps post, which produced 101 clicks and 6,573 impressions at position 9.02.</desc>
+        <path class="diagram-edge flow anim-flow" d="M100 80 H 820" />
+        <g id="fc-nodes"></g>
+      </svg>
+    </div>
+    <button class="diagram-play-btn" data-play="fc" aria-label="Replay fc sequence">&#9654; Replay flow</button>
+    <div class="diagram-detail" id="fc-detail" aria-live="polite">Hover or select a stage.</div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 7. KNOWLEDGE FLYWHEEL (Diagram 3) -->
+<section id="flywheel" aria-labelledby="fw-h">
+  <div class="section-label">Knowledge Flywheel</div>
+  <h2 id="fw-h">Compounding, not campaigning.</h2>
+  <p class="body-text">Jobs feed content, content builds authority, authority brings inbound demand, demand creates more jobs. The Mortlake suburb cluster is the worked example &mdash; an early-stage prototype of suburb-level authority, not a finished result.</p>
+  <div class="diagram-wrap" data-animate>
+    <div class="diagram-svg-wrap">
+      <svg viewBox="0 0 400 400" role="img" aria-labelledby="fw-svg-title fw-svg-desc" style="max-width:340px;">
+        <title id="fw-svg-title">Knowledge Flywheel</title>
+        <desc id="fw-svg-desc">A circular four-stage flywheel: Jobs, Content, Authority, Inbound Demand, looping back to more Jobs. The Mortlake suburb cluster is the worked example, currently early-stage.</desc>
+        <g class="flywheel-rotor">
+          <circle cx="200" cy="200" r="150" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+        </g>
+        <g id="fw-nodes"></g>
+      </svg>
+    </div>
+    <div class="diagram-detail" id="fw-detail" aria-live="polite">Select a quadrant.</div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 8. SEARCH STRATEGY -->
+<section id="search" aria-labelledby="search-h">
+  <div class="section-label">Search Strategy</div>
+  <h2 id="search-h">From invisible to in-contention.</h2>
+  <p class="body-text">Average search position moved from roughly position 20 to position 15 over a 28-day window &mdash; a real, structural improvement, not a fluke spike. Lifetime, the site has produced <strong>639 clicks across 47,814 impressions</strong> &mdash; a site-wide CTR of <strong>1.34%</strong>, against a 2.5&ndash;4% category target. That gap is the single fastest lever available: closing it doubles click volume with zero new ranking work.</p>
+  <p class="body-text">Brand recall is real and measurable. &ldquo;recon plumbing services&rdquo; converts at <strong>39.2% CTR</strong> when it appears in search &mdash; direct evidence the offline and outreach work is compounding into search behaviour, not just rankings.</p>
+
+  <div class="instrument-panel">
+    <div class="instrument-head">
+      <span class="instrument-label">Search Visibility</span>
+      <span class="instrument-snapshot">Snapshot &mdash; Search Console export, 2026-06-30. Not live telemetry.</span>
+    </div>
+    <div class="instrument-bar-row">
+      <div class="instrument-bar-track">
+        <div class="instrument-bar-fill" style="width:0%" data-fill="38.2"></div>
+      </div>
+      <span class="instrument-bar-value">38% query-attributed</span>
+    </div>
+    <p class="instrument-bar-caption">244 of 639 lifetime clicks trace to a visible query. The remaining 62% fall under Google's query-privacy threshold &mdash; a measurement ceiling, not a content gap.</p>
+    <div class="instrument-gauge">
+      <span class="gauge-label">CTR</span>
+      <div class="gauge-track">
+        <div class="gauge-marker observed" style="left:22.3%;" title="Observed: 1.34%"><span class="gauge-dot"></span><span class="gauge-tag">1.34% Observed</span></div>
+        <div class="gauge-marker target" style="left:41.7%;" title="Recommendation: 2.5%"><span class="gauge-dot"></span></div>
+        <div class="gauge-marker target" style="left:66.7%;" title="Recommendation: 4%"><span class="gauge-dot"></span><span class="gauge-tag">2.5&ndash;4% Target</span></div>
+      </div>
+      <div class="gauge-scale"><span>0%</span><span>2%</span><span>4%</span><span>6%</span></div>
+    </div>
+  </div>
+
+  <div class="metrics-grid" style="margin-top:2.5rem;">
+    <div class="metric-card">
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">1.34%</div>
+      <div class="metric-context">Site-wide click-through rate, lifetime (639 clicks / 47,814 impressions)</div>
+      <div class="metric-source">Source: Search Console, lifetime export</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-recommendation">Recommendation</span>
+      <div class="metric-value">2.5&ndash;4%</div>
+      <div class="metric-context">Target CTR via problem+outcome title rewrites &mdash; no ranking change required</div>
+      <div class="metric-source">Source: operator strategic recommendation</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-forecast">Forecast</span>
+      <div class="metric-value">10&ndash;20</div>
+      <div class="metric-context">Inbound leads/month if the CTR recommendation above is executed</div>
+      <div class="metric-source">Source: SITREP strategic read, contingent on action taken</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.05rem; margin-top:3rem; margin-bottom:1rem; font-family:'Syne',sans-serif;">Market Gravity &mdash; where attention actually comes from</h3>
+  <p class="body-text" style="margin-top:0;">Each orbit below pulses at a rate proportional to its real share of sessions.</p>
+  <div class="diagram-wrap" data-animate>
+    <div class="diagram-svg-wrap">
+      <svg viewBox="0 0 600 320" role="img" aria-labelledby="mg-svg-title mg-svg-desc">
+        <title id="mg-svg-title">Market Gravity orbit diagram</title>
+        <desc id="mg-svg-desc">RECON at center with four orbiting channels sized by real session share: Google organic 321 sessions, Direct 132 sessions, ChatGPT referral 21 sessions, Bing organic 7 sessions.</desc>
+        <g id="mg-nodes"></g>
+      </svg>
+    </div>
+    <div class="diagram-detail" id="mg-detail" aria-live="polite">Hover or select a channel.</div>
+    <p class="diagram-caption">Channel data: Google Analytics, lifetime export (519 sessions total). chatgpt.com/referral (21 sessions) is an early, unprompted AI-search discovery signal &mdash; worth watching, not yet a strategy.</p>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 9. COMMERCIAL POSITIONING & FOUNDER BRAND (Diagram 5) -->
+<section id="positioning" aria-labelledby="pos-h">
+  <div class="section-label">Commercial Positioning &amp; Founder Brand</div>
+  <h2 id="pos-h">The same reframe, two channels.</h2>
+  <p class="body-text">On LinkedIn and in outreach framing, the same repositioning move was made: from asking to be hired, to stating readiness to be plugged in.</p>
+  <div class="toggle-row" role="group" aria-label="Compare positioning before and after">
+    <button class="toggle-btn active" id="pos-before-btn" aria-pressed="true">Before</button>
+    <button class="toggle-btn" id="pos-after-btn" aria-pressed="false">After</button>
+  </div>
+  <div class="position-panel before" id="pos-panel">
+    <div class="quote">&ldquo;Hire us.&rdquo;</div>
+    <p style="margin-top:0.75rem; font-size:0.92rem;">Outbound framing centered on persuasion &mdash; competing for attention against every other quote in an inbox.</p>
+  </div>
+
+  <p class="body-text" style="margin-top:2.5rem;">In parallel, LinkedIn became a procurement-signalling asset, not a vanity channel. The audience composition is the proof: <strong>~21% Real Estate, ~20% Facilities Services, and roughly 57&ndash;74% Senior/Manager-level or above</strong> across reported windows. Followers grew approximately 30% over the engagement (from roughly 1,143 to 1,748 at points measured). The gap is activation &mdash; the audience is strong, posting cadence has been inconsistent.</p>
+</section>
+
+<hr class="full-divider">
+
+<!-- 10. OUTREACH ENGINE (fast, numeric) + Operations Intelligence Cycle (Diagram 7) -->
+<section id="outreach" aria-labelledby="outreach-h">
+  <div class="section-label">Outreach Engine</div>
+  <h2 id="outreach-h">1,153 touches. Then a pivot.</h2>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">656</div>
+      <div class="metric-context">Direct emails sent in a single tracked window</div>
+      <div class="metric-source">Source: SITREP, 23 Feb&ndash;3 Mar 2026</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">497</div>
+      <div class="metric-context">LinkedIn rewarm DMs + new contact requests, same window</div>
+      <div class="metric-source">Source: SITREP, 23 Feb&ndash;3 Mar 2026</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">1,153</div>
+      <div class="metric-context">Total outbound touches across email + LinkedIn, that window</div>
+      <div class="metric-source">Source: SITREP, 23 Feb&ndash;3 Mar 2026</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.05rem; margin-top:3rem; margin-bottom:1rem; font-family:'Syne',sans-serif;">Operations Intelligence Cycle</h3>
+  <p class="body-text" style="margin-top:0;">Volume taught the system where to aim. Targeting shifted from broad outreach to sectors that cannot tolerate downtime and require recurring compliance &mdash; dental, laundromats, car &amp; truck wash, commercial kitchens.</p>
+  <div class="toggle-row" role="group" aria-label="Compare outreach era">
+    <button class="toggle-btn active" id="ops-broad-btn" aria-pressed="true">Volume Era</button>
+    <button class="toggle-btn" id="ops-target-btn" aria-pressed="false">Sector-Targeted Era</button>
+  </div>
+  <div class="position-panel" id="ops-panel" style="color: var(--mid);">
+    Broad funnel: all local commercial leads within radius, undifferentiated by sector or recurring-revenue potential.
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 11. EXECUTIVE DECISION LOOP (Diagram 4) -->
+<section id="decision-loop" aria-labelledby="dl-h">
+  <div class="section-label">Executive Decision Loop</div>
+  <h2 id="dl-h">Reporting as a designed system.</h2>
+  <p class="body-text">Four SITREPs, each closing with the same discipline: strip the jargon, state the read, propose the next 14&ndash;30 days. Select a date to read the actual brief given to the business owner.</p>
+  <div class="diagram-wrap" data-animate>
+    <div class="diagram-svg-wrap">
+      <svg viewBox="0 0 700 160" role="img" aria-labelledby="dl-svg-title dl-svg-desc">
+        <title id="dl-svg-title">Executive Decision Loop</title>
+        <desc id="dl-svg-desc">A closed four-node loop: SITREP, Strategic Read, Priority Queue, Execution, returning to SITREP. Four tick marks correspond to four real reporting dates.</desc>
+        <path class="diagram-edge flow anim-flow" d="M120 80 H 580" />
+        <g id="dl-nodes"></g>
+      </svg>
+    </div>
+    <button class="diagram-play-btn" data-play="dl" aria-label="Replay dl sequence">&#9654; Replay flow</button>
+    <div class="diagram-detail" id="dl-detail" aria-live="polite">Select a SITREP date to read its closing brief.</div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 12. OPERATIONS ARCHIVE -->
+<section id="archive" aria-labelledby="archive-h">
+  <div class="section-label">Operations Archive</div>
+  <h2 id="archive-h">The evidence, classified honestly.</h2>
+  <p class="body-text">Every claim in this debrief traces to one of four classifications. Filter to see what backs any given statement.</p>
+  <div class="archive-filters" role="group" aria-label="Filter evidence by classification">
+    <button class="filter-btn" data-filter="public" aria-pressed="true"><span class="filter-dot dot-public"></span>Public</button>
+    <button class="filter-btn" data-filter="verified" aria-pressed="true"><span class="filter-dot dot-verified"></span>Verified</button>
+    <button class="filter-btn" data-filter="internal" aria-pressed="true"><span class="filter-dot dot-internal"></span>Internal</button>
+    <button class="filter-btn" data-filter="pending" aria-pressed="true"><span class="filter-dot dot-pending"></span>Pending</button>
+  </div>
+  <div class="verify-legend">
+    <div class="verify-item"><span class="filter-dot dot-public"></span><strong>Public</strong> &mdash; click through and verify it yourself, right now</div>
+    <div class="verify-item"><span class="filter-dot dot-verified"></span><strong>Verified</strong> &mdash; sourced from an exported report, not independently re-checkable</div>
+    <div class="verify-item"><span class="filter-dot dot-internal"></span><strong>Internal</strong> &mdash; operator-reported, included because it's directly relevant</div>
+    <div class="verify-item"><span class="filter-dot dot-pending"></span><strong>Pending</strong> &mdash; a known gap, flagged rather than guessed</div>
+  </div>
+  <div class="archive-count" id="archive-count" aria-live="polite"></div>
+  <div class="archive-grid" id="archive-grid"></div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 13. METRICS EXPERIENCE -->
+<section id="metrics" aria-labelledby="metrics-h">
+  <div class="section-label">Metrics Experience</div>
+  <h2 id="metrics-h">Four kinds of number. Never blurred.</h2>
+  <p class="body-text">Observed is counted. Estimated is the operator's informed read. Recommendation is the prescribed next move. Forecast is what happens only if that move is taken. Conflating these is how most case studies inflate themselves &mdash; this one doesn't.</p>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">639 / 47.8K</div>
+      <div class="metric-context">Lifetime clicks / impressions, Search Console</div>
+      <div class="metric-source">Mar 2025&ndash;Jun 2026 export</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">519</div>
+      <div class="metric-context">Total sessions, Google Analytics</div>
+      <div class="metric-source">Lifetime export</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-estimated">Estimated</span>
+      <div class="metric-value">6&ndash;12</div>
+      <div class="metric-context">Inbound leads/month at current SEO output</div>
+      <div class="metric-source">SITREP strategic read &mdash; not a counted figure</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-estimated">Estimated</span>
+      <div class="metric-value">~17</div>
+      <div class="metric-context">LinkedIn opportunities at just 1% audience activation</div>
+      <div class="metric-source">SITREP strategic read, ~1,700 qualified followers</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-recommendation">Recommendation</span>
+      <div class="metric-value">2x/wk</div>
+      <div class="metric-context">LinkedIn posting cadence, job-anchored content</div>
+      <div class="metric-source">Operator recommendation</div>
+    </div>
+    <div class="metric-card">
+      <span class="epistemic-tag tag-forecast">Forecast</span>
+      <div class="metric-value">PENDING</div>
+      <div class="metric-context">Google Business Profile metrics &mdash; not yet supplied in this data set</div>
+      <div class="metric-source">Flagged honestly, not fabricated</div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 14. INTERACTIVE TIMELINE -->
+<section id="timeline" aria-labelledby="timeline-h">
+  <div class="section-label">Interactive Timeline</div>
+  <h2 id="timeline-h">The arc, dated.</h2>
+  <div class="timeline" id="timeline-list"></div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 15. COMPETENCY MATRIX -->
+<section id="competency" aria-labelledby="comp-h">
+  <div class="section-label">Competency Matrix</div>
+  <h2 id="comp-h">What this proves, mapped.</h2>
+  <p class="body-text">Hover any row to isolate it. The right-most column is the one that matters most &mdash; it states the capability in terms that have nothing to do with plumbing.</p>
+  <div class="matrix-wrap">
+    <table class="competency" id="comp-table">
+      <thead>
+        <tr><th>Capability</th><th>Evidence</th><th>Artifact</th><th>Business Impact</th><th>Transferability</th></tr>
+      </thead>
+      <tbody id="comp-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- 16. DISPATCH -->
+<section id="dispatch" aria-labelledby="dispatch-h">
+  <div class="section-label">Dispatch</div>
+  <h2 id="dispatch-h" class="sr-only">Dispatch</h2>
+  <p class="reflection-quote">Every business produces signals. Most disappear the moment the job is done. <span class="hl">My work is building the systems that catch them</span> &mdash; long enough for a signal to become a competitive advantage instead of a forgotten callout.</p>
+  <p class="body-text" style="margin-top:2rem;">I didn't go looking for an SEO win here. I went looking for the leak &mdash; the place where real expertise was being produced every day and thrown away. The hardest part was never the search strategy. It was building a loop a non-technical owner could trust without needing to understand it, and reporting on it plainly enough that trust never had to be asked for.</p>
+  <p class="body-text">RECON is not a finished case, and I'm not presenting it as one. The Mortlake cluster is a prototype. CTR optimization is a recommendation, not yet a result. I'd rather you see the system mid-flight, honestly labeled, than a polished result I can't fully stand behind.</p>
+</section>
+
+<hr class="full-divider">
+
+<!-- 17. TRANSFERABLE THINKING -->
+<section id="transfer" class="closer" aria-labelledby="transfer-h">
+  <div class="section-label">Transferable Thinking</div>
+  <h2 id="transfer-h" style="font-size:2rem; max-width:760px;">This was never about plumbing.</h2>
+  <p class="body-text" style="font-size:1.02rem; max-width:720px;">This was about diagnosing a business with no digital memory, building the loop that gives it one, and reporting on it with enough discipline that the owner never had to wonder what was happening. I'd run the same diagnosis on any service business with a field layer and an under-used trust asset sitting idle. If that's the problem in front of you &mdash; that's the conversation worth having.</p>
+  <a href="../index.html#contact" class="closer-cta">Work With Me &rarr;</a>
+</section>
+
+</main>
+
+<footer>
+  RECON Plumbing NSW &mdash; Aurora Digital Foundry Case Study Framework v1 &middot; Evidence locked from recon.md, compiled 2026-06-30
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  function reduceMotion(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  /* ---- HERO: scroll cue + mission board sequenced activation ---- */
+  (function(){
+    var cue = document.getElementById('scroll-cue');
+    var layerTwo = document.getElementById('layer-two');
+    if (cue && layerTwo) {
+      cue.addEventListener('click', function(){
+        layerTwo.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth' });
+      });
+    }
+    var lights = document.querySelectorAll('.mission-light');
+    if ('IntersectionObserver' in window && lights.length) {
+      var lit = false;
+      var boardIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting && !lit) {
+            lit = true;
+            lights.forEach(function(l, i){
+              setTimeout(function(){ l.classList.add('lit'); }, reduceMotion() ? 0 : i * 180);
+            });
+            boardIO.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      boardIO.observe(document.querySelector('.mission-board'));
+    } else {
+      lights.forEach(function(l){ l.classList.add('lit'); });
+    }
+  })();
+
+  /* Scroll-triggered "in-view" class for diagram flow animations, once each */
+  var animTargets = document.querySelectorAll('[data-animate]');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.35 });
+    animTargets.forEach(function(t){ io.observe(t); });
+  } else {
+    animTargets.forEach(function(t){ t.classList.add('in-view'); });
+  }
+
+  /* ---- Instrumentation bar fill ---- */
+  (function(){
+    var fill = document.querySelector('.instrument-bar-fill');
+    if (!fill) return;
+    var panel = document.querySelector('.instrument-panel');
+    var target = fill.getAttribute('data-fill') + '%';
+    if ('IntersectionObserver' in window) {
+      var fio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { fill.style.width = target; fio.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      fio.observe(panel);
+    } else {
+      fill.style.width = target;
+    }
+  })();
+
+  /* Generic helper to build an accessible diagram node (rect + label) */
+  function makeNode(svgNS, x, y, w, h, label, id){
+    var g = document.createElementNS(svgNS, 'g');
+    var rect = document.createElementNS(svgNS, 'rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', y);
+    rect.setAttribute('width', w); rect.setAttribute('height', h);
+    rect.setAttribute('rx', 4);
+    rect.setAttribute('class', 'diagram-node');
+    rect.setAttribute('tabindex', '0');
+    rect.setAttribute('role', 'button');
+    rect.setAttribute('aria-label', label);
+    rect.setAttribute('id', id);
+    var text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', x + w/2); text.setAttribute('y', y + h/2 + 4);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('class', 'diagram-node-label');
+    text.textContent = label;
+    g.appendChild(rect); g.appendChild(text);
+    return { g: g, rect: rect };
+  }
+
+  var svgNS = 'http://www.w3.org/2000/svg';
+
+  /* ---- 1. GROWTH OS DIAGRAM ---- */
+  (function(){
+    var data = [
+      { label: 'Public Presence', detail: 'Website + content surfaces that customers and search engines actually see. See: Search Strategy.', jump: '#search' },
+      { label: 'Lead Capture', detail: 'Outreach + LinkedIn as the inbound and outbound capture layer. See: Outreach Engine.', jump: '#outreach' },
+      { label: 'Operations', detail: 'Field jobs as the raw material for everything downstream. See: Field Capture Engine.', jump: '#field-capture' },
+      { label: 'Growth', detail: 'Suburb clustering, positioning shifts, compounding authority. See: Knowledge Flywheel.', jump: '#flywheel' },
+      { label: 'Intelligence', detail: 'SITREP cadence and decision discipline. See: Executive Decision Loop.', jump: '#decision-loop' }
+    ];
+    var g = document.getElementById('gos-nodes');
+    var detailEl = document.getElementById('gos-detail');
+    var w = 130, h = 60, gap = (800-120-w*5)/4;
+    data.forEach(function(d, i){
+      var x = 120 + i*(w+gap);
+      var n = makeNode(svgNS, x, 70, w, h, d.label, 'gos-n'+i);
+      g.appendChild(n.g);
+      function activate(){
+        document.querySelectorAll('#gos-nodes .diagram-node').forEach(function(el){ el.classList.remove('active'); });
+        n.rect.classList.add('active');
+        detailEl.innerHTML = '<strong>'+d.label+':</strong> ' + d.detail;
+      }
+      n.rect.addEventListener('click', activate);
+      n.rect.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); activate(); } });
+      n.rect.addEventListener('mouseenter', activate);
+    });
+  })();
+
+  /* ---- 2. FIELD CAPTURE PIPELINE ---- */
+  (function(){
+    var data = [
+      { label: 'Job', detail: 'A real completed job: the Boundary Trap installation/replacement case in Sydney.' },
+      { label: 'Blog', detail: 'Job becomes a published article: "Boundary Traps — Sydney\'s Forgotten Plumbing Risk".' },
+      { label: 'Keyword', detail: 'Article targets the boundary trap query cluster (~20–30% of total clicks at points measured).' },
+      { label: 'Search Visibility', detail: 'Result: 101 clicks / 6,573 impressions, average position 9.02 — the strongest non-brand page on the site.' }
+    ];
+    var g = document.getElementById('fc-nodes');
+    var detailEl = document.getElementById('fc-detail');
+    var w = 160, h = 60, gap = (820-100-w*4)/3;
+    data.forEach(function(d, i){
+      var x = 100 + i*(w+gap);
+      var n = makeNode(svgNS, x, 50, w, h, d.label, 'fc-n'+i);
+      g.appendChild(n.g);
+      function activate(){
+        document.querySelectorAll('#fc-nodes .diagram-node').forEach(function(el){ el.classList.remove('active'); });
+        n.rect.classList.add('active');
+        detailEl.textContent = d.detail;
+      }
+      n.rect.addEventListener('click', activate);
+      n.rect.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); activate(); } });
+      n.rect.addEventListener('mouseenter', activate);
+    });
+  })();
+
+  /* ---- 3. KNOWLEDGE FLYWHEEL ---- */
+  (function(){
+    var data = [
+      { label: 'Jobs', angle: -90, detail: 'Real plumbing jobs across Mortlake and greater Sydney generate raw material.' },
+      { label: 'Content', angle: 0, detail: 'Jobs are written up as case-study-style blog posts, suburb by suburb.' },
+      { label: 'Authority', angle: 90, detail: 'Multi-page reinforcement starts building suburb-level search authority — Mortlake is the early prototype (~10–15% of clicks).' },
+      { label: 'Inbound Demand', angle: 180, detail: 'Authority converts into recognition and inbound interest, feeding the next round of jobs.' }
+    ];
+    var g = document.getElementById('fw-nodes');
+    var detailEl = document.getElementById('fw-detail');
+    var cx = 200, cy = 200, r = 150;
+    data.forEach(function(d){
+      var rad = d.angle * Math.PI/180;
+      var x = cx + r*Math.cos(rad) - 65;
+      var y = cy + r*Math.sin(rad) - 25;
+      var n = makeNode(svgNS, x, y, 130, 50, d.label, 'fw-'+d.label.replace(/\s+/g,''));
+      g.appendChild(n.g);
+      function activate(){
+        document.querySelectorAll('#fw-nodes .diagram-node').forEach(function(el){ el.classList.remove('active'); });
+        n.rect.classList.add('active');
+        detailEl.textContent = d.detail;
+      }
+      n.rect.addEventListener('click', activate);
+      n.rect.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); activate(); } });
+      n.rect.addEventListener('mouseenter', activate);
+    });
+  })();
+
+  /* ---- MARKET GRAVITY ---- */
+  (function(){
+    var channels = [
+      { label: 'Google Organic', sessions: 321, angle: -60, color: 'var(--accent)' },
+      { label: 'Direct', sessions: 132, angle: 30, color: '#4fd1ff' },
+      { label: 'ChatGPT Referral', sessions: 21, angle: 130, color: 'var(--internal)' },
+      { label: 'Bing Organic', sessions: 7, angle: 210, color: 'var(--mid)' }
+    ];
+    var g = document.getElementById('mg-nodes');
+    var detailEl = document.getElementById('mg-detail');
+    var cx = 300, cy = 170;
+    var center = document.createElementNS(svgNS,'circle');
+    center.setAttribute('cx', cx); center.setAttribute('cy', cy); center.setAttribute('r', 34);
+    center.setAttribute('fill', 'var(--card-bg)'); center.setAttribute('stroke', 'var(--off-white)'); center.setAttribute('stroke-width','1.5');
+    g.appendChild(center);
+    var clabel = document.createElementNS(svgNS,'text');
+    clabel.setAttribute('x', cx); clabel.setAttribute('y', cy+4); clabel.setAttribute('text-anchor','middle');
+    clabel.setAttribute('class','diagram-node-label'); clabel.textContent = 'RECON';
+    g.appendChild(clabel);
+    var maxSessions = 321;
+    channels.forEach(function(c){
+      var orbitR = 90 + (1 - c.sessions/maxSessions) * 60;
+      var rad = c.angle * Math.PI/180;
+      var nodeR = 16 + (c.sessions/maxSessions)*26;
+      var x = cx + orbitR*Math.cos(rad);
+      var y = cy + orbitR*Math.sin(rad);
+      var orbit = document.createElementNS(svgNS,'circle');
+      orbit.setAttribute('cx', cx); orbit.setAttribute('cy', cy); orbit.setAttribute('r', orbitR);
+      orbit.setAttribute('fill','none'); orbit.setAttribute('stroke','var(--border)'); orbit.setAttribute('stroke-width','1');
+      g.appendChild(orbit);
+      var circ = document.createElementNS(svgNS,'circle');
+      circ.setAttribute('cx', x); circ.setAttribute('cy', y); circ.setAttribute('r', nodeR);
+      circ.setAttribute('fill', 'var(--card-bg)'); circ.setAttribute('stroke', c.color); circ.setAttribute('stroke-width','2');
+      circ.setAttribute('tabindex','0'); circ.setAttribute('role','button');
+      circ.setAttribute('aria-label', c.label + ', ' + c.sessions + ' sessions');
+      g.appendChild(circ);
+      var lbl = document.createElementNS(svgNS,'text');
+      lbl.setAttribute('x', x); lbl.setAttribute('y', y + nodeR + 14); lbl.setAttribute('text-anchor','middle');
+      lbl.setAttribute('class','diagram-node-label'); lbl.setAttribute('font-size','10');
+      lbl.textContent = c.label;
+      g.appendChild(lbl);
+      function activate(){
+        detailEl.textContent = c.label + ': ' + c.sessions + ' sessions (' + ((c.sessions/519)*100).toFixed(1) + '% of total).';
+      }
+      circ.addEventListener('mouseenter', activate);
+      circ.addEventListener('click', activate);
+      circ.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); activate(); } });
+      if (!reduceMotion()) {
+        circ.style.animation = 'pulseFade ' + (3 - (c.sessions/maxSessions)*1.6) + 's ease-in-out infinite';
+      }
+    });
+    var style = document.createElement('style');
+    style.textContent = '@keyframes pulseFade { 0%,100%{opacity:1;} 50%{opacity:0.55;} }';
+    document.head.appendChild(style);
+  })();
+
+  /* ---- POSITIONING TOGGLE ---- */
+  (function(){
+    var beforeBtn = document.getElementById('pos-before-btn');
+    var afterBtn = document.getElementById('pos-after-btn');
+    var panel = document.getElementById('pos-panel');
+    var states = {
+      before: { cls:'before', html: '<div class="quote">&ldquo;Hire us.&rdquo;</div><p style="margin-top:0.75rem;font-size:0.92rem;">Outbound framing centered on persuasion — competing for attention against every other quote in an inbox.</p>' },
+      after: { cls:'after', html: '<div class="quote">&ldquo;We\u2019re already compliant — plug us into your system.&rdquo;</div><p style="margin-top:0.75rem;font-size:0.92rem;">Reframed around CM3 status and procurement-database eligibility — reducing friction at the enterprise level instead of competing on persuasion.</p>' }
+    };
+    function setState(key){
+      panel.className = 'position-panel ' + states[key].cls;
+      panel.innerHTML = states[key].html;
+      beforeBtn.classList.toggle('active', key==='before');
+      afterBtn.classList.toggle('active', key==='after');
+      beforeBtn.setAttribute('aria-pressed', key==='before');
+      afterBtn.setAttribute('aria-pressed', key==='after');
+    }
+    beforeBtn.addEventListener('click', function(){ setState('before'); });
+    afterBtn.addEventListener('click', function(){ setState('after'); });
+  })();
+
+  /* ---- OPS INTELLIGENCE TOGGLE ---- */
+  (function(){
+    var broadBtn = document.getElementById('ops-broad-btn');
+    var targetBtn = document.getElementById('ops-target-btn');
+    var panel = document.getElementById('ops-panel');
+    var states = {
+      broad: 'Broad funnel: all local commercial leads within radius, undifferentiated by sector or recurring-revenue potential.',
+      target: 'Sector-targeted funnel: dental/orthodontics, laundromats/linen services, car & truck wash, commercial kitchens — sectors that cannot tolerate downtime and require ongoing compliance, not just reactive fixes.'
+    };
+    function setState(key){
+      panel.textContent = states[key];
+      broadBtn.classList.toggle('active', key==='broad');
+      targetBtn.classList.toggle('active', key==='target');
+      broadBtn.setAttribute('aria-pressed', key==='broad');
+      targetBtn.setAttribute('aria-pressed', key==='target');
+    }
+    broadBtn.addEventListener('click', function(){ setState('broad'); });
+    targetBtn.addEventListener('click', function(){ setState('target'); });
+  })();
+
+  /* ---- EXECUTIVE DECISION LOOP ---- */
+  (function(){
+    var data = [
+      { date: '24 Feb 2026', detail: 'Blog deliverables reviewed alongside a strategic sitrep — first formal field-to-content cycle documented.' },
+      { date: '23 Feb–3 Mar 2026', detail: 'Outreach volume reported (1,153 touches) alongside the first LinkedIn audience intelligence breakdown — quality over volume established as the read.' },
+      { date: '4 Mar–3 Apr 2026', detail: 'Plain-language brief to the owner: rankings moved 20 → 15, audience is right, consistency is the only gap.' },
+      { date: '4 Mar–6 Apr 2026', detail: 'Market gravity framing introduced: "You are not chasing leads anymore. You are appearing when problems happen, reappearing across channels, building familiarity before contact."' }
+    ];
+    var g = document.getElementById('dl-nodes');
+    var detailEl = document.getElementById('dl-detail');
+    var w = 110, h = 60, gap = (580-120-w*4)/3;
+    data.forEach(function(d, i){
+      var x = 120 + i*(w+gap);
+      var n = makeNode(svgNS, x, 50, w, h, d.date, 'dl-n'+i);
+      g.appendChild(n.g);
+      function activate(){
+        document.querySelectorAll('#dl-nodes .diagram-node').forEach(function(el){ el.classList.remove('active'); });
+        n.rect.classList.add('active');
+        detailEl.innerHTML = '<strong>'+d.date+':</strong> ' + d.detail;
+      }
+      n.rect.addEventListener('click', activate);
+      n.rect.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); activate(); } });
+      n.rect.addEventListener('mouseenter', activate);
+    });
+  })();
+
+  /* ---- OPERATIONS ARCHIVE ---- */
+  var archiveData = [
+    { id:'boundary-traps', cls:'public', title:'Live blog: Boundary Traps article', desc:'Top non-brand performing page, independently viewable now.', date:'Published, ongoing', detail:'recon-plumbing.com.au/plumbing-tips-and-advice/f/boundary-traps-sydneys-forgotten-plumbing-risk — 101 clicks / 6,573 impressions, position 9.02 lifetime.' },
+    { id:'linkedin-page', cls:'public', title:'LinkedIn company page', desc:'Follower count and audience composition publicly viewable.', date:'Ongoing', detail:'Follower growth reported ~30% across the engagement window; audience composition independently checkable on the public profile.' },
+    { id:'gsc-export', cls:'verified', title:'Search Console lifetime export', desc:'Full performance export, Mar 2025–Jun 2026.', date:'Exported 2026-06-30', detail:'639 clicks, 47,814 impressions, 239 pages with traffic, full query and country breakdowns.' },
+    { id:'ga-export', cls:'verified', title:'Google Analytics lifetime export', desc:'Sessions, users, and channel source data.', date:'Exported 2026-06-30', detail:'292 active users, 519 sessions, 51.6s average engagement time, full channel breakdown.' },
+    { id:'sitrep-feb24', cls:'internal', title:'SITREP — 24 Feb 2026', desc:'Operator report including blog deliverables for review.', date:'24 Feb 2026', detail:'Documents the first field-to-content cycle, including the Mortlake RPZD valve case that anchors the Field Capture Engine section above.' },
+    { id:'sitrep-feb23mar3', cls:'internal', title:'SITREP — 23 Feb–3 Mar 2026', desc:'Outreach volume + first LinkedIn audience intelligence report.', date:'23 Feb–3 Mar 2026', detail:'1,153 total outbound touches logged; audience quality analysis introduced as the primary strategic read.' },
+    { id:'sitrep-mar4apr3', cls:'internal', title:'SITREP — 4 Mar–3 Apr 2026', desc:'Ops overview, sector targeting shift, plain-language owner brief.', date:'4 Mar–3 Apr 2026', detail:'Documents the volume → sector-targeted outreach pivot and the Maintenance Gravity Model for content.' },
+    { id:'sitrep-mar4apr6', cls:'internal', title:'SITREP — 4 Mar–6 Apr 2026', desc:'Executive signal: market gravity formation framing.', date:'4 Mar–6 Apr 2026', detail:'Final brief to Tony documenting the shift from outbound-heavy growth to market gravity formation across search, LinkedIn, and outreach.' },
+    { id:'gbp-pending', cls:'pending', title:'Google Business Profile metrics', desc:'Not yet supplied in this data set.', date:'Pending', detail:'Flagged explicitly rather than fabricated or omitted silently — per Foundry doctrine, missing data is marked, never invented.' }
+  ];
+
+  (function(){
+    var grid = document.getElementById('archive-grid');
+    var countEl = document.getElementById('archive-count');
+    var filters = document.querySelectorAll('.filter-btn');
+    var activeFilters = new Set(['public','verified','internal','pending']);
+
+    function render(){
+      grid.innerHTML = '';
+      var shown = 0;
+      archiveData.forEach(function(item, idx){
+        if (!activeFilters.has(item.cls)) return;
+        shown++;
+        var card = document.createElement('div');
+        card.className = 'archive-card';
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role','button');
+        card.setAttribute('aria-expanded','false');
+        card.setAttribute('data-class', item.cls);
+        card.setAttribute('data-id', item.id);
+        card.innerHTML =
+          '<div class="archive-card-head"><span class="archive-card-title">'+item.title+'</span><span class="archive-card-class">'+item.cls+'</span></div>' +
+          '<div class="archive-card-desc">'+item.desc+'</div>' +
+          '<div class="archive-card-detail">'+item.detail+'<div class="archive-card-date">'+item.date+'</div></div>';
+        function toggle(){
+          var exp = card.classList.toggle('expanded');
+          card.setAttribute('aria-expanded', exp);
+        }
+        card.addEventListener('click', toggle);
+        card.addEventListener('keydown', function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); toggle(); } });
+        grid.appendChild(card);
+      });
+      countEl.textContent = shown + ' of ' + archiveData.length + ' evidence items currently visible';
+    }
+
+    filters.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var f = btn.getAttribute('data-filter');
+        var pressed = btn.getAttribute('aria-pressed') === 'true';
+        if (pressed) { activeFilters.delete(f); btn.setAttribute('aria-pressed','false'); }
+        else { activeFilters.add(f); btn.setAttribute('aria-pressed','true'); }
+        render();
+      });
+    });
+    render();
+
+    /* Cross-link: Timeline → Archive jump + expand + highlight */
+    window.__jumpToArchive = function(id){
+      filters.forEach(function(btn){ btn.setAttribute('aria-pressed','true'); activeFilters.add(btn.getAttribute('data-filter')); });
+      render();
+      requestAnimationFrame(function(){
+        var target = grid.querySelector('[data-id="'+id+'"]');
+        if (!target) return;
+        target.classList.add('expanded');
+        target.setAttribute('aria-expanded','true');
+        document.getElementById('archive').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+        target.classList.add('archive-card-flash');
+        setTimeout(function(){ target.classList.remove('archive-card-flash'); }, 1600);
+        target.focus();
+      });
+    };
+  })();
+
+  /* ---- TIMELINE ---- */
+  var timelineData = [
+    { date: '01 Mar 2025', title: 'Data window opens', detail: 'Earliest point in the lifetime Search Console export. Site visibility effectively negligible at this stage (average position outside 40).', archiveRef: 'gsc-export' },
+    { date: '24 Feb 2026', title: 'Field-to-content cycle documented', detail: 'First SITREP pairing real job casework (Mortlake RPZD valve replacement) with a published blog deliverable.', archiveRef: 'sitrep-feb24' },
+    { date: '23 Feb–3 Mar 2026', title: 'Outreach peak + LinkedIn intelligence established', detail: '1,153 outbound touches logged; first formal audience composition analysis identifies a procurement-grade LinkedIn following.', archiveRef: 'sitrep-feb23mar3' },
+    { date: '4 Mar–3 Apr 2026', title: 'Sector-targeting pivot', detail: 'Outreach shifts from volume to "Water-Gravity" sectors (dental, laundromats, kitchens); average search position improves from ~20 to ~15.', archiveRef: 'sitrep-mar4apr3' },
+    { date: '4 Mar–6 Apr 2026', title: 'Market gravity framing', detail: 'Final brief reframes the engagement: RECON is no longer chasing leads, it is becoming the default familiar supplier across search, LinkedIn, and outreach.', archiveRef: 'sitrep-mar4apr6' },
+    { date: '30 Jun 2026', title: 'Recon locked for case study', detail: 'Lifetime data export consolidated against all four SITREPs into the immutable evidence source for this debrief.', archiveRef: 'ga-export' }
+  ];
+  (function(){
+    var list = document.getElementById('timeline-list');
+    timelineData.forEach(function(item, i){
+      var el = document.createElement('div');
+      el.className = 'timeline-item';
+      var evidenceBtn = item.archiveRef ? '<button class="timeline-evidence-link" data-ref="'+item.archiveRef+'">View Evidence →</button>' : '';
+      el.innerHTML =
+        '<div class="timeline-date">'+item.date+'</div>' +
+        '<div class="timeline-title">'+item.title+'</div>' +
+        '<button class="timeline-toggle" aria-expanded="false">Expand</button>' +
+        '<div class="timeline-detail">'+item.detail+evidenceBtn+'</div>';
+      var btn = el.querySelector('.timeline-toggle');
+      btn.addEventListener('click', function(){
+        var exp = el.classList.toggle('expanded');
+        btn.setAttribute('aria-expanded', exp);
+        btn.textContent = exp ? 'Collapse' : 'Expand';
+      });
+      var ev = el.querySelector('.timeline-evidence-link');
+      if (ev) {
+        ev.addEventListener('click', function(){
+          if (window.__jumpToArchive) window.__jumpToArchive(ev.getAttribute('data-ref'));
+        });
+      }
+      list.appendChild(el);
+    });
+  })();
+
+  /* ---- DIAGRAM REPLAY (click-to-play) ---- */
+  (function(){
+    function restartFlowLine(prefix){
+      var wrap = document.getElementById(prefix+'-nodes');
+      if (!wrap) return;
+      var svgWrap = wrap.closest('[data-animate]');
+      if (!svgWrap) return;
+      var path = svgWrap.querySelector('.anim-flow');
+      if (!path || reduceMotion()) return;
+      path.style.animation = 'none';
+      void path.offsetWidth; /* force reflow to restart animation */
+      path.style.animation = '';
+    }
+    function playSequence(prefix){
+      var nodes = document.querySelectorAll('#'+prefix+'-nodes .diagram-node');
+      if (!nodes.length) return;
+      restartFlowLine(prefix);
+      var btn = document.querySelector('.diagram-play-btn[data-play="'+prefix+'"]');
+      if (btn) btn.disabled = true;
+      var step = reduceMotion() ? 0 : 550;
+      nodes.forEach(function(node, i){
+        setTimeout(function(){
+          node.dispatchEvent(new Event('mouseenter'));
+          if (btn && i === nodes.length - 1) setTimeout(function(){ btn.disabled = false; }, 200);
+        }, i * step);
+      });
+    }
+    document.querySelectorAll('.diagram-play-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ playSequence(btn.getAttribute('data-play')); });
+    });
+  })();
+
+  /* ---- COMPETENCY MATRIX ---- */
+  var matrixData = [
+    { cap:'Field Capture Design', evidence:'Boundary Traps post: 101 clicks / 6,573 impressions, pos 9.02', artifact:'Job → Blog → Keyword pipeline', impact:'Converts daily field work into compounding search assets', transfer:'Designing operational data-capture loops that feed marketing automatically — applicable to any service business with a field layer' },
+    { cap:'Audience Intelligence', evidence:'LinkedIn: ~21% Real Estate, ~57–74% Senior/Manager+', artifact:'Three sequential audience composition reports', impact:'Confirms procurement-grade attention before investing in activation', transfer:'Reading audience composition data to validate (or kill) a channel before scaling spend or effort on it' },
+    { cap:'CTR Diagnosis', evidence:'1.34% site CTR vs 2.5–4% category target', artifact:'Search Console lifetime export analysis', impact:'Identifies the fastest available lever with zero ranking risk', transfer:'Finding the cheapest lever in any funnel by separating volume problems from conversion problems' },
+    { cap:'Positioning Reframe', evidence:'"Hire us" → "We\u2019re already compliant — plug us in"', artifact:'Outreach + LinkedIn messaging shift', impact:'Reduces enterprise sales friction without a pricing or product change', transfer:'Reframing a value proposition around the buyer\u2019s existing process, not the seller\u2019s pitch' },
+    { cap:'Executive Communication', evidence:'Four SITREPs, consistent plain-language closing brief', artifact:'SITREP cadence + Tony-facing summaries', impact:'Maintains stakeholder trust under a long, technical engagement', transfer:'Translating technical execution into a non-technical decision-maker\u2019s next 3 actions, every cycle' },
+    { cap:'Evidence Discipline', evidence:'Pending GBP data flagged, not fabricated', artifact:'This case study\u2019s own Operations Archive', impact:'Preserves long-term credibility over short-term polish', transfer:'Refusing to blur Observed/Estimated/Recommendation/Forecast in any reporting context' }
+  ];
+  (function(){
+    var tbody = document.getElementById('comp-tbody');
+    var rows = [];
+    matrixData.forEach(function(d){
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td data-label="Capability" class="matrix-capability">'+d.cap+'</td>' +
+        '<td data-label="Evidence">'+d.evidence+'</td>' +
+        '<td data-label="Artifact">'+d.artifact+'</td>' +
+        '<td data-label="Business Impact">'+d.impact+'</td>' +
+        '<td data-label="Transferability" class="matrix-transfer">'+d.transfer+'</td>';
+      tbody.appendChild(tr);
+      rows.push(tr);
+    });
+    rows.forEach(function(tr){
+      tr.addEventListener('mouseenter', function(){
+        rows.forEach(function(r){ if(r!==tr) r.classList.add('dim'); });
+      });
+      tr.addEventListener('mouseleave', function(){
+        rows.forEach(function(r){ r.classList.remove('dim'); });
+      });
+    });
+  })();
+
+})();
+</script>
+
+</body>
+</html>

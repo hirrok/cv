@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content Pillar Architect — Hirro Kuizon</title>
+<title>Content Pillar Architect | Hirro Kuizon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -358,7 +358,7 @@ async function generate() {
   document.getElementById('input-panel-wrap').classList.add('hidden');
   document.getElementById('st-spin').classList.remove('hidden');
 
-  var systemPrompt = 'You are an expert content strategist. You create structured 90-day content strategies for businesses. Always respond with valid JSON only — no markdown, no preamble, no explanation.';
+  var systemPrompt = 'You are an expert content strategist. You create structured 90-day content strategies for businesses. Always respond with valid JSON only; no markdown, no preamble, no explanation.';
 
   var userPrompt = 'Create a 90-day content strategy for this business:\n\n' +
     'Niche: ' + nicheLabel + '\n' +
@@ -369,7 +369,7 @@ async function generate() {
     'Platforms: ' + platforms.join(', ') + '\n\n' +
     'Return this exact JSON structure:\n' +
     '{\n' +
-    '  "title": "<Niche> — 90-Day Content Strategy",\n' +
+    '  "title": "<Niche>: 90-Day Content Strategy",\n' +
     '  "summary": "<2 sentences: strategic direction and goal emphasis>",\n' +
     '  "posts_per_month": <integer>,\n' +
     '  "pillars": [\n' +
@@ -436,7 +436,7 @@ async function generate() {
 function buildResults(r, platforms, nicheLabel, audLabel, goalLabel) {
   var COLORS = ['#c8f135','#f5c842','#c8f135','#f5c842'];
 
-  document.getElementById('r-title').textContent  = r.title || (nicheLabel + ' — 90-Day Content Strategy');
+  document.getElementById('r-title').textContent  = r.title || (nicheLabel + ': 90-Day Content Strategy');
   document.getElementById('r-sub').textContent    = r.summary || ('Designed for ' + audLabel);
   document.getElementById('r-postcount').textContent = '~' + (r.posts_per_month || platforms.length * 12);
   document.getElementById('r-platforms').textContent = platforms.length;

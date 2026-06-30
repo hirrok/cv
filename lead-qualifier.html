@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lead Qualifier Bot — Hirro Kuizon</title>
+<title>Lead Qualifier Bot | Hirro Kuizon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -484,7 +484,7 @@
       <select id="budget">
         <option value="">Unknown / not discussed</option>
         <option>Price-sensitive / tight budget</option>
-        <option>Moderate — willing to invest if ROI is clear</option>
+        <option>Moderate: willing to invest if ROI is clear</option>
         <option>Ready to spend for the right solution</option>
       </select>
     </div>
@@ -594,7 +594,7 @@ async function runQualifier() {
 
   const systemPrompt = `You are an expert sales qualifier for a digital growth and AI systems operator based in the Philippines. 
 You analyze prospects for fit, pain acuity, budget viability, and conversion likelihood.
-You always respond with a single valid JSON object only — no markdown, no explanation, no preamble.`;
+You always respond with a single valid JSON object only; no markdown, no explanation, no preamble.`;
 
   const userPrompt = `Qualify this prospect and return a JSON brief.
 

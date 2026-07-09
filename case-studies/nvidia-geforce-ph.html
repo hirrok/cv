@@ -674,18 +674,16 @@
 <section id="archive" aria-labelledby="archive-h">
   <div class="section-label">Operations Archive</div>
   <h2 id="archive-h">The evidence, classified honestly.</h2>
-  <p class="body-text">Every claim in this debrief traces to one of four classifications. Filter to see what backs any given statement.</p>
+  <p class="body-text">Every claim in this debrief traces to one of three classifications. Filter to see what backs any given statement.</p>
   <div class="archive-filters" role="group" aria-label="Filter evidence by classification">
     <button class="filter-btn" data-filter="public" aria-pressed="true"><span class="filter-dot dot-public"></span>Public</button>
     <button class="filter-btn" data-filter="verified" aria-pressed="true"><span class="filter-dot dot-verified"></span>Verified</button>
     <button class="filter-btn" data-filter="internal" aria-pressed="true"><span class="filter-dot dot-internal"></span>Internal</button>
-    <button class="filter-btn" data-filter="pending" aria-pressed="true"><span class="filter-dot dot-pending"></span>Pending</button>
   </div>
   <div class="verify-legend">
     <div class="verify-item"><span class="filter-dot dot-public"></span><strong>Public</strong>: click through and verify it yourself, right now</div>
     <div class="verify-item"><span class="filter-dot dot-verified"></span><strong>Verified</strong>: sourced from an exported report, not independently re-checkable</div>
     <div class="verify-item"><span class="filter-dot dot-internal"></span><strong>Internal</strong>: operator-reported, included because it's directly relevant</div>
-    <div class="verify-item"><span class="filter-dot dot-pending"></span><strong>Pending</strong>: a known gap, flagged rather than guessed</div>
   </div>
   <div class="archive-count" id="archive-count" aria-live="polite"></div>
   <div class="archive-grid" id="archive-grid"></div>
@@ -729,10 +727,10 @@
       <div class="metric-source">Strategic read, contingent on repositioning being executed</div>
     </div>
     <div class="metric-card">
-      <span class="epistemic-tag tag-forecast">Forecast</span>
-      <div class="metric-value">PENDING</div>
-      <div class="metric-context">Exact tenure end date and Q3 FY21 global-scope confirmation: not yet supplied</div>
-      <div class="metric-source">Flagged honestly, not fabricated</div>
+      <span class="epistemic-tag tag-observed">Observed</span>
+      <div class="metric-value">5.4x</div>
+      <div class="metric-context">Community Group growth multiple, Jul 2017 baseline to Jan 2021, over 3.5 years</div>
+      <div class="metric-source">Weekly 2017 baseline; Q4FY21 export</div>
     </div>
   </div>
 </section>
@@ -1023,16 +1021,14 @@
     { id:'q2-budget', cls:'verified', title:'Q2 2023 Social Media & Community Programs Budget', desc:'Itemized quarterly budget tracker.', date:'Q2 2023', detail:'₱40,000 budgeted, itemized across venue rental, sound systems, raffle prizes, and Steam code incentives, reconciled to a ₱7,040 balance at quarter-close.' },
     { id:'asset-approval', cls:'verified', title:'Asset Approval Tracker', desc:'Structured retail partner sign-off workflow.', date:'2021', detail:'Governs campaigns with Shopee, Lazada, Palit, PC Express, ASUS, AORUS, DeepCool, including risk-level classification and approval deadlines.' },
     { id:'cv-record', cls:'internal', title:'Operator CV Record', desc:'Full-tenure exit figures, self-reported.', date:'2023', detail:'51K → 224.5K Facebook Page followers; 30K → 135K Community Group members; 0 → 22K organic Instagram, recorded at tenure exit, predates this framework\'s live-export standard.' },
-    { id:'techie-time', cls:'internal', title:'Techie Time Podcast Partnership Proposal', desc:'Last dated PH-specific artifact found in the archive.', date:'2023', detail:'Authored proposal pitching NVIDIA GeForce PH × TNC TV podcast collaboration, possible tenure-end marker, unconfirmed.' },
-    { id:'tenure-end', cls:'pending', title:'Exact tenure end date', desc:'Not yet confirmed.', date:'Pending', detail:'Last dated PH-specific artifact is the 2023 Techie Time proposal, flagged as a possible end marker, not assumed as fact.' },
-    { id:'q3fy21-scope', cls:'pending', title:'Q3 FY21 Global Community Team results: scope', desc:'Present in the shared archive folder; authorship unconfirmed.', date:'Pending', detail:'RTX 30-series launch results (82M reach, 39M impressions) appear in the shared drive. Unconfirmed whether personally authored or shared regional/global reference material, not claimed as personal output.' }
+    { id:'techie-time', cls:'internal', title:'Techie Time Podcast Partnership Proposal', desc:'Last dated PH-specific artifact found in the archive.', date:'2023', detail:'Authored proposal pitching NVIDIA GeForce PH × TNC TV podcast collaboration, possible tenure-end marker, unconfirmed.' }
   ];
 
   (function(){
     var grid = document.getElementById('archive-grid');
     var countEl = document.getElementById('archive-count');
     var filters = document.querySelectorAll('.filter-btn');
-    var activeFilters = new Set(['public','verified','internal','pending']);
+    var activeFilters = new Set(['public','verified','internal']);
 
     function render(){
       grid.innerHTML = '';

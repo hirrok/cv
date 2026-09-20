@@ -417,6 +417,7 @@
     .field label { font-size: .63rem; }
     .cta { font-size: .72rem; padding: .75rem; }
   }
+.demo-note{font:0.875rem/1.6 Inter,Arial,sans-serif;color:#c0c7ce;margin-top:1rem;max-width:46rem} a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #c8f135;outline-offset:3px}
 </style>
 </head>
 <body>
@@ -429,10 +430,10 @@
 <div class="tool-header">
   <div class="tool-eyebrow">
     <span class="live-dot"></span>
-    Live Tool · Demo 01
+    AI-assisted demo · 01
   </div>
   <h1 class="tool-title">Lead <span>Qualifier</span> Bot</h1>
-  <p class="tool-desc">Drop in a prospect's details. Get a structured qualification brief: pain score, budget signal, fit assessment, and your exact next move. Powered by Llama 3.3 via Groq.</p>
+  <p class="tool-desc">Drop in a prospect's details. Get a structured qualification brief: pain score, budget signal, fit assessment, and a suggested next step. Treat budget and fit assessments as hypotheses to confirm.</p><p class="demo-note">External AI service: availability unverified. Use fictional or non-sensitive inputs; submitted text is sent to a third-party AI service. Outputs are drafts for human review.</p>
 </div>
 
 <div class="tool-body">
@@ -618,9 +619,12 @@ Return this exact JSON shape:
   "next_action": "<One hyper-specific action to take within 48 hours>"
 }`;
 
+  const controller = new AbortController();
+  const requestTimer = setTimeout(() => controller.abort(), 30000);
   try {
     const res = await fetch(GROQ_URL, {
       method: 'POST',
+      signal: controller.signal,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -665,10 +669,11 @@ Return this exact JSON shape:
     document.getElementById('loading-state').classList.remove('visible');
     const empty = document.getElementById('empty-state');
     empty.style.display = 'flex';
-    empty.querySelector('p').textContent = 'Analysis failed. Check console and try again.';
+    empty.querySelector('p').textContent = 'The AI service is unavailable or returned an invalid response. Your inputs are retained; please try again later.';
     console.error('Groq error:', err);
   }
 
+  clearTimeout(requestTimer);
   document.getElementById('qualify-btn').disabled = false;
 }
 

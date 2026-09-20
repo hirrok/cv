@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI ROI Estimator | Hirro Kuizon</title>
+<title>Automation Opportunity Calculator | Hirro Kuizon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -54,7 +54,7 @@ body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-hei
 
 .field{margin-bottom:1.1rem}
 .field-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.35rem}
-.field-label span{font-size:.67rem;color:var(--md);letter-spacing:.08em;text-transform:uppercase}
+.field-label label,.field-label span{font-size:.67rem;color:var(--md);letter-spacing:.08em;text-transform:uppercase}
 .field-hint{font-size:.63rem;color:var(--md);opacity:.6}
 
 .input-wrap{position:relative}
@@ -152,9 +152,9 @@ select option{background:#111;color:#f0ede8}
 </div>
 
 <div class="hd">
-  <div class="eyebrow"><span class="dot"></span>Live Tool &middot; Demo 03</div>
-  <h1 class="title">AI &amp; Automation <span>ROI Estimator</span></h1>
-  <p class="desc">Enter your current business numbers. Get a projected return on investing in AI-augmented systems : time saved, revenue unlocked, and the cost of doing nothing.</p>
+  <div class="eyebrow"><span class="dot"></span>Rule-based calculator &middot; Demo 03</div>
+  <h1 class="title">Automation <span>Opportunity Calculator</span></h1>
+  <p class="desc">Explore a time-saving scenario using your own assumptions. Capacity value is not cash savings, profit, or a forecast of additional revenue. This calculator does not calculate ROI.</p>
 </div>
 
 <div class="main">
@@ -165,8 +165,8 @@ select option{background:#111;color:#f0ede8}
 
     <div class="field">
       <div class="field-label">
-        <span>Monthly Revenue</span>
-        <span class="field-hint">PHP or your currency</span>
+        <label for="revenue">Monthly Revenue</label>
+        <span class="field-hint">PHP</span>
       </div>
       <div class="input-wrap">
         <span class="prefix">₱</span>
@@ -176,7 +176,7 @@ select option{background:#111;color:#f0ede8}
 
     <div class="field">
       <div class="field-label">
-        <span>Team Size</span>
+        <label for="team">Team Size</label>
         <span class="field-hint">including yourself</span>
       </div>
       <div class="input-wrap">
@@ -186,7 +186,7 @@ select option{background:#111;color:#f0ede8}
 
     <div class="field">
       <div class="field-label">
-        <span>Hours lost to manual / repetitive tasks per week</span>
+        <label for="hours">Team-wide repetitive task hours per week</label>
       </div>
       <div class="input-wrap">
         <input type="number" id="hours" placeholder="15" min="0" max="80" class="no-prefix">
@@ -195,23 +195,13 @@ select option{background:#111;color:#f0ede8}
     </div>
 
     <div class="field">
-      <div class="field-label">
-        <span>Primary business type</span>
-      </div>
-      <select class="field-select" id="biztype">
-        <option value="service">Service Business (agency, consulting, freelance)</option>
-        <option value="retail">Retail / E-commerce</option>
-        <option value="food">Restaurant / Food Service</option>
-        <option value="health">Health &amp; Wellness</option>
-        <option value="trades">Construction / Trades</option>
-        <option value="saas">Technology / SaaS</option>
-        <option value="other">Other</option>
-      </select>
+      <div class="field-label"><label for="recovery">Assumed share of task time recovered (%)</label></div>
+      <div class="input-wrap"><input type="number" id="recovery" value="20" min="0" max="100" class="no-prefix"></div>
     </div>
 
     <div class="field">
       <div class="field-label">
-        <span>Biggest operational bottleneck</span>
+        <label for="bottleneck">Biggest operational bottleneck</label>
       </div>
       <select class="field-select" id="bottleneck">
         <option value="leads">Getting consistent leads</option>
@@ -225,7 +215,7 @@ select option{background:#111;color:#f0ede8}
 
     <div class="field">
       <div class="field-label">
-        <span>Current monthly spend on marketing / growth</span>
+        <label for="mktspend">Current monthly spend on marketing / growth</label>
       </div>
       <div class="input-wrap">
         <span class="prefix">₱</span>
@@ -233,12 +223,12 @@ select option{background:#111;color:#f0ede8}
       </div>
     </div>
 
-    <button class="cta" onclick="calculate()">Calculate My ROI &rarr;</button>
+    <button class="cta" onclick="calculate()">Explore Scenario &rarr;</button>
   </div>
 
   <!-- OUTPUT PANEL -->
   <div class="out-panel">
-    <span class="out-lbl">ROI Projection</span>
+    <span class="out-lbl">Illustrative Scenario</span>
 
     <div class="idle-state" id="st-idle">
       <span class="idle-icon">&#x25CC;</span>
@@ -250,32 +240,32 @@ select option{background:#111;color:#f0ede8}
         <circle class="spin-track" cx="18" cy="18" r="14"/>
         <circle class="spin-arc" cx="18" cy="18" r="14"/>
       </svg>
-      <span class="spin-txt">Calculating your ROI...</span>
+      <span class="spin-txt">Calculating your scenario...</span>
     </div>
 
     <div class="results hidden" id="st-results">
 
       <div class="headline-metric">
-        <div class="hm-label">Projected 12-Month Value Unlocked</div>
+        <div class="hm-label">Illustrative Annual Capacity Value</div>
         <div class="hm-value" id="r-headline">₱0</div>
         <div class="hm-sub" id="r-headline-sub"></div>
       </div>
 
       <div class="metrics-grid">
         <div class="metric-card">
-          <div class="mc-label">Hours Recovered / Year</div>
+          <div class="mc-label">Potential Hours Recovered / Year</div>
           <div class="mc-value green" id="r-hours"></div>
         </div>
         <div class="metric-card">
-          <div class="mc-label">Revenue Capacity Gain</div>
+          <div class="mc-label">Revenue per Team Hour (Proxy)</div>
           <div class="mc-value green" id="r-revcap"></div>
         </div>
         <div class="metric-card">
-          <div class="mc-label">Estimated Automation Saving</div>
+          <div class="mc-label">Cash Savings</div>
           <div class="mc-value" id="r-saving"></div>
         </div>
         <div class="metric-card">
-          <div class="mc-label">Mktg Efficiency Uplift</div>
+          <div class="mc-label">Annual Marketing Spend (Context)</div>
           <div class="mc-value amber" id="r-mkt"></div>
         </div>
       </div>
@@ -286,12 +276,12 @@ select option{background:#111;color:#f0ede8}
       </div>
 
       <div class="insight-block">
-        <div class="ib-label">Highest-Leverage First Move</div>
+        <div class="ib-label">Suggested Small Experiment</div>
         <p class="ib-text" id="r-firstmove"></p>
       </div>
 
       <div class="coi-block">
-        <div class="coi-label">Cost of Inaction (12 months)</div>
+        <div class="coi-label">How to Interpret This</div>
         <p class="coi-text" id="r-coi"></p>
       </div>
 
@@ -304,152 +294,66 @@ select option{background:#111;color:#f0ede8}
 <div class="assumptions">
   <div class="ass-title">Model Assumptions</div>
   <div class="ass-list">
-    <span class="ass-tag">40% avg task automation rate</span>
-    <span class="ass-tag">Conservative revenue upside estimates</span>
-    <span class="ass-tag">PHP-denominated defaults</span>
-    <span class="ass-tag">SME baseline (1–50 staff)</span>
-    <span class="ass-tag">12-month projection window</span>
-    <span class="ass-tag">Estimates vary by implementation quality</span>
+    <span class="ass-tag">Recovery rate is your assumption, not an industry benchmark</span>
+    <span class="ass-tag">52 weeks per year</span>
+    <span class="ass-tag">160 working hours per person per month</span>
+    <span class="ass-tag">Revenue per hour is a rough capacity proxy, not wages or profit</span>
+    <span class="ass-tag">Implementation and running costs are not included</span>
+
   </div>
 </div>
 
 <div class="footer">
   <span>Built by Hirro Kuizon</span>
-  <span>AI &amp; Automation ROI Model, pure JS</span>
+  <span>Rule-based time and capacity scenario</span>
 </div>
 
 <script>
-// ─── BOTTLENECK CONFIG ─────────────────────────────────────────────
 var BOTTLENECKS = {
-  leads: {
-    analysis: 'Inconsistent lead flow is the highest-cost problem a business can have: it means revenue is unpredictable and every month starts from zero. AI-augmented lead generation (content systems, SEO automation, and lead scoring) typically reduces cost-per-lead by 30–50% while increasing volume.',
-    move: 'Deploy a lead qualification system and automated follow-up sequence. A prospect who doesn\'t hear from you within 2 hours is 7× less likely to convert. Automate the first 3 touchpoints so speed-to-lead is no longer dependent on your availability.',
-    multiplier: 1.35
-  },
-  followup: {
-    analysis: 'Manual follow-up is where deals go to die. Studies show 80% of sales require 5+ follow-ups, but 44% of salespeople give up after one. An automated sequence ensures every prospect is followed up systematically, without owner intervention.',
-    move: 'Build a 5-step follow-up sequence: Day 0 (instant), Day 2 (value add), Day 5 (case study), Day 9 (objection pre-empt), Day 14 (close or park). This alone typically lifts conversion rates by 20–35%.',
-    multiplier: 1.25
-  },
-  content: {
-    analysis: 'Manual content creation is a time sink with no compounding return. A systematized content operation, using pillar strategy, templates, and repurposing workflows, produces 3–5× more output per hour invested while building long-term organic reach.',
-    move: 'Implement a content multiplication system: one anchor piece per week → 5 derivative assets (clips, captions, carousels, email, story). This triples your content output without tripling your time.',
-    multiplier: 1.20
-  },
-  admin: {
-    analysis: 'Admin tasks are the silent revenue killer. Reporting, documentation, and data entry consume high-cost human time for low-value work. This is the highest-ROI category for AI automation; most admin tasks can be 70–90% automated.',
-    move: 'Audit your last 5 hours of admin work and identify the 3 most repetitive tasks. These are your automation targets. Start with automated reporting and templated documentation, which typically recovers 8–12 hours per week per person.',
-    multiplier: 1.30
-  },
-  fulfillment: {
-    analysis: 'Fulfillment bottlenecks cap revenue directly: you can\'t sell what you can\'t deliver. Systemizing delivery through SOPs, templates, and client onboarding automation removes the ceiling on capacity.',
-    move: 'Document your fulfillment process as a step-by-step SOP, then identify which steps can be templated or automated. A standardized onboarding flow alone reduces fulfillment time by 25–40% per client.',
-    multiplier: 1.15
-  },
-  customerservice: {
-    analysis: 'Unmanaged customer service is a churn accelerator. Every unanswered inquiry is a competitor opportunity. AI-powered FAQ systems and automated response workflows can handle 60 to 70 percent of common inquiries instantly, around the clock.',
-    move: 'Build an FAQ automation layer: identify your 10 most common questions, create templated responses, and deploy an auto-reply with those answers. This immediately reduces response time from hours to seconds.',
-    multiplier: 1.20
-  }
+  leads: ['Review where inquiries come from and which lead sources produce qualified conversations.', 'Track inquiries from one channel for two weeks before adding automation.'],
+  followup: ['Check whether delayed follow-ups are causing missed conversations.', 'Trial a reminder and response template; measure response time and replies.'],
+  content: ['Identify repeatable research, drafting, and publishing steps.', 'Template one recurring format and compare production time while reviewing quality.'],
+  admin: ['Identify repetitive reporting or documentation tasks with clear inputs and outputs.', 'Automate one low-risk step and measure time saved, errors, and review effort.'],
+  fulfillment: ['Look for repeated handoffs or information requests that delay delivery.', 'Trial a checklist for one service and compare completion time.'],
+  customerservice: ['Group recurring inquiries before deciding which replies can be standardized.', 'Trial reviewed templates for common questions, with a route to human support.']
 };
-
-// ─── BIZ TYPE MULTIPLIERS ──────────────────────────────────────────
-var BIZ_MULT = {
-  service:  1.30,
-  retail:   1.20,
-  food:     1.10,
-  health:   1.25,
-  trades:   1.15,
-  saas:     1.35,
-  other:    1.20
-};
-
-// ─── HELPERS ───────────────────────────────────────────────────────
-function fmt(n) {
-  return '₱' + Math.round(n).toLocaleString('en-PH');
-}
-
+function fmt(n) { return '₱' + Math.round(n).toLocaleString('en-PH'); }
 function show(id) {
   ['st-idle','st-spin','st-results'].forEach(function(s) {
     document.getElementById(s).classList.toggle('hidden', s !== id);
   });
 }
-
-// ─── CORE CALCULATION ──────────────────────────────────────────────
-function calculate() {
-  var revenue   = parseFloat(document.getElementById('revenue').value) || 0;
-  var team      = parseFloat(document.getElementById('team').value) || 1;
-  var hours     = parseFloat(document.getElementById('hours').value) || 0;
-  var mktspend  = parseFloat(document.getElementById('mktspend').value) || 0;
-  var biztype   = document.getElementById('biztype').value;
-  var bottleneck = document.getElementById('bottleneck').value;
-
-  if (!revenue || !hours) {
-    alert('Please enter your monthly revenue and weekly hours lost to manual tasks.');
-    return;
+function computeScenario(revenue, team, hours, recovery, mktspend) {
+  if (![revenue,team,hours,recovery,mktspend].every(Number.isFinite) ||
+      revenue < 0 || !Number.isInteger(team) || team < 1 || hours < 0 || hours > 80 ||
+      recovery < 0 || recovery > 100 || mktspend < 0 || hours > team * 160 * 12 / 52) {
+    throw new Error('Use non-negative numbers, a whole-number team size of at least 1, a recovery rate from 0 to 100%, and weekly hours within team capacity (maximum 80 for this demo).');
   }
-
-  show('st-spin');
-
-  setTimeout(function() {
-    var bizMult  = BIZ_MULT[biztype] || 1.20;
-    var bnConfig = BOTTLENECKS[bottleneck];
-    var bnMult   = bnConfig.multiplier;
-
-    // Hours recovered: 40% automation rate of manual hours
-    var hoursPerYear     = hours * 52;
-    var hoursRecovered   = Math.round(hoursPerYear * 0.40);
-
-    // Revenue per hour (rough: monthly rev / (team * 160hrs/mo))
-    var revPerHour = revenue / (team * 160);
-
-    // Revenue capacity gain: recovered hours × rev/hr × biz multiplier
-    var revCapGain = hoursRecovered * revPerHour * bizMult;
-
-    // Marketing efficiency: if spending on mkt, 25% uplift from better systems
-    var mktUplift = mktspend > 0 ? mktspend * 12 * 0.25 : revenue * 0.08;
-
-    // Automation cost saving: admin/tool overhead reduction (conservative ₱3k/mo per team member)
-    var autoSaving = team * 3000 * 12;
-
-    // Total 12-month value
-    var total = revCapGain + mktUplift + autoSaving;
-
-    // Cost of inaction: lost revenue + time cost + competitive erosion
-    var coiTime = hoursRecovered * revPerHour; // time never converted
-    var coiComp = revenue * 12 * 0.05;          // 5% competitive erosion est.
-    var coiTotal = coiTime + coiComp + (mktspend * 12 * 0.15);
-
-    // Marketing efficiency label
-    var mktLabel = mktspend > 0
-      ? fmt(mktUplift) + ' uplift on existing spend'
-      : fmt(mktUplift) + ' est. organic value';
-
-    // Populate output
-    document.getElementById('r-headline').textContent = fmt(total);
-    document.getElementById('r-headline-sub').textContent =
-      'Across time recovery, revenue capacity, and system efficiency gains over 12 months.';
-
-    document.getElementById('r-hours').textContent = hoursRecovered.toLocaleString() + ' hrs';
-    document.getElementById('r-revcap').textContent = fmt(revCapGain);
-    document.getElementById('r-saving').textContent = fmt(autoSaving);
-    document.getElementById('r-mkt').textContent = mktLabel;
-
-    document.getElementById('r-bottleneck').textContent = bnConfig.analysis;
-    document.getElementById('r-firstmove').textContent   = bnConfig.move;
-
-    document.getElementById('r-coi').textContent =
-      'Delaying systemization by 12 months costs an estimated ' + fmt(coiTotal) +
-      ' in unrecovered time value, missed conversions, and competitive ground ceded to operators who move faster. That\'s ' +
-      fmt(coiTotal / 12) + ' per month you\'re leaving on the table.';
-
+  var recovered = hours * 52 * recovery / 100;
+  var hourlyProxy = revenue / (team * 160);
+  return { recovered: recovered, hourlyProxy: hourlyProxy, capacity: recovered * hourlyProxy, marketing: mktspend * 12 };
+}
+function calculate() {
+  try {
+    var read = function(id, fallback) {
+      var raw = document.getElementById(id).value.trim();
+      return raw === '' ? fallback : Number(raw);
+    };
+    var r = computeScenario(read('revenue',NaN), read('team',1), read('hours',NaN), read('recovery',NaN), read('mktspend',0));
+    var b = BOTTLENECKS[document.getElementById('bottleneck').value];
+    document.getElementById('r-headline').textContent = fmt(r.capacity);
+    document.getElementById('r-headline-sub').textContent = 'Assumed hours recovered × current revenue per team hour. Not additional revenue or net benefit.';
+    document.getElementById('r-hours').textContent = r.recovered.toLocaleString('en-PH',{maximumFractionDigits:1}) + ' hrs';
+    document.getElementById('r-revcap').textContent = fmt(r.hourlyProxy) + '/hr';
+    document.getElementById('r-saving').textContent = 'Not estimated';
+    document.getElementById('r-mkt').textContent = fmt(r.marketing);
+    document.getElementById('r-bottleneck').textContent = b[0];
+    document.getElementById('r-firstmove').textContent = b[1];
+    document.getElementById('r-coi').textContent = 'Recovered time only creates value if it can be usefully redeployed. Marketing spend is context, not a benefit. Measure actual time savings in a small trial, then subtract setup, subscription, maintenance, and review costs before making an investment decision.';
     show('st-results');
-  }, 1800);
+  } catch (error) { alert(error.message); }
 }
-
-function resetTool() {
-  show('st-idle');
-}
+function resetTool() { show('st-idle'); }
 </script>
 </body>
 </html>

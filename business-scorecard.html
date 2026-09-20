@@ -155,9 +155,9 @@ body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-hei
 </div>
 
 <div class="hd">
-  <div class="eyebrow"><span class="dot"></span>Live Tool &middot; Demo 02</div>
+  <div class="eyebrow"><span class="dot"></span>Rule-based assessment &middot; Demo 02</div>
   <h1 class="title">Business <span>Infrastructure</span> Scorecard</h1>
-  <p class="desc">10 questions. 4 dimensions. Get a readiness score across your sales, content, operations, and digital systems; plus a prioritized action plan.</p>
+  <p class="desc">10 questions. 4 dimensions. Get a readiness score across your sales, content, operations, and digital systems; plus suggested areas to review. This self-assessment uses preset rules, not AI or a validated business benchmark. Overall score weights each question equally; dimension feedback uses the percentage of its available points.</p>
 </div>
 
 <div class="quiz-wrap">
@@ -221,7 +221,7 @@ body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-hei
       <div class="dim-grid" id="dim-grid"></div>
 
       <div class="priority-block">
-        <div class="priority-label">Priority Action Plan</div>
+        <div class="priority-label">Suggested Areas to Review</div>
         <div id="priority-list"></div>
       </div>
 
@@ -419,7 +419,7 @@ var DIMS = {
       { max:12, text:'Strong digital infrastructure. The next growth lever is content-driven SEO and reputation amplification to widen the top of the funnel.' }
     ],
     actions: [
-      { title:'Claim and fully optimize your Google Business Profile', desc:'Complete every field, add photos, set hours, and enable messaging. This is the highest-ROI 2-hour investment for any local business.' },
+      { title:'Claim and fully optimize your Google Business Profile', desc:'Complete relevant fields, add photos, and set accurate hours. Consider this if your business serves local customers.' },
       { title:'Build a review generation system', desc:'Create a simple post-purchase message asking for a Google review. Send it within 24 hours of a positive interaction. 5 new reviews per month compounds fast.' },
       { title:'Audit your website for the 3 conversion basics', desc:'Check that your site has: a clear headline stating what you do and who for, a visible call-to-action above the fold, and a mobile-optimized layout.' }
     ]
@@ -540,8 +540,8 @@ function showResults() {
     var mx = dimMax[d] || 1;
     var pct = Math.round((sc/mx)*100);
     var cfg = DIMS[d];
-    var read = cfg.reads[cfg.reads.length-1].text;
-    cfg.reads.forEach(function(r){ if (sc <= r.max) { read = r.text; return; } });
+    var normalizedScore = (sc / mx) * 12;
+    var read = cfg.reads.find(function(r){ return normalizedScore <= r.max; }).text;
 
     // Color based on pct
     var col = pct >= 70 ? '#c8f135' : pct >= 40 ? '#f5c842' : '#ff5a5a';

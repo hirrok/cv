@@ -4,11 +4,21 @@ Static portfolio published through GitHub Pages. Open `index.html` for the homep
 
 Serve locally with `python -m http.server 8000`. There is no build step.
 
-## Preserved demos
+## Systems Lab
 
-- `business-scorecard.html`: preset, rule-based self-assessment.
-- `roi-estimator.html`: transparent capacity-value scenario, not a financial ROI forecast.
-- `lead-qualifier.html` and `content-pillar-architect.html`: AI-assisted demos that use an external Worker. Backend source is not included here and availability is unverified. Use fictional inputs and review output.
+Current featured artifacts:
+
+- `growth-operations-command-center.html`: flagship recruiter-safe operating-system demonstration using local mock data, simulated machine preparation, explicit approval gates and an activity log.
+- `opportunity-intelligence.html`: deterministic structured assessment across six operating dimensions with transparent scoring and priority actions.
+- `roi-estimator.html`: hardened Automation Value Model comparing low/base/high recovery assumptions while separating capacity value, direct labor savings and automation cost.
+
+Earlier experiments remain available for URL continuity:
+
+- `business-scorecard.html`
+- `lead-qualifier.html`
+- `content-pillar-architect.html`
+
+The earlier AI-assisted experiments may depend on an external Worker. They are preserved as historical prototypes and are no longer featured as current proof.
 
 Existing case-study URLs remain unchanged. The downloadable PDF remains at `Hirro-Kuizon-Content-SEO-AI-Ops-CV-2026.pdf` for URL compatibility and is synchronized with the September 2026 positioning release; `cv.html` remains the browser-readable and printable version.
 

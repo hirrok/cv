@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opportunity Intelligence | Hirro Kuizon</title>
+<meta name="description" content="Interactive deterministic business opportunity assessment by Hirro Kuizon.">
+<style>
+:root{color-scheme:dark;--bg:#0b0f12;--panel:#12191f;--panel2:#172028;--ink:#f5f7f8;--muted:#9fabb5;--line:#33404a;--accent:#c8f135;--warn:#f4c95d;--bad:#ff7272}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Arial,Helvetica,sans-serif}a{color:inherit;text-underline-offset:.25em}button,select,input{font:inherit}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{width:min(1040px,calc(100% - 3rem));margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--line)}.brand{font-weight:800;text-decoration:none;letter-spacing:.06em}.back{color:var(--muted);font-size:.82rem;text-decoration:none}
+.hero{padding:3rem 0 2rem}.eyebrow{color:var(--accent);font-size:.75rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1;letter-spacing:-.05em;margin:.7rem 0 1rem}.hero p{color:var(--muted);max-width:46rem;font-size:1.02rem}.note{font-size:.78rem;color:var(--muted);border-left:2px solid var(--accent);padding-left:.8rem;margin-top:1rem}
+.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:1rem;padding-bottom:3rem}.panel{background:var(--panel);border:1px solid var(--line);padding:1.2rem}.panel-title{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.field{margin-bottom:.9rem}.field label{display:flex;justify-content:space-between;gap:1rem;font-size:.72rem;color:var(--muted);letter-spacing:.04em;margin-bottom:.35rem}.field select,.field input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:.65rem .75rem}.field small{color:var(--muted)}
+.btn{border:1px solid var(--line);background:transparent;color:var(--ink);padding:.65rem .8rem;cursor:pointer}.btn.primary{background:var(--accent);color:#0b0f12;border-color:var(--accent);font-weight:700;width:100%;margin-top:.4rem}.btn:hover{border-color:var(--accent)}
+.empty{min-height:430px;display:grid;place-items:center;text-align:center;color:var(--muted)}.result{display:none}.score{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:1rem}.score strong{font-size:3rem;letter-spacing:-.06em;color:var(--accent);line-height:1}.score span{color:var(--muted);font-size:.75rem}.summary{color:#dce2e6;margin-bottom:1rem}
+.dimensions{display:grid;gap:.6rem}.dim{background:var(--panel2);border:1px solid #28343d;padding:.75rem}.dim-top{display:flex;justify-content:space-between;gap:1rem}.dim-top b{font-size:.82rem}.dim-top span{font-size:.72rem;color:var(--muted)}.bar{height:5px;background:#253039;margin:.55rem 0}.fill{height:100%;background:var(--accent)}.reason{font-size:.74rem;color:var(--muted)}
+.priority{margin-top:1rem}.priority h2{font-size:.82rem;margin:0 0 .6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}.priority-item{border-top:1px solid var(--line);padding:.75rem 0}.priority-item b{display:block;font-size:.84rem}.priority-item span{font-size:.76rem;color:var(--muted)}
+.controls{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}.footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;color:var(--muted);font-size:.75rem}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.empty{min-height:250px}.footer{flex-direction:column}}@media(max-width:520px){.wrap{width:min(100% - 1.4rem,1040px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav"><a class="brand" href="index.html">HIRRO KUIZON</a><a class="back" href="index.html#tools">← Systems Lab</a></nav>
+<header class="hero"><div class="eyebrow">Systems Lab · Structured Assessment</div><h1>Opportunity<br>Intelligence</h1><p>Turn observable business conditions into a transparent priority map. The model scores six operating dimensions, explains each score, and surfaces the highest-leverage next moves.</p><div class="note">No AI endpoint. No hidden model. The logic is deterministic and visible in the page source. Results are directional hypotheses, not a substitute for business recon or financial due diligence.</div></header>
+
+<main class="grid">
+<section class="panel">
+<div class="panel-title">Business Snapshot</div>
+<div class="field"><label for="name">Business name <small>optional</small></label><input id="name" placeholder="Example Co."></div>
+<div class="field"><label for="industry">Industry</label><select id="industry"><option>Professional services</option><option>Trades / local services</option><option>Food / hospitality</option><option>Retail / commerce</option><option>Media / creator</option><option>Technology / SaaS</option><option>Other</option></select></div>
+<div id="questions"></div>
+<button class="btn primary" onclick="assess()">Generate opportunity map →</button>
+</section>
+
+<section class="panel">
+<div id="empty" class="empty"><div><strong>Assessment ready.</strong><br>Set the six operating conditions and generate the map.</div></div>
+<div id="result" class="result">
+<div class="score"><div><span>Opportunity readiness</span><br><strong id="total">—</strong></div><span id="band">—</span></div>
+<p class="summary" id="summary"></p>
+<div class="dimensions" id="dimensions"></div>
+<div class="priority"><h2>Priority actions</h2><div id="priorities"></div></div>
+<div class="controls"><button class="btn" onclick="copySummary()">Copy executive summary</button><button class="btn" onclick="resetForm()">Reset</button></div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><span>Built by Hirro Kuizon · deterministic assessment logic</span><span>Structured inputs → scored gaps → reasoned priorities</span></footer>
+</div>
+
+<script>
+const CONFIG=[
+{key:'presence',label:'Digital Presence',q:'How credible and current is the public presence?',opts:[
+['No reliable public presence',0,'Visibility and trust depend on referrals or manual explanation.'],
+['Basic presence exists but is incomplete or stale',1,'The business can be found, but confidence and conversion are fragile.'],
+['Credible website/listing with current core information',2,'The public layer is functional; optimization can now compound.'],
+['Strong multi-surface presence with clear conversion paths',3,'Presence is already an asset; focus shifts downstream.']]},
+{key:'capture',label:'Lead Capture',q:'What happens when someone is interested?',opts:[
+['No defined capture; inquiries arrive ad hoc',0,'Demand can disappear without becoming a record or next action.'],
+['Contact exists but routing/follow-up is mostly manual',1,'Leads are visible but response depends heavily on operator memory.'],
+['Structured forms or inbox with follow-up routine',2,'Lead flow is usable; measurement and prioritization can improve it.'],
+['Tracked pipeline with source, status and next action',3,'Capture is mature enough for optimization and automation.']]},
+{key:'experience',label:'Customer Experience',q:'How clear is the buyer journey from interest to service?',opts:[
+['Inconsistent; customers must figure out the process',0,'Friction and uncertainty can suppress conversion and trust.'],
+['Some standard steps but frequent manual clarification',1,'The journey works but still leaks operator time and customer confidence.'],
+['Clear process, expectations and handoffs',2,'Experience is predictable and ready for refinement.'],
+['Measured journey with proactive updates and recovery paths',3,'Customer experience is an operational advantage.']]},
+{key:'search',label:'Search Visibility',q:'How reliably can high-intent buyers discover the business?',opts:[
+['Essentially invisible in search',0,'The business forfeits intent that already exists in the market.'],
+['Branded visibility only or inconsistent local discovery',1,'Search captures existing awareness more than new demand.'],
+['Relevant local/service visibility with some organic traffic',2,'Search is contributing and can be systematized.'],
+['Consistent non-branded visibility tied to useful pages/content',3,'Search is already a compounding acquisition channel.']]},
+{key:'ops',label:'Operational Systems',q:'How visible are leads, jobs, tasks and follow-ups internally?',opts:[
+['Mostly in heads, chats or scattered notes',0,'The owner is the system of record; missed work and context loss are likely.'],
+['Spreadsheets/manual trackers with inconsistent upkeep',1,'Some memory exists outside the operator, but control is fragile.'],
+['Shared system with statuses, ownership and recurring review',2,'Operations are trackable and ready for selective automation.'],
+['Integrated operating view with alerts, logs and clear accountability',3,'Operational visibility supports scale and delegation.']]},
+{key:'revenue',label:'Revenue Expansion Potential',q:'How much unmet commercial leverage is visible?',opts:[
+['Little evidence of additional demand or expansion',0,'The priority may be validation rather than adding infrastructure.'],
+['Some repeat demand, cross-sell or follow-up opportunity',1,'There is visible upside, but evidence should be strengthened.'],
+['Clear missed follow-up, repeat purchase or service expansion paths',2,'Revenue leverage is concrete enough to prioritize experiments.'],
+['Strong recurring demand plus measurable conversion/retention levers',3,'The business has multiple evidence-backed expansion paths.']]}
+];
+const ACTIONS={
+presence:'Strengthen the public conversion surface: current proof, clear offer, mobile usability, and one obvious next step.',
+capture:'Create one structured lead record with source, status, owner, next action and follow-up date.',
+experience:'Map the buyer journey and remove the single point requiring the most unnecessary clarification.',
+search:'Build or improve one page around a high-intent customer task, then measure discovery and inquiry behavior.',
+ops:'Establish a simple operating ledger for leads, work-in-progress, follow-ups and ownership before adding automation.',
+revenue:'Run one bounded revenue experiment around follow-up, repeat purchase, referral, or an adjacent high-demand service.'
+};
+function renderQuestions(){
+ const el=document.getElementById('questions');el.innerHTML='';
+ CONFIG.forEach((c,i)=>{el.innerHTML+=`<div class="field"><label for="${c.key}">${c.label}<small>${c.q}</small></label><select id="${c.key}">${c.opts.map((o,j)=>`<option value="${j}">${o[0]}</option>`).join('')}</select></div>`});
+}
+function assess(){
+ const name=document.getElementById('name').value.trim()||'This business';
+ const rows=CONFIG.map(c=>{const idx=Number(document.getElementById(c.key).value);const o=c.opts[idx];return {key:c.key,label:c.label,score:o[1],reason:o[2]}});
+ const raw=rows.reduce((a,b)=>a+b.score,0), total=Math.round(raw/18*100);
+ const band=total<35?'FOUNDATIONAL':total<65?'DEVELOPING':total<85?'OPERATIONAL':'ADVANCED';
+ const ranked=[...rows].sort((a,b)=>a.score-b.score);
+ document.getElementById('total').textContent=total+'/100';document.getElementById('band').textContent=band;
+ document.getElementById('summary').textContent=name+' shows the largest leverage gap in '+ranked[0].label.toLowerCase()+', followed by '+ranked[1].label.toLowerCase()+'. The score is not a business-quality grade; it is a map of where infrastructure or operating discipline may create the next useful gain.';
+ document.getElementById('dimensions').innerHTML=rows.map(r=>`<div class="dim"><div class="dim-top"><b>${r.label}</b><span>${r.score}/3</span></div><div class="bar"><div class="fill" style="width:${r.score/3*100}%"></div></div><div class="reason">${r.reason}</div></div>`).join('');
+ document.getElementById('priorities').innerHTML=ranked.slice(0,3).map((r,i)=>`<div class="priority-item"><b>0${i+1} · ${r.label}</b><span>${ACTIONS[r.key]}</span></div>`).join('');
+ document.getElementById('empty').style.display='none';document.getElementById('result').style.display='block';
+ window.lastSummary=name+' — Opportunity Intelligence\nReadiness: '+total+'/100 ('+band+')\nTop priorities:\n'+ranked.slice(0,3).map((r,i)=>(i+1)+'. '+r.label+': '+ACTIONS[r.key]).join('\n')+'\n\nDirectional assessment only; verify through real business recon and measurement.';
+}
+function copySummary(){if(!window.lastSummary)return;navigator.clipboard.writeText(window.lastSummary).then(()=>alert('Executive summary copied.')).catch(()=>alert('Copy unavailable in this browser.'))}
+function resetForm(){document.getElementById('name').value='';CONFIG.forEach(c=>document.getElementById(c.key).selectedIndex=0);document.getElementById('result').style.display='none';document.getElementById('empty').style.display='grid'}
+renderQuestions();
+</script>
+</body></html>

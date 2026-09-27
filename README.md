@@ -12,4 +12,4 @@ Serve locally with `python -m http.server 8000`. There is no build step.
 
 Existing case-study URLs remain unchanged. The older 2026 PDF remains at its original URL for compatibility; `cv.html` is the current printable version.
 
-This bounded release updates presentation, career dates, contextual evidence links, demo labels, calculator assumptions, scorecard feedback, and safe AI-output rendering. It does not rebuild the backend or integrate other projects.
+The September 2026 positioning release updates the hiring surface to reflect verified growth from AI-assisted drafting into AI-assisted systems operations: research, production, QA, publishing and monitoring with human release control. It preserves existing case-study URLs, demos, visual identity and project boundaries; independent systems work is described as capability evidence rather than client engagement.

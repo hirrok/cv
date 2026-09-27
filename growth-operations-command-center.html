@@ -129,17 +129,17 @@ function loadScenario(name){
 function generate(type){
  const d=SCENARIOS[current];
  const texts={
- brief:'OWNER BRIEF\n\n'+d.campaign+'\n\nNext actions:\n1. Clear the highest-risk attention item.\n2. Review items already at the approval gate.\n3. Protect response time before adding new production load.',
- followup:'FOLLOW-UP DRAFT\n\nHi — following up on your recent inquiry. I reviewed the current scope and the next useful step is to confirm the priority outcome, decision timeline, and who needs to approve the work. Once those are clear, the proposal can be tightened around the actual operating need.',
- campaign:'CAMPAIGN BRIEF\n\nObjective: turn current demand signals into one measurable publishing cycle.\nAudience: warm prospects and existing customers.\nCore message: practical proof over generic promotion.\nRelease condition: claims checked, links verified, owner approval recorded.\nMeasure: qualified replies, inquiries, and response time.'
+ brief:'OWNER BRIEF\\n\\n'+d.campaign+'\\n\\nNext actions:\\n1. Clear the highest-risk attention item.\\n2. Review items already at the approval gate.\\n3. Protect response time before adding new production load.',
+ followup:'FOLLOW-UP DRAFT\\n\\nHi — following up on your recent inquiry. I reviewed the current scope and the next useful step is to confirm the priority outcome, decision timeline, and who needs to approve the work. Once those are clear, the proposal can be tightened around the actual operating need.',
+ campaign:'CAMPAIGN BRIEF\\n\\nObjective: turn current demand signals into one measurable publishing cycle.\\nAudience: warm prospects and existing customers.\\nCore message: practical proof over generic promotion.\\nRelease condition: claims checked, links verified, owner approval recorded.\\nMeasure: qualified replies, inquiries, and response time.'
  };
  pending={type:type,text:texts[type]};document.getElementById('output').innerHTML='<div class="meta">Machine-prepared draft · not released</div><p>'+esc(texts[type])+'</p>';toggleDecision(true);addLog('machine','Prepared '+type+' draft. Status: proposed.');
 }
 function queueApproval(i){
- const x=SCENARIOS[current].approvals[i];pending={type:'release',text:x[0]};document.getElementById('output').innerHTML='<div class="meta">Human review required · release gate</div><p><b>'+esc(x[0])+'</b>\n'+esc(x[1])+'\n\nThis item is ready for a human decision. The demo will not release it automatically.</p>';toggleDecision(true);addLog('machine','Surfaced '+x[0]+' for human review.');
+ const x=SCENARIOS[current].approvals[i];pending={type:'release',text:x[0]};document.getElementById('output').innerHTML='<div class="meta">Human review required · release gate</div><p><b>'+esc(x[0])+'</b>\\n'+esc(x[1])+'\\n\\nThis item is ready for a human decision. The demo will not release it automatically.</p>';toggleDecision(true);addLog('machine','Surfaced '+x[0]+' for human review.');
 }
 function approveDraft(){
- if(!pending)return;addLog('human','Approved '+pending.type+': '+pending.text.split('\n')[0]+'.');document.getElementById('output').innerHTML='<div class="meta">Approved by human operator</div><p>Decision recorded. In a production system, this is the point where the approved artifact would be handed to the authorized release channel.</p>';pending=null;toggleDecision(false);
+ if(!pending)return;addLog('human','Approved '+pending.type+': '+pending.text.split('\\n')[0]+'.');document.getElementById('output').innerHTML='<div class="meta">Approved by human operator</div><p>Decision recorded. In a production system, this is the point where the approved artifact would be handed to the authorized release channel.</p>';pending=null;toggleDecision(false);
 }
 function rejectDraft(){
  if(!pending)return;addLog('human','Rejected/revision requested for '+pending.type+'.');document.getElementById('output').innerHTML='<div class="meta">Revision requested</div><p>The proposed artifact remains unreleased. Machine work can resume only against the revised instruction.</p>';pending=null;toggleDecision(false);

@@ -40,7 +40,7 @@
 <div class="stat"><small>Open leads</small><strong id="s-leads">12</strong><span id="s-leads-note">3 need action today</span></div>
 <div class="stat"><small>Content in flight</small><strong id="s-content">7</strong><span id="s-content-note">2 awaiting approval</span></div>
 <div class="stat"><small>Median response</small><strong id="s-response">2.4h</strong><span id="s-response-note">inside 4h target</span></div>
-<div class="stat"><small>Pipeline value</small><strong id="s-value">₱286K</strong><span id="s-value-note">illustrative opportunity value</span></div>
+<div class="stat"><small>Pipeline value</small><strong id="s-value">$4.6K</strong><span id="s-value-note">illustrative opportunity value</span></div>
 </section>
 
 <div class="grid">
@@ -87,27 +87,27 @@
 
 <script>
 const SCENARIOS={
-baseline:{stats:['12','7','2.4h','₱286K'],notes:['3 need action today','2 awaiting approval','inside 4h target','illustrative opportunity value'],attention:[
+baseline:{stats:['12','7','2.4h','$4.6K'],notes:['3 need action today','2 awaiting approval','inside 4h target','illustrative opportunity value'],attention:[
 ['Lead response overdue','Evergreen Dental requested a proposal 5h ago.','warn'],
 ['Approval waiting','September case-study post is ready for human release.','good'],
 ['Measurement gap','Two recent posts are missing campaign tags.','warn']],
-leads:{New:[['Evergreen Dental','₱68K'],['Koru Fitness','₱42K']],Qualified:[['Atlas Repairs','₱94K']],Proposal:[['Northline Studio','₱55K']],Followup:[['Mesa Foods','₱27K']]},
+leads:{New:[['Evergreen Dental','$1.1K'],['Koru Fitness','$674']],Qualified:[['Atlas Repairs','$1.5K']],Proposal:[['Northline Studio','$882']],Followup:[['Mesa Foods','$433']]},
 content:[['Case-study post','QA complete','Approval'],['Customer FAQ reel','Draft complete','QA'],['Search article','Research complete','Draft'],['Weekly report','Data ready','Review']],
 approvals:[['Case-study post','Copy + links verified'],['Evergreen proposal','Scope drafted; pricing requires human check']],
 campaign:'Retention content is performing steadily. The current leverage point is faster follow-up on qualified inquiries.'},
-campaign:{stats:['19','11','1.8h','₱414K'],notes:['6 need action today','4 awaiting approval','inside 4h target','illustrative opportunity value'],attention:[
+campaign:{stats:['19','11','1.8h','$6.6K'],notes:['6 need action today','4 awaiting approval','inside 4h target','illustrative opportunity value'],attention:[
 ['Launch approval','Three campaign assets are QA-complete and waiting.','good'],
 ['Lead surge','Seven new inquiries arrived in the last 24h.','warn'],
 ['Capacity watch','Publishing queue is above normal weekly load.','warn']],
-leads:{New:[['Tamarind Co.','₱71K'],['Lumen Clinic','₱83K'],['Stone & Beam','₱36K']],Qualified:[['Atlas Repairs','₱94K'],['Koru Fitness','₱42K']],Proposal:[['Evergreen Dental','₱68K']],Followup:[['Northline Studio','₱55K']]},
+leads:{New:[['Tamarind Co.','$1.1K'],['Lumen Clinic','$1.3K'],['Stone & Beam','$577']],Qualified:[['Atlas Repairs','$1.5K'],['Koru Fitness','$674']],Proposal:[['Evergreen Dental','$1.1K']],Followup:[['Northline Studio','$882']]},
 content:[['Launch carousel','QA complete','Approval'],['Founder clip','QA complete','Approval'],['Search article','Draft complete','QA'],['Email sequence','Draft complete','QA']],
 approvals:[['Launch carousel','Claims checked; CTA verified'],['Founder clip','Captions + framing verified'],['Evergreen proposal','Commercial terms require human check']],
 campaign:'Demand is elevated. Protect response speed and release only the campaign assets that have completed QA.'},
-risk:{stats:['14','8','6.7h','₱301K'],notes:['7 overdue actions','3 blocked','outside 4h target','illustrative opportunity value'],attention:[
+risk:{stats:['14','8','6.7h','$4.8K'],notes:['7 overdue actions','3 blocked','outside 4h target','illustrative opportunity value'],attention:[
 ['Response SLA breached','Median lead response exceeded the 4h operating target.','bad'],
 ['Broken handoff','Two content assets have no named reviewer.','bad'],
 ['Pipeline aging','Three qualified leads have had no touch in 72h.','warn']],
-leads:{New:[['Lumen Clinic','₱83K']],Qualified:[['Atlas Repairs','₱94K'],['Mesa Foods','₱27K']],Proposal:[['Northline Studio','₱55K']],Followup:[['Evergreen Dental','₱68K'],['Koru Fitness','₱42K']]},
+leads:{New:[['Lumen Clinic','$1.3K']],Qualified:[['Atlas Repairs','$1.5K'],['Mesa Foods','$433']],Proposal:[['Northline Studio','$882']],Followup:[['Evergreen Dental','$1.1K'],['Koru Fitness','$674']]},
 content:[['Case-study post','QA complete','Approval'],['Customer FAQ reel','Blocked: no reviewer','Assign'],['Search article','Blocked: source check','Research'],['Weekly report','Data stale','Refresh']],
 approvals:[['Case-study post','Ready; release can proceed'],['Evergreen proposal','Pricing assumption unresolved']],
 campaign:'The system is losing time at handoffs. Fix response and reviewer ownership before increasing output volume.'}

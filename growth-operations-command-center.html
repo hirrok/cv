@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Growth Operations Command Center | Hirro Kuizon</title>
+<meta name="description" content="Interactive recruiter-safe demonstration of a human-gated AI-assisted growth operations workflow.">
+<style>
+:root{color-scheme:dark;--bg:#0b0f12;--panel:#12191f;--panel2:#172028;--ink:#f5f7f8;--muted:#9fabb5;--line:#33404a;--accent:#c8f135;--warn:#f4c95d;--bad:#ff7272}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Arial,Helvetica,sans-serif}button,select{font:inherit}button{cursor:pointer}a{color:inherit;text-underline-offset:.25em}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{width:min(1180px,calc(100% - 3rem));margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--line)}.brand{font-weight:800;text-decoration:none;letter-spacing:.06em}.back{color:var(--muted);font-size:.82rem;text-decoration:none}
+.hero{padding:3.4rem 0 2.2rem;display:grid;grid-template-columns:1.3fr .7fr;gap:3rem;align-items:end}.eyebrow{color:var(--accent);font-size:.76rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(2.4rem,5vw,4.8rem);line-height:.98;letter-spacing:-.055em;margin:.7rem 0 1rem}.hero p{color:var(--muted);max-width:46rem;font-size:1.05rem}.demo-card{border:1px solid var(--line);border-top:3px solid var(--accent);background:var(--panel);padding:1.3rem}.demo-card strong{display:block;font-size:.8rem;letter-spacing:.1em;color:var(--accent);margin-bottom:.5rem}.demo-card p{font-size:.86rem;margin:0}
+.controlbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;border-block:1px solid var(--line);margin-bottom:1.2rem}.controlbar label{font-size:.78rem;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}.controlbar select{background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:.6rem .75rem}.mode{font-size:.75rem;color:var(--muted)}.mode b{color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1rem}.stat{background:var(--panel);border:1px solid var(--line);padding:1rem}.stat small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.67rem}.stat strong{font-size:1.8rem;letter-spacing:-.04em}.stat span{display:block;color:var(--muted);font-size:.75rem;margin-top:.2rem}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1rem}.panel{background:var(--panel);border:1px solid var(--line);padding:1.1rem}.panel h2{font-size:1rem;margin:0}.panel-head{display:flex;justify-content:space-between;gap:1rem;align-items:center;margin-bottom:1rem}.panel-head span{font-size:.68rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.queue,.rows{display:grid;gap:.65rem}.item{background:var(--panel2);border:1px solid #28343d;padding:.85rem}.item-top{display:flex;justify-content:space-between;gap:1rem}.item h3{font-size:.92rem;margin:0 0 .25rem}.item p{margin:0;color:var(--muted);font-size:.8rem}.tag{white-space:nowrap;border:1px solid var(--line);padding:.2rem .5rem;font-size:.63rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.tag.warn{color:var(--warn);border-color:#6d5d2f}.tag.bad{color:var(--bad);border-color:#713f3f}.tag.good{color:var(--accent);border-color:#506424}
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem}.stage{background:var(--panel2);border:1px solid #28343d;padding:.75rem;min-height:120px}.stage b{font-size:.7rem;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}.chip{display:block;background:#202b33;border-left:2px solid var(--accent);padding:.55rem;margin-top:.55rem;font-size:.76rem}.chip small{display:block;color:var(--muted);margin-top:.18rem}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}.action{background:transparent;color:var(--ink);border:1px solid var(--line);padding:.75rem;text-align:left}.action:hover{border-color:var(--accent)}.action b{display:block;color:var(--accent);font-size:.75rem;margin-bottom:.25rem}.action span{font-size:.75rem;color:var(--muted)}
+.output{margin-top:.8rem;background:#0e1419;border:1px solid var(--line);padding:.9rem;min-height:120px}.output .meta{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}.output p{white-space:pre-wrap;margin:.3rem 0;color:#dce2e6;font-size:.82rem}.output-controls{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}.btn{border:1px solid var(--line);background:transparent;color:var(--ink);padding:.5rem .7rem;font-size:.72rem}.btn.primary{background:var(--accent);color:#0b0f12;border-color:var(--accent);font-weight:700}.btn:disabled{opacity:.45;cursor:not-allowed}
+.log{max-height:260px;overflow:auto}.log-entry{display:grid;grid-template-columns:88px 1fr;gap:.7rem;border-top:1px solid #28343d;padding:.65rem 0}.log-entry:first-child{border-top:0}.log-entry time{font-size:.7rem;color:var(--muted)}.log-entry span{font-size:.78rem}.human{color:var(--accent)}.machine{color:#9dc6ff}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.7rem;margin-top:.8rem}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:.3rem}.dot.h{background:var(--accent)}.dot.m{background:#9dc6ff}
+.footer{padding:2rem 0 3rem;color:var(--muted);font-size:.76rem;display:flex;justify-content:space-between;gap:1rem}
+@media(max-width:850px){.hero,.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.pipeline,.actions{grid-template-columns:1fr 1fr}.demo-card{max-width:34rem}}
+@media(max-width:560px){.wrap{width:min(100% - 1.4rem,1180px)}.hero{padding-top:2rem}.stats,.pipeline,.actions{grid-template-columns:1fr}.controlbar{align-items:flex-start;flex-direction:column}.footer{flex-direction:column}.log-entry{grid-template-columns:70px 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav"><a class="brand" href="index.html">HIRRO KUIZON</a><a class="back" href="index.html#tools">← Systems Lab</a></nav>
+<header class="hero">
+<div><div class="eyebrow">Systems Lab · Flagship Demonstration</div><h1>Growth Operations<br>Command Center</h1><p>A working demonstration of how I structure machine-assisted operations: observable work, explicit attention queues, controlled generation, human approval, and an audit trail.</p></div>
+<aside class="demo-card"><strong>DEMO DATA · NO LIVE CLIENT SYSTEMS</strong><p>Northstar Home Services is fictional. All records are local mock data. “AI” actions below are deterministic simulations designed to demonstrate workflow architecture without depending on an external model.</p></aside>
+</header>
+
+<div class="controlbar">
+<div><label for="scenario">Operating scenario</label> <select id="scenario" onchange="loadScenario(this.value)"><option value="baseline">Normal week</option><option value="campaign">Campaign week</option><option value="risk">At-risk week</option></select></div>
+<div class="mode">Release doctrine: <b>MACHINE PREPARES → HUMAN APPROVES</b></div>
+</div>
+
+<section class="stats" aria-label="Business snapshot">
+<div class="stat"><small>Open leads</small><strong id="s-leads">12</strong><span id="s-leads-note">3 need action today</span></div>
+<div class="stat"><small>Content in flight</small><strong id="s-content">7</strong><span id="s-content-note">2 awaiting approval</span></div>
+<div class="stat"><small>Median response</small><strong id="s-response">2.4h</strong><span id="s-response-note">inside 4h target</span></div>
+<div class="stat"><small>Pipeline value</small><strong id="s-value">₱286K</strong><span id="s-value-note">illustrative opportunity value</span></div>
+</section>
+
+<div class="grid">
+<section class="panel">
+<div class="panel-head"><h2>Attention Queue</h2><span>What requires judgment now?</span></div>
+<div class="queue" id="attention"></div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h2>Machine Actions</h2><span>Draft only · never auto-release</span></div>
+<div class="actions">
+<button class="action" onclick="generate('brief')"><b>01 · OWNER BRIEF</b><span>Summarize risks, movement and next actions.</span></button>
+<button class="action" onclick="generate('followup')"><b>02 · FOLLOW-UP DRAFT</b><span>Prepare a lead response for review.</span></button>
+<button class="action" onclick="generate('campaign')"><b>03 · CAMPAIGN BRIEF</b><span>Turn current signals into a draft campaign.</span></button>
+</div>
+<div class="output" id="output"><div class="meta">No draft generated</div><p>Select a machine action. Nothing leaves this demo without a human approval step.</p></div>
+<div class="output-controls"><button id="approve" class="btn primary" onclick="approveDraft()" disabled>Approve draft</button><button id="reject" class="btn" onclick="rejectDraft()" disabled>Reject / revise</button></div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h2>Lead Pipeline</h2><span>Visibility before automation</span></div>
+<div class="pipeline" id="pipeline"></div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h2>Content Pipeline</h2><span>Production → QA → release</span></div>
+<div class="rows" id="contentRows"></div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h2>Approval Gate</h2><span>Consequential release stays human</span></div>
+<div class="rows" id="approvals"></div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h2>Activity Log</h2><span>Proposed state ≠ released state</span></div>
+<div class="log" id="log"></div>
+<div class="legend"><span><i class="dot m"></i>Machine preparation</span><span><i class="dot h"></i>Human decision</span></div>
+</section>
+</div>
+
+<footer class="footer"><span>Built by Hirro Kuizon · recruiter-safe systems demonstration</span><span>Local mock data · deterministic logic · no external AI dependency</span></footer>
+</div>
+
+<script>
+const SCENARIOS={
+baseline:{stats:['12','7','2.4h','₱286K'],notes:['3 need action today','2 awaiting approval','inside 4h target','illustrative opportunity value'],attention:[
+['Lead response overdue','Evergreen Dental requested a proposal 5h ago.','warn'],
+['Approval waiting','September case-study post is ready for human release.','good'],
+['Measurement gap','Two recent posts are missing campaign tags.','warn']],
+leads:{New:[['Evergreen Dental','₱68K'],['Koru Fitness','₱42K']],Qualified:[['Atlas Repairs','₱94K']],Proposal:[['Northline Studio','₱55K']],Followup:[['Mesa Foods','₱27K']]},
+content:[['Case-study post','QA complete','Approval'],['Customer FAQ reel','Draft complete','QA'],['Search article','Research complete','Draft'],['Weekly report','Data ready','Review']],
+approvals:[['Case-study post','Copy + links verified'],['Evergreen proposal','Scope drafted; pricing requires human check']]},
+campaign:'Retention content is performing steadily. The current leverage point is faster follow-up on qualified inquiries.'},
+campaign:{stats:['19','11','1.8h','₱414K'],notes:['6 need action today','4 awaiting approval','inside 4h target','illustrative opportunity value'],attention:[
+['Launch approval','Three campaign assets are QA-complete and waiting.','good'],
+['Lead surge','Seven new inquiries arrived in the last 24h.','warn'],
+['Capacity watch','Publishing queue is above normal weekly load.','warn']],
+leads:{New:[['Tamarind Co.','₱71K'],['Lumen Clinic','₱83K'],['Stone & Beam','₱36K']],Qualified:[['Atlas Repairs','₱94K'],['Koru Fitness','₱42K']],Proposal:[['Evergreen Dental','₱68K']],Followup:[['Northline Studio','₱55K']]},
+content:[['Launch carousel','QA complete','Approval'],['Founder clip','QA complete','Approval'],['Search article','Draft complete','QA'],['Email sequence','Draft complete','QA']],
+approvals:[['Launch carousel','Claims checked; CTA verified'],['Founder clip','Captions + framing verified'],['Evergreen proposal','Commercial terms require human check']]},
+campaign:'Demand is elevated. Protect response speed and release only the campaign assets that have completed QA.'},
+risk:{stats:['14','8','6.7h','₱301K'],notes:['7 overdue actions','3 blocked','outside 4h target','illustrative opportunity value'],attention:[
+['Response SLA breached','Median lead response exceeded the 4h operating target.','bad'],
+['Broken handoff','Two content assets have no named reviewer.','bad'],
+['Pipeline aging','Three qualified leads have had no touch in 72h.','warn']],
+leads:{New:[['Lumen Clinic','₱83K']],Qualified:[['Atlas Repairs','₱94K'],['Mesa Foods','₱27K']],Proposal:[['Northline Studio','₱55K']],Followup:[['Evergreen Dental','₱68K'],['Koru Fitness','₱42K']]},
+content:[['Case-study post','QA complete','Approval'],['Customer FAQ reel','Blocked: no reviewer','Assign'],['Search article','Blocked: source check','Research'],['Weekly report','Data stale','Refresh']],
+approvals:[['Case-study post','Ready; release can proceed'],['Evergreen proposal','Pricing assumption unresolved']]},
+campaign:'The system is losing time at handoffs. Fix response and reviewer ownership before increasing output volume.'}
+};
+let current='baseline',pending=null,logs=[];
+function esc(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function loadScenario(name){
+ current=name;const d=SCENARIOS[name];
+ ['leads','content','response','value'].forEach((k,i)=>document.getElementById('s-'+k).textContent=d.stats[i]);
+ ['leads','content','response','value'].forEach((k,i)=>document.getElementById('s-'+k+'-note').textContent=d.notes[i]);
+ document.getElementById('attention').innerHTML=d.attention.map(x=>'<div class="item"><div class="item-top"><div><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></div><span class="tag '+x[2]+'">'+(x[2]==='bad'?'Critical':x[2]==='warn'?'Watch':'Ready')+'</span></div></div>').join('');
+ const stages=['New','Qualified','Proposal','Followup'];
+ document.getElementById('pipeline').innerHTML=stages.map(s=>'<div class="stage"><b>'+s+'</b>'+d.leads[s].map(v=>'<span class="chip">'+esc(v[0])+'<small>'+esc(v[1])+'</small></span>').join('')+'</div>').join('');
+ document.getElementById('contentRows').innerHTML=d.content.map(x=>'<div class="item"><div class="item-top"><div><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></div><span class="tag">'+esc(x[2])+'</span></div></div>').join('');
+ document.getElementById('approvals').innerHTML=d.approvals.map((x,i)=>'<div class="item"><div class="item-top"><div><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></div><button class="btn" onclick="queueApproval('+i+')">Review</button></div></div>').join('');
+ pending=null;toggleDecision(false);document.getElementById('output').innerHTML='<div class="meta">Scenario loaded · '+esc(name)+'</div><p>'+esc(d.campaign)+'</p>';
+ addLog('machine','Scenario model refreshed from local mock data.');
+}
+function generate(type){
+ const d=SCENARIOS[current];
+ const texts={
+ brief:'OWNER BRIEF\n\n'+d.campaign+'\n\nNext actions:\n1. Clear the highest-risk attention item.\n2. Review items already at the approval gate.\n3. Protect response time before adding new production load.',
+ followup:'FOLLOW-UP DRAFT\n\nHi — following up on your recent inquiry. I reviewed the current scope and the next useful step is to confirm the priority outcome, decision timeline, and who needs to approve the work. Once those are clear, the proposal can be tightened around the actual operating need.',
+ campaign:'CAMPAIGN BRIEF\n\nObjective: turn current demand signals into one measurable publishing cycle.\nAudience: warm prospects and existing customers.\nCore message: practical proof over generic promotion.\nRelease condition: claims checked, links verified, owner approval recorded.\nMeasure: qualified replies, inquiries, and response time.'
+ };
+ pending={type:type,text:texts[type]};document.getElementById('output').innerHTML='<div class="meta">Machine-prepared draft · not released</div><p>'+esc(texts[type])+'</p>';toggleDecision(true);addLog('machine','Prepared '+type+' draft. Status: proposed.');
+}
+function queueApproval(i){
+ const x=SCENARIOS[current].approvals[i];pending={type:'release',text:x[0]};document.getElementById('output').innerHTML='<div class="meta">Human review required · release gate</div><p><b>'+esc(x[0])+'</b>\n'+esc(x[1])+'\n\nThis item is ready for a human decision. The demo will not release it automatically.</p>';toggleDecision(true);addLog('machine','Surfaced '+x[0]+' for human review.');
+}
+function approveDraft(){
+ if(!pending)return;addLog('human','Approved '+pending.type+': '+pending.text.split('\n')[0]+'.');document.getElementById('output').innerHTML='<div class="meta">Approved by human operator</div><p>Decision recorded. In a production system, this is the point where the approved artifact would be handed to the authorized release channel.</p>';pending=null;toggleDecision(false);
+}
+function rejectDraft(){
+ if(!pending)return;addLog('human','Rejected/revision requested for '+pending.type+'.');document.getElementById('output').innerHTML='<div class="meta">Revision requested</div><p>The proposed artifact remains unreleased. Machine work can resume only against the revised instruction.</p>';pending=null;toggleDecision(false);
+}
+function toggleDecision(on){document.getElementById('approve').disabled=!on;document.getElementById('reject').disabled=!on}
+function addLog(kind,text){
+ const now=new Date();logs.unshift({kind,text,time:now.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'})});logs=logs.slice(0,10);
+ document.getElementById('log').innerHTML=logs.map(x=>'<div class="log-entry"><time>'+x.time+'</time><span><b class="'+(x.kind==='human'?'human':'machine')+'">'+(x.kind==='human'?'HUMAN':'MACHINE')+'</b> · '+esc(x.text)+'</span></div>').join('');
+}
+loadScenario('baseline');
+</script>
+</body></html>

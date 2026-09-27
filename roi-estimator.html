@@ -1,359 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Automation Opportunity Calculator | Hirro Kuizon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Automation Value Model | Hirro Kuizon</title>
+<meta name="description" content="Transparent scenario model for estimating recovered capacity, direct labor savings and automation running cost.">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ac:#c8f135;--bk:#0a0a0a;--c1:#111111;--c2:#161616;
-  --bd:rgba(255,255,255,0.08);--md:#6b6b6b;--ow:#f0ede8;
-}
-body{font-family:'Inter',sans-serif;background:var(--bk);color:var(--ow);min-height:100vh;font-weight:300;-webkit-font-smoothing:antialiased;font-size:16px}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes countup{from{opacity:0}to{opacity:1}}
-
-/* NAV */
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.75rem;border-bottom:1px solid var(--bd)}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;text-decoration:none;color:var(--ow)}
-.nav-back{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .2s}
-.nav-back:hover{color:var(--ac)}
-
-/* HEADER */
-.hd{padding:2.25rem 1.75rem 1.75rem;max-width:860px;margin:0 auto}
-.eyebrow{display:flex;align-items:center;gap:7px;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ac);margin-bottom:.7rem}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 1.5s infinite;display:inline-block}
-.title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.7rem,4vw,2.8rem);line-height:1;letter-spacing:-.03em;margin-bottom:.6rem}
-.title span{color:var(--ac)}
-.desc{color:var(--md);font-size:.87rem;max-width:520px;line-height:1.7}
-
-/* LAYOUT */
-.main{max-width:860px;margin:0 auto;padding:0 1.75rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;align-items:start}
-@media(max-width:640px){.main{grid-template-columns:1fr}}
-@media(max-width:480px){
-  .hd{padding:1.75rem 1rem 1.25rem}
-  .main{padding:0 1rem 3rem}
-  .assumptions{padding:0 1rem 1rem}
-  .panel{padding:1.25rem}
-  .out-panel{padding:1.25rem;min-height:300px}
-  .hm-value{font-size:1.55rem}
-  .metrics-grid{grid-template-columns:1fr}
-  .footer{padding:1rem 1rem 1.5rem;flex-direction:column;gap:.4rem}
-  .field{margin-bottom:.85rem}
-}
-
-/* INPUT PANEL */
-.panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem}
-.panel-lbl{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ac);margin-bottom:1.4rem;display:block}
-
-.field{margin-bottom:1.1rem}
-.field-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.35rem}
-.field-label label,.field-label span{font-size:.67rem;color:var(--md);letter-spacing:.08em;text-transform:uppercase}
-.field-hint{font-size:.63rem;color:var(--md);opacity:.6}
-
-.input-wrap{position:relative}
-.prefix{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.88rem;color:var(--md);pointer-events:none}
-.suffix{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);font-size:.75rem;color:var(--md);pointer-events:none;letter-spacing:.05em;text-transform:uppercase}
-.field input{
-  width:100%;background:var(--c2);border:1px solid var(--bd);color:var(--ow);
-  font-family:'Inter',sans-serif;font-size:.88rem;font-weight:300;
-  padding:.65rem .85rem .65rem 1.75rem;outline:none;transition:border-color .15s
-}
-.field input.no-prefix{padding-left:.85rem}
-.field input:focus{border-color:var(--ac)}
-.field input[type=range]{
-  padding:0;background:transparent;border:none;width:100%;
-  accent-color:var(--ac);cursor:pointer;height:20px
-}
-.field input[type=range]:focus{border:none}
-.range-labels{display:flex;justify-content:space-between;margin-top:.25rem}
-.range-lbl{font-size:.62rem;color:var(--md)}
-
-select.field-select{
-  width:100%;background:var(--c2);border:1px solid var(--bd);color:var(--ow);
-  font-family:'Inter',sans-serif;font-size:.88rem;font-weight:300;
-  padding:.65rem .85rem;outline:none;transition:border-color .15s;appearance:none;cursor:pointer
-}
-select.field-select:focus{border-color:var(--ac)}
-select option{background:#111;color:#f0ede8}
-
-.cta{
-  width:100%;background:var(--ac);color:var(--bk);border:none;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:.77rem;
-  letter-spacing:.09em;text-transform:uppercase;padding:.82rem;
-  cursor:pointer;transition:opacity .2s;margin-top:.5rem
-}
-.cta:hover{opacity:.82}
-
-/* OUTPUT PANEL */
-.out-panel{background:var(--c1);border:1px solid var(--bd);padding:1.5rem;min-height:460px;display:flex;flex-direction:column}
-.out-lbl{font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ac);margin-bottom:1.2rem;display:block}
-
-.idle-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--md);text-align:center}
-.idle-icon{font-size:1.9rem;opacity:.15}
-.idle-txt{font-size:.79rem;line-height:1.5;max-width:165px}
-
-.spin-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-.spinner{width:36px;height:36px}
-.spin-track{fill:none;stroke:rgba(255,255,255,0.07);stroke-width:2.5}
-.spin-arc{fill:none;stroke:var(--ac);stroke-width:2.5;stroke-dasharray:22 66;stroke-linecap:round;transform-origin:50% 50%;animation:spin .85s linear infinite}
-.spin-txt{font-size:.7rem;color:var(--md);letter-spacing:.09em;text-transform:uppercase}
-
-/* RESULTS */
-.results{display:flex;flex-direction:column;flex:1;animation:fadein .35s ease}
-
-.headline-metric{padding-bottom:1rem;border-bottom:1px solid var(--bd);margin-bottom:1rem}
-.hm-label{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--md);margin-bottom:.3rem}
-.hm-value{font-family:'Syne',sans-serif;font-weight:800;font-size:1.9rem;line-height:1;color:var(--ac)}
-.hm-sub{font-size:.75rem;color:var(--md);margin-top:.3rem}
-
-.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
-.metric-card{background:var(--c2);border:1px solid var(--bd);padding:.85rem}
-.mc-label{font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--md);margin-bottom:.3rem}
-.mc-value{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ow)}
-.mc-value.green{color:var(--ac)}
-.mc-value.amber{color:#f5c842}
-
-.insight-block{margin-bottom:.85rem}
-.ib-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--md);margin-bottom:.25rem}
-.ib-text{font-size:.8rem;line-height:1.65;color:var(--ow)}
-
-.coi-block{background:var(--c2);border:1px solid rgba(255,255,255,0.05);border-left:3px solid #ff5a5a;padding:.85rem;margin-bottom:.9rem}
-.coi-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#ff5a5a;margin-bottom:.25rem}
-.coi-text{font-size:.8rem;line-height:1.65;color:var(--ow)}
-
-.rst-btn{background:transparent;border:1px solid var(--bd);color:var(--md);font-family:'Syne',sans-serif;font-weight:700;font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1rem;cursor:pointer;align-self:flex-start;transition:border-color .2s,color .2s}
-.rst-btn:hover{border-color:var(--ow);color:var(--ow)}
-
-/* ASSUMPTIONS */
-.assumptions{max-width:860px;margin:0 auto;padding:0 1.75rem 1rem}
-.ass-title{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--md);margin-bottom:.6rem}
-.ass-list{display:flex;flex-wrap:wrap;gap:.5rem}
-.ass-tag{font-size:.68rem;color:var(--md);background:var(--c1);border:1px solid var(--bd);padding:.3rem .7rem}
-
-/* FOOTER */
-.footer{max-width:860px;margin:0 auto;padding:1rem 1.75rem 1.75rem;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}
-.footer span{font-size:.66rem;color:var(--md)}
-
-.hidden{display:none}
+:root{color-scheme:dark;--bg:#0b0f12;--panel:#12191f;--panel2:#172028;--ink:#f5f7f8;--muted:#9fabb5;--line:#33404a;--accent:#c8f135;--warn:#f4c95d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Arial,Helvetica,sans-serif}a{color:inherit;text-underline-offset:.25em}button,input,select{font:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{width:min(1060px,calc(100% - 3rem));margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--line)}.brand{font-weight:800;text-decoration:none;letter-spacing:.06em}.back{color:var(--muted);font-size:.82rem;text-decoration:none}
+.hero{padding:3rem 0 2rem}.eyebrow{color:var(--accent);font-size:.75rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1;letter-spacing:-.05em;margin:.7rem 0 1rem}.hero p{color:var(--muted);max-width:48rem;font-size:1.02rem}.note{font-size:.78rem;color:var(--muted);border-left:2px solid var(--accent);padding-left:.8rem;margin-top:1rem}
+.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:1rem;padding-bottom:3rem}.panel{background:var(--panel);border:1px solid var(--line);padding:1.2rem}.panel-title{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}.field{margin-bottom:.9rem}.field label{display:flex;justify-content:space-between;gap:1rem;font-size:.72rem;color:var(--muted);margin-bottom:.35rem}.field input,.field select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:.65rem .75rem}.field small{color:var(--muted)}.btn{border:1px solid var(--line);background:transparent;color:var(--ink);padding:.65rem .8rem;cursor:pointer}.btn.primary{background:var(--accent);color:#0b0f12;border-color:var(--accent);font-weight:700;width:100%;margin-top:.4rem}.btn:hover{border-color:var(--accent)}
+.empty{min-height:430px;display:grid;place-items:center;text-align:center;color:var(--muted)}.result{display:none}.headline{border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:1rem}.headline small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.headline strong{font-size:2.8rem;line-height:1;color:var(--accent);letter-spacing:-.055em}.headline p{font-size:.76rem;color:var(--muted);margin:.4rem 0 0}
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}.scenario{background:var(--panel2);border:1px solid #28343d;padding:.8rem}.scenario b{font-size:.73rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}.scenario strong{display:block;font-size:1.35rem;margin:.35rem 0}.scenario span{display:block;font-size:.72rem;color:var(--muted);margin-top:.18rem}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-top:.8rem}.metric{background:var(--panel2);border:1px solid #28343d;padding:.8rem}.metric small{color:var(--muted);display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}.metric strong{font-size:1.08rem}
+.interpret{margin-top:1rem;border-top:1px solid var(--line);padding-top:1rem}.interpret h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:.2rem 0 .5rem}.interpret p{font-size:.8rem;color:#dce2e6}.controls{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}.assumptions{padding:1rem 0 2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.76rem}.assumptions b{color:var(--ink)}.footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1rem;color:var(--muted);font-size:.75rem}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.empty{min-height:250px}}@media(max-width:600px){.scenarios,.metrics{grid-template-columns:1fr}.footer{flex-direction:column}.wrap{width:min(100% - 1.4rem,1060px)}}
 </style>
 </head>
 <body>
+<div class="wrap">
+<nav class="nav"><a class="brand" href="index.html">HIRRO KUIZON</a><a class="back" href="index.html#tools">← Systems Lab</a></nav>
+<header class="hero"><div class="eyebrow">Systems Lab · Scenario Model</div><h1>Automation<br>Value Model</h1><p>Test low, base and high automation assumptions without pretending recovered time automatically becomes profit. The model separates capacity value, direct labor savings, implementation cost, and recurring run cost.</p><div class="note">This is a planning model, not a forecast. It only estimates direct savings when you provide a loaded hourly labor cost. Capacity value is not cash savings.</div></header>
 
-<div class="nav">
-  <a href="index.html" class="nav-logo">HK</a>
-  <a href="index.html" class="nav-back">&#8592; Back to Portfolio</a>
+<main class="grid">
+<section class="panel">
+<div class="panel-title">Inputs</div>
+<div class="field"><label for="revenue">Monthly revenue <small>PHP</small></label><input id="revenue" type="number" min="0" value="150000"></div>
+<div class="field"><label for="team">Team size <small>people</small></label><input id="team" type="number" min="1" step="1" value="3"></div>
+<div class="field"><label for="hours">Repetitive task hours <small>team-wide / week</small></label><input id="hours" type="number" min="0" value="15"></div>
+<div class="field"><label for="labor">Loaded labor cost <small>PHP / hour · optional</small></label><input id="labor" type="number" min="0" placeholder="e.g. 250"></div>
+<div class="field"><label for="setup">One-time implementation cost <small>PHP</small></label><input id="setup" type="number" min="0" value="15000"></div>
+<div class="field"><label for="monthly">Monthly tool / run cost <small>PHP</small></label><input id="monthly" type="number" min="0" value="2500"></div>
+<div class="field"><label for="base">Base recovery assumption <small>% of repetitive hours</small></label><input id="base" type="number" min="1" max="90" value="30"></div>
+<div class="field"><label for="bottleneck">Primary workflow</label><select id="bottleneck"><option value="followup">Lead follow-up</option><option value="content">Content production</option><option value="reporting">Reporting / documentation</option><option value="support">Customer inquiries</option><option value="ops">Operational coordination</option></select></div>
+<button class="btn primary" onclick="run()">Compare scenarios →</button>
+</section>
+
+<section class="panel">
+<div id="empty" class="empty"><div><strong>Model ready.</strong><br>Adjust the assumptions and compare three operating scenarios.</div></div>
+<div id="result" class="result">
+<div class="headline"><small>Base-case annual recovered capacity</small><strong id="headline">—</strong><p id="headlineNote"></p></div>
+<div class="scenarios" id="scenarios"></div>
+<div class="metrics">
+<div class="metric"><small>Revenue / team hour proxy</small><strong id="proxy">—</strong></div>
+<div class="metric"><small>Annual run cost</small><strong id="runCost">—</strong></div>
+<div class="metric"><small>First-year automation cost</small><strong id="firstCost">—</strong></div>
+<div class="metric"><small>Direct-savings payback</small><strong id="payback">Not estimated</strong></div>
 </div>
-
-<div class="hd">
-  <div class="eyebrow"><span class="dot"></span>Rule-based calculator &middot; Demo 03</div>
-  <h1 class="title">Automation <span>Opportunity Calculator</span></h1>
-  <p class="desc">Explore a time-saving scenario using your own assumptions. Capacity value is not cash savings, profit, or a forecast of additional revenue. This calculator does not calculate ROI.</p>
+<div class="interpret"><h2>Interpretation</h2><p id="interpret"></p><h2>Suggested experiment</h2><p id="experiment"></p></div>
+<div class="controls"><button class="btn" onclick="copySummary()">Copy executive summary</button><button class="btn" onclick="resetView()">Reset</button></div>
 </div>
+</section>
+</main>
 
-<div class="main">
-
-  <!-- INPUT PANEL -->
-  <div class="panel">
-    <span class="panel-lbl">Your Business Numbers</span>
-
-    <div class="field">
-      <div class="field-label">
-        <label for="revenue">Monthly Revenue</label>
-        <span class="field-hint">PHP</span>
-      </div>
-      <div class="input-wrap">
-        <span class="prefix">₱</span>
-        <input type="number" id="revenue" placeholder="150,000" min="0">
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="field-label">
-        <label for="team">Team Size</label>
-        <span class="field-hint">including yourself</span>
-      </div>
-      <div class="input-wrap">
-        <input type="number" id="team" placeholder="3" min="1" class="no-prefix">
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="field-label">
-        <label for="hours">Team-wide repetitive task hours per week</label>
-      </div>
-      <div class="input-wrap">
-        <input type="number" id="hours" placeholder="15" min="0" max="80" class="no-prefix">
-        <span class="suffix">hrs</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="field-label"><label for="recovery">Assumed share of task time recovered (%)</label></div>
-      <div class="input-wrap"><input type="number" id="recovery" value="20" min="0" max="100" class="no-prefix"></div>
-    </div>
-
-    <div class="field">
-      <div class="field-label">
-        <label for="bottleneck">Biggest operational bottleneck</label>
-      </div>
-      <select class="field-select" id="bottleneck">
-        <option value="leads">Getting consistent leads</option>
-        <option value="followup">Following up with prospects</option>
-        <option value="content">Creating content consistently</option>
-        <option value="admin">Admin, reporting, documentation</option>
-        <option value="fulfillment">Fulfillment and delivery</option>
-        <option value="customerservice">Customer service and inquiries</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <div class="field-label">
-        <label for="mktspend">Current monthly spend on marketing / growth</label>
-      </div>
-      <div class="input-wrap">
-        <span class="prefix">₱</span>
-        <input type="number" id="mktspend" placeholder="10,000" min="0">
-      </div>
-    </div>
-
-    <button class="cta" onclick="calculate()">Explore Scenario &rarr;</button>
-  </div>
-
-  <!-- OUTPUT PANEL -->
-  <div class="out-panel">
-    <span class="out-lbl">Illustrative Scenario</span>
-
-    <div class="idle-state" id="st-idle">
-      <span class="idle-icon">&#x25CC;</span>
-      <p class="idle-txt">Enter your numbers and run the estimator.</p>
-    </div>
-
-    <div class="spin-state hidden" id="st-spin">
-      <svg class="spinner" viewBox="0 0 36 36">
-        <circle class="spin-track" cx="18" cy="18" r="14"/>
-        <circle class="spin-arc" cx="18" cy="18" r="14"/>
-      </svg>
-      <span class="spin-txt">Calculating your scenario...</span>
-    </div>
-
-    <div class="results hidden" id="st-results">
-
-      <div class="headline-metric">
-        <div class="hm-label">Illustrative Annual Capacity Value</div>
-        <div class="hm-value" id="r-headline">₱0</div>
-        <div class="hm-sub" id="r-headline-sub"></div>
-      </div>
-
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="mc-label">Potential Hours Recovered / Year</div>
-          <div class="mc-value green" id="r-hours"></div>
-        </div>
-        <div class="metric-card">
-          <div class="mc-label">Revenue per Team Hour (Proxy)</div>
-          <div class="mc-value green" id="r-revcap"></div>
-        </div>
-        <div class="metric-card">
-          <div class="mc-label">Cash Savings</div>
-          <div class="mc-value" id="r-saving"></div>
-        </div>
-        <div class="metric-card">
-          <div class="mc-label">Annual Marketing Spend (Context)</div>
-          <div class="mc-value amber" id="r-mkt"></div>
-        </div>
-      </div>
-
-      <div class="insight-block">
-        <div class="ib-label">Bottleneck Analysis</div>
-        <p class="ib-text" id="r-bottleneck"></p>
-      </div>
-
-      <div class="insight-block">
-        <div class="ib-label">Suggested Small Experiment</div>
-        <p class="ib-text" id="r-firstmove"></p>
-      </div>
-
-      <div class="coi-block">
-        <div class="coi-label">How to Interpret This</div>
-        <p class="coi-text" id="r-coi"></p>
-      </div>
-
-      <button class="rst-btn" onclick="resetTool()">&#8592; Recalculate</button>
-    </div>
-  </div>
-
-</div>
-
-<div class="assumptions">
-  <div class="ass-title">Model Assumptions</div>
-  <div class="ass-list">
-    <span class="ass-tag">Recovery rate is your assumption, not an industry benchmark</span>
-    <span class="ass-tag">52 weeks per year</span>
-    <span class="ass-tag">160 working hours per person per month</span>
-    <span class="ass-tag">Revenue per hour is a rough capacity proxy, not wages or profit</span>
-    <span class="ass-tag">Implementation and running costs are not included</span>
-
-  </div>
-</div>
-
-<div class="footer">
-  <span>Built by Hirro Kuizon</span>
-  <span>Rule-based time and capacity scenario</span>
+<div class="assumptions"><b>Model law:</b> 52 weeks/year · 160 work hours/person/month · low/base/high recovery = 60% / 100% / 140% of your base assumption, capped at 90% · capacity value = recovered hours × current revenue-per-team-hour proxy · direct labor savings = recovered hours × loaded labor cost when supplied.</div>
+<footer class="footer"><span>Built by Hirro Kuizon · deterministic scenario logic</span><span>Transparent assumptions · no hidden AI model</span></footer>
 </div>
 
 <script>
-var BOTTLENECKS = {
-  leads: ['Review where inquiries come from and which lead sources produce qualified conversations.', 'Track inquiries from one channel for two weeks before adding automation.'],
-  followup: ['Check whether delayed follow-ups are causing missed conversations.', 'Trial a reminder and response template; measure response time and replies.'],
-  content: ['Identify repeatable research, drafting, and publishing steps.', 'Template one recurring format and compare production time while reviewing quality.'],
-  admin: ['Identify repetitive reporting or documentation tasks with clear inputs and outputs.', 'Automate one low-risk step and measure time saved, errors, and review effort.'],
-  fulfillment: ['Look for repeated handoffs or information requests that delay delivery.', 'Trial a checklist for one service and compare completion time.'],
-  customerservice: ['Group recurring inquiries before deciding which replies can be standardized.', 'Trial reviewed templates for common questions, with a route to human support.']
+const EXP={
+followup:'Pilot one standardized follow-up sequence for two weeks. Track response time, reply rate, manual review time, and qualified conversations.',
+content:'Automate one repeatable content step, not the whole pipeline. Compare production time and QA corrections against the current process.',
+reporting:'Automate one recurring report with fixed inputs and outputs. Measure preparation time, correction time, and stakeholder usefulness.',
+support:'Template the three most common inquiry responses with a clear escalation route. Measure handling time and customer resolution quality.',
+ops:'Automate one low-risk handoff or reminder. Track cycle time, missed tasks, and review burden before expanding.'
 };
-function fmt(n) { return '₱' + Math.round(n).toLocaleString('en-PH'); }
-function show(id) {
-  ['st-idle','st-spin','st-results'].forEach(function(s) {
-    document.getElementById(s).classList.toggle('hidden', s !== id);
-  });
+let last='';
+function money(n){return '₱'+Math.round(n).toLocaleString('en-PH')}
+function num(id,optional=false){const v=document.getElementById(id).value.trim();if(optional&&v==='')return null;const n=Number(v);if(!Number.isFinite(n)||n<0)throw new Error('Use valid non-negative numeric inputs.');return n}
+function run(){
+ try{
+  const revenue=num('revenue'),team=num('team'),hours=num('hours'),labor=num('labor',true),setup=num('setup'),monthly=num('monthly'),base=num('base');
+  if(!Number.isInteger(team)||team<1)throw new Error('Team size must be a whole number of at least 1.');
+  if(base<1||base>90)throw new Error('Base recovery assumption must be between 1% and 90%.');
+  const teamWeekly=team*160*12/52;if(hours>teamWeekly)throw new Error('Repetitive weekly hours exceed the available team-hour capacity.');
+  const proxy=revenue/(team*160),runCost=monthly*12,firstCost=setup+runCost;
+  const rates=[Math.min(90,base*.6),base,Math.min(90,base*1.4)];
+  const names=['Low','Base','High'];
+  const rows=rates.map((r,i)=>{const recovered=hours*52*r/100;return {name:names[i],rate:r,recovered,capacity:recovered*proxy,direct:labor===null?null:recovered*labor}});
+  document.getElementById('headline').textContent=rows[1].recovered.toLocaleString('en-PH',{maximumFractionDigits:1})+' hrs';
+  document.getElementById('headlineNote').textContent=money(rows[1].capacity)+' capacity value proxy; this is not forecast revenue.';
+  document.getElementById('scenarios').innerHTML=rows.map(x=>`<div class="scenario"><b>${x.name} · ${x.rate.toFixed(0)}% recovery</b><strong>${x.recovered.toLocaleString('en-PH',{maximumFractionDigits:1})} hrs</strong><span>Capacity value: ${money(x.capacity)}</span><span>Direct labor savings: ${x.direct===null?'not estimated':money(x.direct)}</span></div>`).join('');
+  document.getElementById('proxy').textContent=money(proxy)+'/hr';document.getElementById('runCost').textContent=money(runCost);document.getElementById('firstCost').textContent=money(firstCost);
+  let pay='Not estimated';
+  if(labor!==null&&rows[1].direct>0){const netAnnual=rows[1].direct-runCost;if(netAnnual>0){pay=(firstCost/(rows[1].direct/12-monthly)).toFixed(1)+' months';}else pay='No positive direct-savings case';}
+  document.getElementById('payback').textContent=pay;
+  const interpret=labor===null
+   ?'You have modeled recovered capacity but not direct cash savings. Treat the result as a workload hypothesis: the hours only create value if the team can redeploy them into useful work.'
+   :'The direct-savings case uses your loaded labor cost. Compare that saving against implementation and run cost, then validate the recovery rate with a bounded pilot before committing.';
+  document.getElementById('interpret').textContent=interpret;document.getElementById('experiment').textContent=EXP[document.getElementById('bottleneck').value];
+  last='Automation Value Model\nBase recovery: '+base+'%\nAnnual hours recovered: '+rows[1].recovered.toFixed(1)+'\nCapacity value proxy: '+money(rows[1].capacity)+'\nDirect labor savings: '+(rows[1].direct===null?'not estimated':money(rows[1].direct))+'\nFirst-year automation cost: '+money(firstCost)+'\nPayback: '+pay+'\n\nInterpretation: '+interpret+'\nExperiment: '+EXP[document.getElementById('bottleneck').value];
+  document.getElementById('empty').style.display='none';document.getElementById('result').style.display='block';
+ }catch(e){alert(e.message)}
 }
-function computeScenario(revenue, team, hours, recovery, mktspend) {
-  if (![revenue,team,hours,recovery,mktspend].every(Number.isFinite) ||
-      revenue < 0 || !Number.isInteger(team) || team < 1 || hours < 0 || hours > 80 ||
-      recovery < 0 || recovery > 100 || mktspend < 0 || hours > team * 160 * 12 / 52) {
-    throw new Error('Use non-negative numbers, a whole-number team size of at least 1, a recovery rate from 0 to 100%, and weekly hours within team capacity (maximum 80 for this demo).');
-  }
-  var recovered = hours * 52 * recovery / 100;
-  var hourlyProxy = revenue / (team * 160);
-  return { recovered: recovered, hourlyProxy: hourlyProxy, capacity: recovered * hourlyProxy, marketing: mktspend * 12 };
-}
-function calculate() {
-  try {
-    var read = function(id, fallback) {
-      var raw = document.getElementById(id).value.trim();
-      return raw === '' ? fallback : Number(raw);
-    };
-    var r = computeScenario(read('revenue',NaN), read('team',1), read('hours',NaN), read('recovery',NaN), read('mktspend',0));
-    var b = BOTTLENECKS[document.getElementById('bottleneck').value];
-    document.getElementById('r-headline').textContent = fmt(r.capacity);
-    document.getElementById('r-headline-sub').textContent = 'Assumed hours recovered × current revenue per team hour. Not additional revenue or net benefit.';
-    document.getElementById('r-hours').textContent = r.recovered.toLocaleString('en-PH',{maximumFractionDigits:1}) + ' hrs';
-    document.getElementById('r-revcap').textContent = fmt(r.hourlyProxy) + '/hr';
-    document.getElementById('r-saving').textContent = 'Not estimated';
-    document.getElementById('r-mkt').textContent = fmt(r.marketing);
-    document.getElementById('r-bottleneck').textContent = b[0];
-    document.getElementById('r-firstmove').textContent = b[1];
-    document.getElementById('r-coi').textContent = 'Recovered time only creates value if it can be usefully redeployed. Marketing spend is context, not a benefit. Measure actual time savings in a small trial, then subtract setup, subscription, maintenance, and review costs before making an investment decision.';
-    show('st-results');
-  } catch (error) { alert(error.message); }
-}
-function resetTool() { show('st-idle'); }
+function copySummary(){if(!last)return;navigator.clipboard.writeText(last).then(()=>alert('Executive summary copied.')).catch(()=>alert('Copy unavailable in this browser.'))}
+function resetView(){document.getElementById('result').style.display='none';document.getElementById('empty').style.display='grid'}
 </script>
-</body>
-</html>
+</body></html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Content Pillar Architect | Hirro Kuizon</title>
@@ -176,9 +177,9 @@ select option{background:#111;color:#f0ede8}
 </div>
 
 <div class="hd">
-  <div class="eyebrow"><span class="dot"></span>AI-assisted demo &middot; 04</div>
+  <div class="eyebrow">ARCHIVED PROTOTYPE &middot; LEGACY DEMO</div>
   <h1 class="title">Content Pillar <span>Architect</span></h1>
-  <p class="desc">Enter your niche, audience, and platforms. Draft a 90-day content plan with AI: 4 pillars, post formats, platform cadence, and sample hooks.</p><p class="demo-note">External AI service: availability unverified. Use fictional or non-sensitive inputs; submitted text is sent to a third-party AI service. Outputs are drafts for human review.</p>
+  <p class="desc">Archived early AI-assisted content-planning prototype, preserved for URL continuity and historical context.</p><p class="demo-note"><strong>Legacy surface:</strong> not current recruiter proof. Live model calls are disabled. See the Systems Lab for current deterministic demonstrations.</p>
 </div>
 
 <div class="main">
@@ -267,7 +268,7 @@ select option{background:#111;color:#f0ede8}
       </div>
 
     </div>
-    <button class="cta" onclick="generate()">Generate My Content Strategy &rarr;</button>
+    <button class="cta" disabled aria-disabled="true">Archived · live run disabled</button>
   </div>
 
   <!-- SPINNER -->
@@ -313,7 +314,7 @@ select option{background:#111;color:#f0ede8}
 
       <div class="reset-row">
         <button class="rst-btn" onclick="resetTool()">&#8592; Build Another Strategy</button>
-        <span class="rst-note">Llama 3.3 via Groq · Built by Hirro Kuizon</span>
+        <span class="rst-note">Archived prototype · Built by Hirro Kuizon</span>
       </div>
     </div>
   </div>
@@ -322,13 +323,13 @@ select option{background:#111;color:#f0ede8}
 
 <div class="footer">
   <span>Built by Hirro Kuizon</span>
-  <span>Llama 3.3 via Groq API</span>
+  <span>Archived legacy prototype</span>
 </div>
 
 <script>
 // SECURITY: no API key lives client-side. Requests route through a Cloudflare
 // Worker proxy that injects the Groq key server-side. See groq-proxy-worker.js.
-const GROQ_URL = 'https://groq-proxy.hirro-kuizon.workers.dev'; // TODO: set after Worker deploy
+const GROQ_URL = null; // archived prototype: external model calls intentionally disabled
 const MODEL    = 'llama-3.3-70b-versatile';
 
 // ─── PLATFORM PILLS ────────────────────────────────────────────────
@@ -342,6 +343,8 @@ function getSelectedPlatforms() {
 
 // ─── GENERATE ──────────────────────────────────────────────────────
 async function generate() {
+  alert('This archived prototype no longer makes live model calls. Open Systems Lab for current demonstrations.');
+  return;
   var niche       = document.getElementById('niche').value;
   var audience    = document.getElementById('audience').value;
   var voice       = document.getElementById('voice').value;

@@ -19,16 +19,16 @@
 <body>
 <div class="wrap">
 <nav class="nav"><a class="brand" href="index.html">HIRRO KUIZON</a><a class="back" href="index.html#tools">← Systems Lab</a></nav>
-<header class="hero"><div class="eyebrow">Systems Lab · Scenario Model</div><h1>Automation<br>Value Model</h1><p>Test low, base and high automation assumptions without pretending recovered time automatically becomes profit. The model separates capacity value, direct labor savings, implementation cost, and recurring run cost.</p><div class="note">This is a planning model, not a forecast. It only estimates direct savings when you provide a loaded hourly labor cost. Capacity value is not cash savings.</div></header>
+<header class="hero"><div class="eyebrow">Systems Lab · Scenario Model</div><h1>Automation<br>Value Model</h1><p>Test low, base and high automation assumptions without pretending recovered time automatically becomes profit. The model separates capacity value, direct labor savings, implementation cost, and recurring run cost.</p><div class="note">This is a planning model, not a forecast. Default values are illustrative demo inputs. It only estimates direct savings when you provide a loaded hourly labor cost. Capacity value is not cash savings.</div></header>
 
 <main class="grid">
 <section class="panel">
 <div class="panel-title">Inputs</div>
-<div class="field"><label for="revenue">Monthly revenue <small>USD</small></label><input id="revenue" type="number" min="0" value="2406"></div>
+<div class="field"><label for="revenue">Monthly revenue <small>USD</small></label><input id="revenue" type="number" min="0" value="2500"></div>
 <div class="field"><label for="team">Team size <small>people</small></label><input id="team" type="number" min="1" step="1" value="3"></div>
 <div class="field"><label for="hours">Repetitive task hours <small>team-wide / week</small></label><input id="hours" type="number" min="0" value="15"></div>
 <div class="field"><label for="labor">Loaded labor cost <small>USD / hour · optional</small></label><input id="labor" type="number" min="0" placeholder="e.g. 4"></div>
-<div class="field"><label for="setup">One-time implementation cost <small>USD</small></label><input id="setup" type="number" min="0" value="241"></div>
+<div class="field"><label for="setup">One-time implementation cost <small>USD</small></label><input id="setup" type="number" min="0" value="250"></div>
 <div class="field"><label for="monthly">Monthly tool / run cost <small>USD</small></label><input id="monthly" type="number" min="0" value="40"></div>
 <div class="field"><label for="base">Base recovery assumption <small>% of repetitive hours</small></label><input id="base" type="number" min="1" max="90" value="30"></div>
 <div class="field"><label for="bottleneck">Primary workflow</label><select id="bottleneck"><option value="followup">Lead follow-up</option><option value="content">Content production</option><option value="reporting">Reporting / documentation</option><option value="support">Customer inquiries</option><option value="ops">Operational coordination</option></select></div>
@@ -65,37 +65,7 @@ support:'Template the three most common inquiry responses with a clear escalatio
 ops:'Automate one low-risk handoff or reminder. Track cycle time, missed tasks, and review burden before expanding.'
 };
 let last='';
-function money(n){return '
-function num(id,optional=false){const v=document.getElementById(id).value.trim();if(optional&&v==='')return null;const n=Number(v);if(!Number.isFinite(n)||n<0)throw new Error('Use valid non-negative numeric inputs.');return n}
-function run(){
- try{
-  const revenue=num('revenue'),team=num('team'),hours=num('hours'),labor=num('labor',true),setup=num('setup'),monthly=num('monthly'),base=num('base');
-  if(!Number.isInteger(team)||team<1)throw new Error('Team size must be a whole number of at least 1.');
-  if(base<1||base>90)throw new Error('Base recovery assumption must be between 1% and 90%.');
-  const teamWeekly=team*160*12/52;if(hours>teamWeekly)throw new Error('Repetitive weekly hours exceed the available team-hour capacity.');
-  const proxy=revenue/(team*160),runCost=monthly*12,firstCost=setup+runCost;
-  const rates=[Math.min(90,base*.6),base,Math.min(90,base*1.4)];
-  const names=['Low','Base','High'];
-  const rows=rates.map((r,i)=>{const recovered=hours*52*r/100;return {name:names[i],rate:r,recovered,capacity:recovered*proxy,direct:labor===null?null:recovered*labor}});
-  document.getElementById('headline').textContent=rows[1].recovered.toLocaleString('en-PH',{maximumFractionDigits:1})+' hrs';
-  document.getElementById('headlineNote').textContent=money(rows[1].capacity)+' capacity value proxy; this is not forecast revenue.';
-  document.getElementById('scenarios').innerHTML=rows.map(x=>`<div class="scenario"><b>${x.name} · ${x.rate.toFixed(0)}% recovery</b><strong>${x.recovered.toLocaleString('en-PH',{maximumFractionDigits:1})} hrs</strong><span>Capacity value: ${money(x.capacity)}</span><span>Direct labor savings: ${x.direct===null?'not estimated':money(x.direct)}</span></div>`).join('');
-  document.getElementById('proxy').textContent=money(proxy)+'/hr';document.getElementById('runCost').textContent=money(runCost);document.getElementById('firstCost').textContent=money(firstCost);
-  let pay='Not estimated';
-  if(labor!==null&&rows[1].direct>0){const netAnnual=rows[1].direct-runCost;if(netAnnual>0){pay=(firstCost/(rows[1].direct/12-monthly)).toFixed(1)+' months';}else pay='No positive direct-savings case';}
-  document.getElementById('payback').textContent=pay;
-  const interpret=labor===null
-   ?'You have modeled recovered capacity but not direct cash savings. Treat the result as a workload hypothesis: the hours only create value if the team can redeploy them into useful work.'
-   :'The direct-savings case uses your loaded labor cost. Compare that saving against implementation and run cost, then validate the recovery rate with a bounded pilot before committing.';
-  document.getElementById('interpret').textContent=interpret;document.getElementById('experiment').textContent=EXP[document.getElementById('bottleneck').value];
-  last='Automation Value Model\nBase recovery: '+base+'%\nAnnual hours recovered: '+rows[1].recovered.toFixed(1)+'\nCapacity value proxy: '+money(rows[1].capacity)+'\nDirect labor savings: '+(rows[1].direct===null?'not estimated':money(rows[1].direct))+'\nFirst-year automation cost: '+money(firstCost)+'\nPayback: '+pay+'\n\nInterpretation: '+interpret+'\nExperiment: '+EXP[document.getElementById('bottleneck').value];
-  document.getElementById('empty').style.display='none';document.getElementById('result').style.display='block';
- }catch(e){alert(e.message)}
-}
-function copySummary(){if(!last)return;navigator.clipboard.writeText(last).then(()=>alert('Executive summary copied.')).catch(()=>alert('Copy unavailable in this browser.'))}
-function resetView(){document.getElementById('result').style.display='none';document.getElementById('empty').style.display='grid'}
-</script>
-</body></html>+Math.round(n).toLocaleString('en-US')}
+function money(n){return '$'+Math.round(n).toLocaleString('en-US')}
 function num(id,optional=false){const v=document.getElementById(id).value.trim();if(optional&&v==='')return null;const n=Number(v);if(!Number.isFinite(n)||n<0)throw new Error('Use valid non-negative numeric inputs.');return n}
 function run(){
  try{

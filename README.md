@@ -18,8 +18,8 @@ Earlier experiments remain available for URL continuity:
 - `lead-qualifier.html`
 - `content-pillar-architect.html`
 
-The earlier AI-assisted experiments may depend on an external Worker. They are preserved as historical prototypes and are no longer featured as current proof.
+The two earlier LLM-wrapper experiments are explicitly archived, marked `noindex`, and have live external model calls disabled. They are preserved as historical prototypes and are not current recruiter proof.
 
 Existing case-study URLs remain unchanged. The downloadable PDF remains at `Hirro-Kuizon-Content-SEO-AI-Ops-CV-2026.pdf` for URL compatibility and is synchronized with the September 2026 positioning release; `cv.html` remains the browser-readable and printable version.
 
-The September 2026 positioning release updates the hiring surface to reflect verified growth from AI-assisted drafting into AI-assisted systems operations: research, production, QA, publishing and monitoring with human release control. It preserves existing case-study URLs, demos, visual identity and project boundaries; independent systems work is described as capability evidence rather than client engagement.
+The September 2026 positioning release updates the hiring surface to reflect verified growth from AI-assisted drafting into AI-assisted systems operations: research, production, QA, publishing and monitoring with authority-aware release control. It preserves existing case-study URLs, demos, visual identity and project boundaries; independent systems work is described as capability evidence rather than client engagement.

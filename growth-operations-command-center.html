@@ -27,13 +27,13 @@
 <div class="wrap">
 <nav class="nav"><a class="brand" href="index.html">HIRRO KUIZON</a><a class="back" href="index.html#tools">← Systems Lab</a></nav>
 <header class="hero">
-<div><div class="eyebrow">Systems Lab · Flagship Demonstration</div><h1>Growth Operations<br>Command Center</h1><p>A working demonstration of how I structure machine-assisted operations: observable work, explicit attention queues, controlled generation, human approval, and an audit trail.</p></div>
+<div><div class="eyebrow">Systems Lab · Flagship Demonstration</div><h1>Growth Operations<br>Command Center</h1><p>A working demonstration of how I structure machine-assisted operations: observable work, explicit attention queues, controlled generation, authority-aware release gates, and an audit trail.</p></div>
 <aside class="demo-card"><strong>DEMO DATA · NO LIVE CLIENT SYSTEMS</strong><p>Northstar Home Services is fictional. All records are local mock data. “AI” actions below are deterministic simulations designed to demonstrate workflow architecture without depending on an external model.</p></aside>
 </header>
 
 <div class="controlbar">
 <div><label for="scenario">Operating scenario</label> <select id="scenario" onchange="loadScenario(this.value)"><option value="baseline">Normal week</option><option value="campaign">Campaign week</option><option value="risk">At-risk week</option></select></div>
-<div class="mode">Release doctrine: <b>MACHINE PREPARES → HUMAN APPROVES</b></div>
+<div class="mode">Release doctrine: <b>MACHINE PREPARES → RELEASE FOLLOWS AUTHORITY</b></div>
 </div>
 
 <section class="stats" aria-label="Business snapshot">
@@ -50,13 +50,13 @@
 </section>
 
 <section class="panel">
-<div class="panel-head"><h2>Machine Actions</h2><span>Draft only · never auto-release</span></div>
+<div class="panel-head"><h2>Machine Actions</h2><span>Prepared output · release follows authority</span></div>
 <div class="actions">
 <button class="action" onclick="generate('brief')"><b>01 · OWNER BRIEF</b><span>Summarize risks, movement and next actions.</span></button>
 <button class="action" onclick="generate('followup')"><b>02 · FOLLOW-UP DRAFT</b><span>Prepare a lead response for review.</span></button>
 <button class="action" onclick="generate('campaign')"><b>03 · CAMPAIGN BRIEF</b><span>Turn current signals into a draft campaign.</span></button>
 </div>
-<div class="output" id="output"><div class="meta">No draft generated</div><p>Select a machine action. Nothing leaves this demo without a human approval step.</p></div>
+<div class="output" id="output"><div class="meta">No draft generated</div><p>Select a machine action. This demo keeps consequential release behind an explicit decision gate.</p></div>
 <div class="output-controls"><button id="approve" class="btn primary" onclick="approveDraft()" disabled>Approve draft</button><button id="reject" class="btn" onclick="rejectDraft()" disabled>Reject / revise</button></div>
 </section>
 
@@ -71,7 +71,7 @@
 </section>
 
 <section class="panel">
-<div class="panel-head"><h2>Approval Gate</h2><span>Consequential release stays human</span></div>
+<div class="panel-head"><h2>Approval Gate</h2><span>Consequential release requires explicit authority</span></div>
 <div class="rows" id="approvals"></div>
 </section>
 
@@ -129,17 +129,17 @@ function loadScenario(name){
 function generate(type){
  const d=SCENARIOS[current];
  const texts={
- brief:'OWNER BRIEF\\n\\n'+d.campaign+'\\n\\nNext actions:\\n1. Clear the highest-risk attention item.\\n2. Review items already at the approval gate.\\n3. Protect response time before adding new production load.',
- followup:'FOLLOW-UP DRAFT\\n\\nHi — following up on your recent inquiry. I reviewed the current scope and the next useful step is to confirm the priority outcome, decision timeline, and who needs to approve the work. Once those are clear, the proposal can be tightened around the actual operating need.',
- campaign:'CAMPAIGN BRIEF\\n\\nObjective: turn current demand signals into one measurable publishing cycle.\\nAudience: warm prospects and existing customers.\\nCore message: practical proof over generic promotion.\\nRelease condition: claims checked, links verified, owner approval recorded.\\nMeasure: qualified replies, inquiries, and response time.'
+ brief:'OWNER BRIEF\n\n'+d.campaign+'\n\nHighest-risk signal: '+d.attention[0][0]+' — '+d.attention[0][1]+'\n\nNext actions:\n1. Clear the highest-risk attention item.\n2. Review items already at the release gate.\n3. Protect response time before adding new production load.',
+ followup:'FOLLOW-UP DRAFT\n\nHi — following up on the recent '+((d.leads.Followup[0]||d.leads.Proposal[0]||d.leads.Qualified[0]||d.leads.New[0]||['inquiry'])[0])+' conversation. The current operating signal is: '+d.campaign+' The next useful step is to confirm the priority outcome, decision timeline, and decision owner so the proposal can be tightened around the actual need.',
+ campaign:'CAMPAIGN BRIEF\n\nOperating signal: '+d.campaign+'\nHighest-risk item: '+d.attention[0][0]+'.\nObjective: turn the current signal into one measurable publishing cycle without increasing release risk.\nAudience: warm prospects and existing customers.\nCore message: practical proof over generic promotion.\nRelease condition: claims checked, links verified, and authority gate satisfied.\nMeasure: qualified replies, inquiries, response time, and review burden.'
  };
  pending={type:type,text:texts[type]};document.getElementById('output').innerHTML='<div class="meta">Machine-prepared draft · not released</div><p>'+esc(texts[type])+'</p>';toggleDecision(true);addLog('machine','Prepared '+type+' draft. Status: proposed.');
 }
 function queueApproval(i){
- const x=SCENARIOS[current].approvals[i];pending={type:'release',text:x[0]};document.getElementById('output').innerHTML='<div class="meta">Human review required · release gate</div><p><b>'+esc(x[0])+'</b>\\n'+esc(x[1])+'\\n\\nThis item is ready for a human decision. The demo will not release it automatically.</p>';toggleDecision(true);addLog('machine','Surfaced '+x[0]+' for human review.');
+ const x=SCENARIOS[current].approvals[i];pending={type:'release',text:x[0]};document.getElementById('output').innerHTML='<div class="meta">Human review required · release gate</div><p><b>'+esc(x[0])+'</b>\n'+esc(x[1])+'\n\nThis item is ready for a human decision. The demo will not release it automatically.</p>';toggleDecision(true);addLog('machine','Surfaced '+x[0]+' for human review.');
 }
 function approveDraft(){
- if(!pending)return;addLog('human','Approved '+pending.type+': '+pending.text.split('\\n')[0]+'.');document.getElementById('output').innerHTML='<div class="meta">Approved by human operator</div><p>Decision recorded. In a production system, this is the point where the approved artifact would be handed to the authorized release channel.</p>';pending=null;toggleDecision(false);
+ if(!pending)return;addLog('human','Approved '+pending.type+': '+pending.text.split('\n')[0]+'.');document.getElementById('output').innerHTML='<div class="meta">Approved by human operator</div><p>Decision recorded. In a production system, this is the point where the approved artifact would be handed to the authorized release channel.</p>';pending=null;toggleDecision(false);
 }
 function rejectDraft(){
  if(!pending)return;addLog('human','Rejected/revision requested for '+pending.type+'.');document.getElementById('output').innerHTML='<div class="meta">Revision requested</div><p>The proposed artifact remains unreleased. Machine work can resume only against the revised instruction.</p>';pending=null;toggleDecision(false);

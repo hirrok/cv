@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lead Qualifier Bot | Hirro Kuizon</title>
@@ -429,11 +430,10 @@
 
 <div class="tool-header">
   <div class="tool-eyebrow">
-    <span class="live-dot"></span>
-    AI-assisted demo · 01
+    ARCHIVED PROTOTYPE · LEGACY DEMO
   </div>
   <h1 class="tool-title">Lead <span>Qualifier</span> Bot</h1>
-  <p class="tool-desc">Drop in a prospect's details. Get a structured qualification brief: pain score, budget signal, fit assessment, and a suggested next step. Treat budget and fit assessments as hypotheses to confirm.</p><p class="demo-note">External AI service: availability unverified. Use fictional or non-sensitive inputs; submitted text is sent to a third-party AI service. Outputs are drafts for human review.</p>
+  <p class="tool-desc">Archived early AI-assisted qualification prototype, preserved for URL continuity and historical context.</p><p class="demo-note"><strong>Legacy surface:</strong> not current recruiter proof. Live model calls are disabled. See the Systems Lab for current deterministic demonstrations.</p>
 </div>
 
 <div class="tool-body">
@@ -502,7 +502,7 @@
       </select>
     </div>
 
-    <button class="submit-btn" id="qualify-btn" onclick="runQualifier()">Qualify This Lead →</button>
+    <button class="submit-btn" id="qualify-btn" disabled aria-disabled="true">Archived · live run disabled</button>
   </div>
 
   <!-- OUTPUT -->
@@ -565,17 +565,19 @@
 </div>
 
 <div class="tool-footer">
-  <p>Llama 3.3 via Groq API · Built by Hirro Kuizon</p>
+  <p>Archived prototype · Built by Hirro Kuizon</p>
   <a href="index.html" class="back-link">← Portfolio</a>
 </div>
 
 <script>
 // SECURITY: no API key lives client-side. Requests route through the same
 // Cloudflare Worker proxy used by Content Pillar Architect. Key injected server-side.
-const GROQ_URL = 'https://groq-proxy.hirro-kuizon.workers.dev'; // TODO: set after Worker deploy — same URL as content-pillar-architect.html
+const GROQ_URL = null; // archived prototype: external model calls intentionally disabled
 const MODEL    = 'llama-3.3-70b-versatile';
 
 async function runQualifier() {
+  alert('This archived prototype no longer makes live model calls. Open Systems Lab for current demonstrations.');
+  return;
   const bizName  = document.getElementById('biz-name').value.trim();
   const industry = document.getElementById('industry').value;
   const bizSize  = document.getElementById('biz-size').value;

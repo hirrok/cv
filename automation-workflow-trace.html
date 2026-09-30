@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Automation Workflow Trace | Hirro Kuizon</title>
+<meta name="description" content="Recruiter-safe deterministic demonstration of webhook intake, JSON normalization, scoring, AI-prep, CRM update, follow-up and authority-aware release.">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--panel:#101820;--panel2:#16212a;--line:#2b3944;--accent:#b8e34b;--muted:#9cadb9;--ink:#eef4f6}
+body{background:#0b1116;color:var(--ink)}.wrap{width:min(1180px,calc(100% - 3rem));margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--line)}.nav a{color:inherit;text-decoration:none}.hero{padding:4rem 0 2rem;display:grid;grid-template-columns:1.35fr .65fr;gap:2rem}.eyebrow{color:var(--accent);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:clamp(2.6rem,6vw,5.6rem);line-height:.95;letter-spacing:-.06em;margin:.7rem 0 1.1rem}.hero p{max-width:50rem;color:var(--muted);font-size:1.05rem}.proof{border:1px solid var(--line);padding:1.2rem;background:var(--panel)}.proof strong{display:block;margin-bottom:.5rem}.proof p{font-size:.82rem;margin:.35rem 0}.grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:1rem;padding:1rem 0 4rem}.panel{border:1px solid var(--line);background:var(--panel);padding:1rem}.panel h2{font-size:1rem;margin:.1rem 0 1rem}.controls{display:grid;gap:.8rem}.field label{display:block;color:var(--muted);font-size:.75rem;margin-bottom:.3rem}.field input,.field select,.field textarea{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:.7rem;font:inherit}.actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem}.actions button{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:.7rem .9rem;cursor:pointer}.actions button.primary{background:var(--accent);color:#111;border-color:var(--accent);font-weight:700}.trace{display:grid;gap:.55rem}.step{border:1px solid var(--line);background:var(--panel2);padding:.8rem;display:grid;grid-template-columns:2rem 1fr auto;gap:.7rem;align-items:start}.step b{color:var(--accent)}.step small{color:var(--muted);display:block;margin-top:.2rem}.state{font-size:.67rem;border:1px solid var(--line);padding:.15rem .4rem;text-transform:uppercase;letter-spacing:.06em}.state.ok{border-color:var(--accent);color:var(--accent)}.state.err{border-color:#d78686;color:#d78686}.json{white-space:pre-wrap;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:#081014;border:1px solid var(--line);padding:1rem;min-height:190px;overflow:auto}.audit{margin-top:1rem}.audit div{border-top:1px solid var(--line);padding:.55rem 0;font-size:.78rem;color:var(--muted)}.note{border-top:1px solid var(--line);padding:1.2rem 0 3rem;color:var(--muted);font-size:.8rem}.note strong{color:var(--ink)}
+@media(max-width:800px){.hero,.grid{grid-template-columns:1fr}.hero{padding-top:2.5rem}.step{grid-template-columns:1.6rem 1fr}.state{grid-column:2}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav"><a href="systems-lab.html">← Systems Lab</a><span>HIRRO KUIZON · RECRUITER-SAFE DEMO</span></nav>
+<section class="hero">
+<div><div class="eyebrow">Automation Workflow Trace</div><h1>From intake<br>to controlled action.</h1><p>A deterministic architecture demonstration of a multi-step growth workflow: webhook-style intake, JSON normalization, explicit scoring, machine-prepared follow-up, CRM state update, error handling, and authority-aware release.</p></div>
+<aside class="proof"><strong>What this proves</strong><p>• Multi-step workflow decomposition</p><p>• JSON-shaped state and transformation</p><p>• Lead scoring and routing logic</p><p>• CRM-style status transitions</p><p>• Failure handling and auditability</p><p>• Human control at consequential release</p><p><em>Local deterministic demo. No claim of live client deployment, n8n production use, or external LLM/API execution.</em></p></aside>
+</section>
+<section class="grid">
+<div class="panel">
+<h2>1 · Simulated webhook payload</h2>
+<div class="controls">
+<div class="field"><label>Lead name</label><input id="name" value="Maya Chen"></div>
+<div class="field"><label>Company</label><input id="company" value="Northstar Property Group"></div>
+<div class="field"><label>Source</label><select id="source"><option>Website form</option><option>LinkedIn</option><option>Referral</option><option>Paid campaign</option></select></div>
+<div class="field"><label>Intent</label><select id="intent"><option value="3">Ready to discuss project</option><option value="2">Requests information</option><option value="1">General enquiry</option></select></div>
+<div class="field"><label>Estimated opportunity value</label><input id="value" type="number" value="4200"></div>
+<div class="field"><label>Message</label><textarea id="message" rows="4">We need a faster lead follow-up workflow before our next campaign launch.</textarea></div>
+<div class="actions"><button class="primary" onclick="runFlow(false)">Run workflow</button><button onclick="runFlow(true)">Inject malformed payload</button><button onclick="resetFlow()">Reset</button></div>
+</div>
+<div class="audit"><h2>Audit log</h2><div id="audit">No run yet.</div></div>
+</div>
+<div>
+<div class="panel">
+<h2>2 · Execution trace</h2>
+<div id="trace" class="trace"></div>
+<h2 style="margin-top:1rem">Current JSON state</h2>
+<pre id="json" class="json">{ "status": "waiting_for_input" }</pre>
+</div>
+</div>
+</section>
+<div class="note"><strong>Architecture note:</strong> In a production implementation, the visible stages can map to tools such as webhook triggers, REST/API calls, LLM steps, CRM mutations, queueing, retries and notification actions. This page intentionally keeps execution local and deterministic so the workflow logic can be inspected without external credentials or hidden endpoints.</div>
+</div>
+<script>
+const steps=[
+['Webhook intake','Receive external event and validate required fields.'],
+['Normalize JSON','Map source payload into a stable internal schema.'],
+['Score & route','Apply explicit intent/value/source rules.'],
+['AI-prep stage','Prepare a suggested follow-up using deterministic stand-in logic.'],
+['CRM update','Write status, priority, owner and next action.'],
+['Authority gate','Hold consequential outbound until release authority is satisfied.']
+];
+function paint(states){
+ const t=document.getElementById('trace');t.innerHTML='';
+ steps.forEach((s,i)=>{const st=states[i]||['waiting',''];const d=document.createElement('div');d.className='step';d.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b><div><strong>'+s[0]+'</strong><small>'+s[1]+(st[1]?' · '+st[1]:'')+'</small></div><span class="state '+(st[0]==='ok'?'ok':st[0]==='error'?'err':'')+'">'+st[0]+'</span>';t.appendChild(d);});
+}
+function audit(line){const a=document.getElementById('audit');if(a.textContent==='No run yet.')a.innerHTML='';const d=document.createElement('div');d.textContent=new Date().toLocaleTimeString()+' · '+line;a.prepend(d);}
+function runFlow(bad){
+ const payload=bad?{company:document.getElementById('company').value}:{
+  event:'lead.created',name:document.getElementById('name').value.trim(),company:document.getElementById('company').value.trim(),
+  source:document.getElementById('source').value,intent:Number(document.getElementById('intent').value),
+  estimated_value:Number(document.getElementById('value').value),message:document.getElementById('message').value.trim()
+ };
+ const states=[];
+ states.push(payload.name&&payload.company&&payload.message?['ok','required fields valid']:['error','missing name/message']);
+ if(states[0][0]==='error'){
+  paint(states);document.getElementById('json').textContent=JSON.stringify({status:'rejected',reason:'validation_error',received:payload},null,2);audit('Payload rejected before downstream actions.');return;
+ }
+ const normalized={lead_id:'lead_'+Date.now(),contact:{name:payload.name,company:payload.company},source:payload.source,intent:payload.intent,estimated_value:payload.estimated_value,message:payload.message,status:'new'};
+ states.push(['ok','stable schema created']);
+ let score=payload.intent*20+(payload.estimated_value>=5000?30:payload.estimated_value>=2000?20:10)+(payload.source==='Referral'?20:10);
+ score=Math.min(score,100);
+ const priority=score>=70?'high':score>=50?'medium':'standard';
+ states.push(['ok','score '+score+' / priority '+priority]);
+ const draft='Hi '+payload.name.split(' ')[0]+', thanks for reaching out about '+payload.message.toLowerCase()+'. I can map the workflow, identify the highest-friction handoff, and propose a bounded first implementation step.';
+ states.push(['ok','follow-up prepared, not released']);
+ const crm={...normalized,score,priority,status:'qualified',owner:'growth-ops',next_action:'review_followup',followup_draft:draft};
+ states.push(['ok','record mutated to qualified']);
+ states.push(['ok','release held for authorized approval']);
+ paint(states);document.getElementById('json').textContent=JSON.stringify(crm,null,2);audit('Workflow completed with outbound held at authority gate.');
+}
+function resetFlow(){paint([]);document.getElementById('json').textContent='{ "status": "waiting_for_input" }';document.getElementById('audit').textContent='No run yet.';}
+paint([]);
+</script>
+</body>
+</html>
